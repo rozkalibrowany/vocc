@@ -3,8 +3,9 @@
 
 #include <QMainWindow>
 #include <QDesktopWidget>
-#include <QProcess>
 #include <QObject>
+#include <QDebug>
+#include "connections.h"
 
 namespace Ui {
     class MainWindow;
@@ -21,13 +22,9 @@ public:
 private:
     void centerOnScreen(void);
 
-    bool connected;
-
     Ui::MainWindow *ui;
     QDesktopWidget resolution;
-    QProcess *process;
-private slots:
-    static void readLine();
+    Connections *connection;
 };
 
 #endif // MAINWINDOW_H

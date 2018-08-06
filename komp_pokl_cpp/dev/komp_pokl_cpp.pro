@@ -16,12 +16,15 @@ CONFIG += c++11
 SOURCES += \
     ../src/main.cpp \
     ../src/mainwindow.cpp \
+    ../src/connections.cpp
 
 HEADERS  += \
-    ../src/mainwindow.h
+    ../src/mainwindow.h \
+    ../src/connections.h
 
 FORMS += \
-    ../ui/mainwindow.ui
+    ../ui/mainwindow.ui \
+    ../ui/rpmwidget.ui
 
 RESOURCES += \
     ../img/img.qrc

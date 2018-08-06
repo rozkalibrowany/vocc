@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -10,11 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("ADek UI v0.1");
     this->centerOnScreen();
 
-    connected = false;
-    process = new QProcess();
-    connect(process, &QProcess::readyReadStandardOutput,
-                     readLine);
-    // RPM WIDGET HERE
+    // create connection
+    connection = new Connections();
+
 
 }
 
@@ -32,7 +29,5 @@ void MainWindow::centerOnScreen(void)
            ((resolution.height()/2) - (this->frameSize().height()/2)));
 }
 
-void MainWindow::readLine()
-{
 
-}
+
