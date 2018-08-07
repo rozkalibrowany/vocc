@@ -20,7 +20,8 @@ SOURCES += \
 
 HEADERS  += \
     ../src/mainwindow.h \
-    ../src/connections.h
+    ../src/connections.h \
+    ../src/logger.h
 
 FORMS += \
     ../ui/mainwindow.ui \
