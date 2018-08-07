@@ -1,9 +1,11 @@
-#include "mainwindow.h"
 #include <QApplication>
 #include <unistd.h>
 #include <stdio.h>
-#include "logger.h"
 #include <cstdarg>
+
+#include "mainwindow.h"
+#include "logger.h"
+#include "rpmwidget.h"
 
 #define     BUF_LEN         255
 #define     EXIT_FAILURE    1

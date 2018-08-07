@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>rpm_widget</class>
- <widget class="QWidget" name="rpm_widget">
+ <class>RpmWidget</class>
+ <widget class="QWidget" name="RpmWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -1041,7 +1041,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle23.png</pixmap>
+     <pixmap>../img/circles/circle23.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
