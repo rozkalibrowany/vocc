@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "rpmwidget.h"
+#include "testform.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -11,9 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // create connection
     connection = new Connections();
-
-    RpmWidget *rpm = new RpmWidget();
-    rpm->show();
+    // create Rpm Widget
+    RpmWidget *rpm = new RpmWidget(ui->rpm_widget);
 
 }
 

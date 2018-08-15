@@ -3,3 +3,4 @@
 *.autosave
 *.user
 *.o
+/versions/*

@@ -136,7 +136,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle1.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle1.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -155,7 +155,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle2.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -174,7 +174,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle3.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle3.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -193,7 +193,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle4.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle4.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -212,7 +212,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle5.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle5.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -231,7 +231,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle6.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle6.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -250,7 +250,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle7.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle7.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -269,7 +269,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle8.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle8.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -291,7 +291,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle9.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle9.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -310,7 +310,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle10.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle10.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -332,7 +332,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle11.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle11.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -351,7 +351,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle12.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle12.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -370,7 +370,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle13.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle13.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -389,7 +389,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle14.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle14.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -408,7 +408,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle15.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle15.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -427,7 +427,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle16.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle16.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -446,7 +446,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle17.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle17.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -465,7 +465,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle18.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle18.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -484,7 +484,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle19.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle19.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -503,7 +503,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle20.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle20.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -522,7 +522,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle21.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle21.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -541,7 +541,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle22.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle22.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -560,7 +560,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/colorized_circles/circle23.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/colorized_circles/colorized_circles/circle23.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -617,7 +617,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle1.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle1.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -636,7 +636,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle2.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -655,7 +655,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle3.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle3.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -674,7 +674,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle4.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle4.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -693,7 +693,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle5.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle5.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -712,7 +712,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle6.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle6.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -731,7 +731,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle7.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle7.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -750,7 +750,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle8.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle8.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -772,7 +772,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle9.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle9.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -791,7 +791,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle10.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle10.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -813,7 +813,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle11.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle11.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -832,7 +832,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle12.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle12.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -851,7 +851,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle13.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle13.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -870,7 +870,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle14.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle14.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -889,7 +889,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle15.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle15.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -908,7 +908,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle16.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle16.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -927,7 +927,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle17.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle17.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -946,7 +946,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle18.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle18.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -965,7 +965,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle19.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle19.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -984,7 +984,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle20.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle20.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1003,7 +1003,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle21.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle21.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1022,7 +1022,7 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>img/dark_colorized_circles/circle22.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle22.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1041,12 +1041,35 @@ background-color: rgba(255, 255, 255, 20)</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../img/circles/circle23.png</pixmap>
+     <pixmap resource="../img/img.qrc">:/dark_colorized_circles/dark_colorized_circles/circle23.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
     </property>
    </widget>
+   <zorder>circle10_3</zorder>
+   <zorder>circle1_3</zorder>
+   <zorder>circle2_3</zorder>
+   <zorder>circle3_3</zorder>
+   <zorder>circle4_3</zorder>
+   <zorder>circle5_3</zorder>
+   <zorder>circle6_3</zorder>
+   <zorder>circle7_3</zorder>
+   <zorder>circle8_3</zorder>
+   <zorder>circle9_3</zorder>
+   <zorder>circle11_3</zorder>
+   <zorder>circle12_3</zorder>
+   <zorder>circle13_3</zorder>
+   <zorder>circle14_3</zorder>
+   <zorder>circle15_3</zorder>
+   <zorder>circle16_3</zorder>
+   <zorder>circle17_3</zorder>
+   <zorder>circle18_3</zorder>
+   <zorder>circle19_3</zorder>
+   <zorder>circle20_3</zorder>
+   <zorder>circle21_3</zorder>
+   <zorder>circle22_3</zorder>
+   <zorder>circle23_3</zorder>
   </widget>
   <widget class="QLabel" name="rpmCaption_2">
    <property name="geometry">
@@ -1267,9 +1290,8 @@ font: italic 14pt &quot;Ubuntu&quot;;</string>
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <zorder>black_circle</zorder>
-  <zorder>dark_dots_widget</zorder>
   <zorder>dots_widget</zorder>
+  <zorder>black_circle</zorder>
   <zorder>graphicsView</zorder>
   <zorder>pintop</zorder>
   <zorder>rpmCaption</zorder>
@@ -1281,7 +1303,10 @@ font: italic 14pt &quot;Ubuntu&quot;;</string>
   <zorder>rpmCaption_6</zorder>
   <zorder>rpmCaption_7</zorder>
   <zorder>rpmCaption_8</zorder>
+  <zorder>dark_dots_widget</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="../img/img.qrc"/>
+ </resources>
  <connections/>
 </ui>
