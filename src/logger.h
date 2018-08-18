@@ -6,6 +6,7 @@
 #define LOG_MAIN                0x0001
 #define LOG_GUI                 0x0002
 #define LOG_CONNECTIONS         0x0004
+#define LOG_RPM                 0x0008
 
 #define LOG_ERROR               0x8000
 

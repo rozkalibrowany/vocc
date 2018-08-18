@@ -3,6 +3,12 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QLabel>
+#include <QGraphicsScene>
+#include <QColor>
+#include <QBrush>
+#include <QPen>
+#include <QGraphicsEllipseItem>
 
 namespace Ui {
 class RpmWidget;
@@ -17,6 +23,13 @@ public:
     ~RpmWidget();
 
 private:
+    void initWidget(void);
+    void updateLine(int value);
+
+    QList<QLabel *> dots;
+    QGraphicsScene *scene;
+    QString mainColor;
+    QColor color;
     Ui::RpmWidget *rpm;
 };
 

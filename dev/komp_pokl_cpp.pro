@@ -23,7 +23,8 @@ HEADERS  += \
     ../src/mainwindow.h \
     ../src/connections.h \
     ../src/logger.h \
-    ../src/rpmwidget.h
+    ../src/rpmwidget.h \
+    ../src/parameters.h
 
 FORMS += \
     ../ui/mainwindow.ui \
