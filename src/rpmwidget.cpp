@@ -7,7 +7,9 @@
 #include <QGraphicsEllipseItem>
 #include <QGraphicsLineItem>
 
+
 #define CLASS_INFO  "rpm"
+
 
 RpmWidget::RpmWidget(QWidget *parent)
     : QWidget(parent),
@@ -45,12 +47,12 @@ void RpmWidget::initWidget()
     rpm->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     rpm->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    this->updateLine(0);
+    this->updateWidget(0);
 }
 
-void RpmWidget::updateLine(int value)
+void RpmWidget::drawLine(int value)
 {
-    LOG (LOG_RPM, "%s - update line by value %d", CLASS_INFO, value);
+    LOG (LOG_RPM, "%s - drawing line, value %d", CLASS_INFO, value);
 
     float x1, x2, y1, y2, lineLength, angle, angleOffset;
 
@@ -82,7 +84,7 @@ void RpmWidget::updateLine(int value)
     y2 = (-1) * lineLength * qCos(angle + qDegreesToRadians(angleOffset));
 
     LOG (LOG_RPM, "%s - x1: %.2f\t y1: %.2f\t x2: %.2f\t y2: %.2f\t lineLength: %.2f\t" \
-                  "angle: %.2f\t angleOffset: %.2f\n", CLASS_INFO, x1, y1, x2, y2, lineLength, angle, angleOffset);
+                  "angle: %.2f\t angleOffset: %.2f", CLASS_INFO, x1, y1, x2, y2, lineLength, angle, angleOffset);
 
     /* draw pintop */
     QRectF pintop(x1 - 2, y1 - 4, 10, 10);
@@ -95,5 +97,27 @@ void RpmWidget::updateLine(int value)
     lineItem = new QGraphicsLineItem(line);
     scene->addItem(lineItem);
     lineItem->setPen(pen);
+
+}
+
+void RpmWidget::updateWidget(int value)
+{
+    LOG (LOG_RPM, "%s - updating rpm widget by value %d", CLASS_INFO, value);
+
+    int speed, nOfDots;
+
+    /* update LCD display */
+    speed = int(value * 0.02827); // gokart speed
+    rpm->rpmNumber->display(speed);
+
+    /* update line */
+    drawLine(value);
+
+    /* update leds */
+    nOfDots = int(value/(MAX_RPM_VALUE / dots.length()));
+
+    LOG (LOG_RPM, "%s - speed: %d km/h\t dots: %d", CLASS_INFO, speed, nOfDots);
+
+
 
 }

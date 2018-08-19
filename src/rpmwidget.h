@@ -24,7 +24,8 @@ public:
 
 private:
     void initWidget(void);
-    void updateLine(int value);
+    void drawLine(int value);
+    void updateWidget(int value);
 
     QList<QLabel *> dots;
     QGraphicsScene *scene;
