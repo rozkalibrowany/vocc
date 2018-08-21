@@ -27,6 +27,7 @@ private:
     void drawLine(int value);
     void updateWidget(int value);
 
+    int currentNoOfDots;
     QList<QLabel *> dots;
     QGraphicsScene *scene;
     QString mainColor;

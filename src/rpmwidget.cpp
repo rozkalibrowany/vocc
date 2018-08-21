@@ -40,6 +40,7 @@ void RpmWidget::initWidget()
             dots.at(i)->setVisible(false);
     }
 
+    currentNoOfDots = 0;
     scene = new QGraphicsScene(this);
     rpm->graphicsView->setScene(scene);
     rpm->graphicsView->setSceneRect(0, 0, rpm->graphicsView->frameSize().width(), \
@@ -47,7 +48,7 @@ void RpmWidget::initWidget()
     rpm->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     rpm->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    this->updateWidget(0);
+    this->updateWidget(1300);
 }
 
 void RpmWidget::drawLine(int value)
@@ -118,6 +119,15 @@ void RpmWidget::updateWidget(int value)
 
     LOG (LOG_RPM, "%s - speed: %d km/h\t dots: %d", CLASS_INFO, speed, nOfDots);
 
-
-
+    if (nOfDots != currentNoOfDots) {
+        for (int i = 0; i < nOfDots; ++i) {
+            if (dots.at(i) != NULL && !dots.at(i)->isVisible())
+                dots.at(i)->setVisible(true);
+        }
+        for (int i = nOfDots; i < dots.length(); ++i) {
+            if (dots.at(i) != NULL && dots.at(i)->isVisible())
+                dots.at(i)->setVisible(false);
+        }
+    }
+    currentNoOfDots = nOfDots;
 }
