@@ -11,6 +11,8 @@
 #include "connections.h"
 #include "rpmwidget.h"
 #include <QMetaType>
+#include <QString>
+#include <QTimer>
 
 namespace Ui {
     class MainWindow;
@@ -34,20 +36,33 @@ public:
     ~MainWindow();
 
 private:
+    void buttonStyleUpdate(QFrame *frame, bool isChanged);
+    void buttonStyleUpdate(QPushButton *button, bool isChanged);
     void centerOnScreen(void);
     void initializeFunctionButtons(void);
+    void initializeLapTimer(void);
+    void initializeTimerForDateTime(void);
     void menuButtonChanged(QFrame *frame);
     void setNewPage(int index);
-    void buttonStyleUpdate(QFrame *frame, bool isChanged);
+    void setLapTimerTime(void);
 
+    bool lapTimerStarted;
+    int s, m, ms;
     QMap<QString, int> map;
     QFrame *lastButtonObject;
+    QString date, time, lapTime;
+    QTimer *lapTimer, *sleepTimer;
     Ui::MainWindow *ui;
     Ui::FrameObjects frObj;
     QDesktopWidget resolution;
     Connections *connection;
     RpmWidget *rpm;
 
+private slots:
+    void setSystemDate(void);
+    void startLapTimer(void);
+    void updateLapTimer(void);
+    void resetLapTimer(void);
 
 };
 

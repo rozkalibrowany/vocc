@@ -4,6 +4,7 @@
 #include <QObject>
 #include <string>
 #include <QSequentialIterable>
+#include <QDateTime>
 
 #define CLASS_INFO          "main window"
 
@@ -16,13 +17,14 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("ADek UI v0.1");
     this->centerOnScreen();
     lastButtonObject = NULL;
+    lapTimerStarted = false;
 
-    // create connection
+    /* create connection */
     if (connection != NULL)
         delete connection;
     connection = new Connections();
 
-    // create Rpm Widget
+    /* create Rpm Widget */
     rpm = new RpmWidget(ui->rpm_widget);
 
     /* set buttons map */
@@ -33,6 +35,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     /* initialize functions buttons */
     initializeFunctionButtons();
+
+    /* set system datetime */
+    setSystemDate();
+    initializeTimerForDateTime();
+
+    /* initialize lap timer */
+    initializeLapTimer();
+
+    /* set start page */
+    menuButtonChanged(ui->vfMain);
+
 }
 
 
@@ -68,6 +81,36 @@ void MainWindow::initializeFunctionButtons(void)
 }
 
 
+void MainWindow::initializeLapTimer(void)
+{
+    LOG (LOG_MAINWINDOW, "%s - initializing lap timer", CLASS_INFO);
+
+    lapTimer = new QTimer(this);
+    sleepTimer = new QTimer(this);
+
+    ui->timerButton->setText("Start Timer");
+
+    sleepTimer->setInterval(2500);
+    sleepTimer->setSingleShot(true);
+
+    m = ms = s = 0;
+
+    connect (ui->timerButton, &QPushButton::clicked, this, &MainWindow::startLapTimer);
+    connect (lapTimer, &QTimer::timeout, this, &MainWindow::updateLapTimer);
+    connect (sleepTimer, &QTimer::timeout, this, &MainWindow::resetLapTimer);
+}
+
+
+void MainWindow::initializeTimerForDateTime(void)
+{
+    LOG (LOG_MAINWINDOW, "%s - current date and time %s, %s", CLASS_INFO, \
+         date.toStdString().c_str(), time.toStdString().c_str());
+
+    QTimer *timer = new QTimer(this);
+    connect (timer, &QTimer::timeout, this, &MainWindow::setSystemDate);
+    timer->start(1000);
+}
+
 void MainWindow::menuButtonChanged(QFrame *frame)
 {
     LOG (LOG_MAINWINDOW, "%s - initializing function button: %s", CLASS_INFO, \
@@ -87,16 +130,10 @@ void MainWindow::menuButtonChanged(QFrame *frame)
 }
 
 
-void MainWindow::setNewPage(int index)
-{
-    ui->stackedWidget->setCurrentIndex(index);
-}
-
-
 void MainWindow::buttonStyleUpdate(QFrame *frame, bool isChanged)
 {
 
-    LOG (LOG_MAINWINDOW, "%s - %s - obj name %s", CLASS_INFO, Q_FUNC_INFO, \
+    LOG (LOG_MAINWINDOW, "%s - %s - %s", CLASS_INFO, Q_FUNC_INFO, \
          frame->objectName().toStdString().c_str());
 
     QPushButton *iconObject;
@@ -121,4 +158,92 @@ void MainWindow::buttonStyleUpdate(QFrame *frame, bool isChanged)
     textObject->style()->polish(textObject);
     textObject->update();
 
+}
+
+
+void MainWindow::buttonStyleUpdate(QPushButton *button, bool isChanged)
+{
+    LOG (LOG_MAINWINDOW, "%s - %s - %s", CLASS_INFO, Q_FUNC_INFO, \
+         button->objectName().toStdString().c_str());
+
+    button->setProperty("clicked", isChanged);
+    button->style()->unpolish(button);
+    button->style()->polish(button);
+    button->update();
+}
+
+void MainWindow::setNewPage(int index)
+{
+    LOG (LOG_MAINWINDOW, "%s - changing page to %d", CLASS_INFO, index);
+
+    ui->stackedWidget->setCurrentIndex(index);
+}
+
+
+void MainWindow::setSystemDate(void)
+{
+    date = QDate::currentDate().toString("dd-MM-yyyy");
+    if (date != NULL)
+        ui->dateLabel->setText(date);
+
+    time = QTime::currentTime().toString("hh:mm");
+    if (time != NULL)
+        ui->timeLabel->setText(time);
+
+}
+
+
+void MainWindow::setLapTimerTime(void)
+{
+    lapTime = QString("%1:%2:%3").arg(QString::number(m), QString::number(s), QString::number(ms));
+    ui->lcdNumber->setDigitCount(lapTime.length());
+    ui->lcdNumber->display(lapTime);
+}
+
+
+void MainWindow::startLapTimer(void)
+{
+    LOG (LOG_MAINWINDOW, "%s - lap timer started", CLASS_INFO);
+
+    if (!lapTimerStarted) {
+        lapTimerStarted = true;
+        buttonStyleUpdate(ui->timerButton, true);
+        ui->timerButton->setText("Stop Timer");
+        lapTimer->start(10);
+    } else {
+        buttonStyleUpdate(ui->timerButton, false);
+        ui->timerButton->setText("Start Timer");
+        sleepTimer->start();
+        lapTimer->stop();
+        lapTimerStarted = false;
+    }
+}
+
+
+void MainWindow::updateLapTimer(void)
+{
+    if (ms < 100)
+        ms += 1;
+    else {
+        if (s < 59) {
+            ms = 0;
+            s += 1;
+        } else if (s == 59 && m < 59) {
+            m += 1;
+            ms = 0;
+            s = 0;
+        } else
+            lapTimer->stop();
+    }
+
+    setLapTimerTime();
+}
+
+
+void MainWindow::resetLapTimer(void)
+{
+    LOG (LOG_MAINWINDOW, "%s - resetting lap timer", CLASS_INFO);
+
+    s = m = ms = 0;
+    setLapTimerTime();
 }
