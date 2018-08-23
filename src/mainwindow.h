@@ -8,24 +8,15 @@
 #include <QFrame>
 #include <QList>
 #include <QPushButton>
-#include "connections.h"
-#include "rpmwidget.h"
-#include <QMetaType>
 #include <QString>
 #include <QTimer>
+#include "connections.h"
+#include "rpmwidget.h"
+#include "alerts.h"
 
 namespace Ui {
     class MainWindow;
-
-    struct FrameObjects
-    {
-        QFrame *frame;
-        QPushButton *button;
-        QLabel *label;
-    };
 }
-
-Q_DECLARE_METATYPE(Ui::FrameObjects)
 
 class MainWindow : public QMainWindow
 {
@@ -35,9 +26,9 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
 private:
     void buttonStyleUpdate(QFrame *frame, bool isChanged);
-    void buttonStyleUpdate(QPushButton *button, bool isChanged);
     void centerOnScreen(void);
     void initializeFunctionButtons(void);
     void initializeLapTimer(void);
@@ -53,16 +44,22 @@ private:
     QString date, time, lapTime;
     QTimer *lapTimer, *sleepTimer;
     Ui::MainWindow *ui;
-    Ui::FrameObjects frObj;
     QDesktopWidget resolution;
+    Alerts *alerts;
     Connections *connection;
     RpmWidget *rpm;
 
+protected:
+    template <typename T> void buttonStyleUpdate(T *widget, const char* property, bool isChanged);
+
+//public slots:
+//    void setAlertStatusSlot(bool &isAlert, int &alarmNr);
+
 private slots:
-    void setSystemDate(void);
-    void startLapTimer(void);
-    void updateLapTimer(void);
-    void resetLapTimer(void);
+    void setSystemDateSlot(void);
+    void startLapTimerSlot(void);
+    void updateLapTimerSlot(void);
+    void resetLapTimerSlot(void);
 
 };
 

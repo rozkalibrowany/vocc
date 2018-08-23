@@ -1,10 +1,11 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "logger.h"
 #include <QObject>
 #include <string>
 #include <QSequentialIterable>
 #include <QDateTime>
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "logger.h"
+
 
 #define CLASS_INFO          "main window"
 
@@ -27,6 +28,9 @@ MainWindow::MainWindow(QWidget *parent)
     /* create Rpm Widget */
     rpm = new RpmWidget(ui->rpm_widget);
 
+    /* create converter alerts widget */
+    alerts = new Alerts(ui->controllerWidget);
+
     /* set buttons map */
     map["vfMain"] = 0;
     map["vfAlerts"] = 1;
@@ -37,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     initializeFunctionButtons();
 
     /* set system datetime */
-    setSystemDate();
+    setSystemDateSlot();
     initializeTimerForDateTime();
 
     /* initialize lap timer */
@@ -95,9 +99,9 @@ void MainWindow::initializeLapTimer(void)
 
     m = ms = s = 0;
 
-    connect (ui->timerButton, &QPushButton::clicked, this, &MainWindow::startLapTimer);
-    connect (lapTimer, &QTimer::timeout, this, &MainWindow::updateLapTimer);
-    connect (sleepTimer, &QTimer::timeout, this, &MainWindow::resetLapTimer);
+    connect (ui->timerButton, &QPushButton::clicked, this, &MainWindow::startLapTimerSlot);
+    connect (lapTimer, &QTimer::timeout, this, &MainWindow::updateLapTimerSlot);
+    connect (sleepTimer, &QTimer::timeout, this, &MainWindow::resetLapTimerSlot);
 }
 
 
@@ -107,7 +111,7 @@ void MainWindow::initializeTimerForDateTime(void)
          date.toStdString().c_str(), time.toStdString().c_str());
 
     QTimer *timer = new QTimer(this);
-    connect (timer, &QTimer::timeout, this, &MainWindow::setSystemDate);
+    connect (timer, &QTimer::timeout, this, &MainWindow::setSystemDateSlot);
     timer->start(1000);
 }
 
@@ -139,11 +143,8 @@ void MainWindow::buttonStyleUpdate(QFrame *frame, bool isChanged)
     QPushButton *iconObject;
     QLabel *textObject;
 
-    frObj.frame = frame;
     iconObject = frame->findChild<QPushButton *>();
-    frObj.button = iconObject;
     textObject = frame->findChild<QLabel *>();
-    frObj.label = textObject;
 
     frame->setProperty("chosen", isChanged);
     frame->style()->unpolish(frame);
@@ -161,15 +162,15 @@ void MainWindow::buttonStyleUpdate(QFrame *frame, bool isChanged)
 }
 
 
-void MainWindow::buttonStyleUpdate(QPushButton *button, bool isChanged)
+template <typename T> void MainWindow::buttonStyleUpdate(T *widget, const char* property, bool isChanged)
 {
     LOG (LOG_MAINWINDOW, "%s - %s - %s", CLASS_INFO, Q_FUNC_INFO, \
-         button->objectName().toStdString().c_str());
+         widget->objectName().toStdString().c_str());
 
-    button->setProperty("clicked", isChanged);
-    button->style()->unpolish(button);
-    button->style()->polish(button);
-    button->update();
+    widget->setProperty(property, isChanged);
+    widget->style()->unpolish(widget);
+    widget->style()->polish(widget);
+    widget->update();
 }
 
 void MainWindow::setNewPage(int index)
@@ -180,7 +181,7 @@ void MainWindow::setNewPage(int index)
 }
 
 
-void MainWindow::setSystemDate(void)
+void MainWindow::setSystemDateSlot(void)
 {
     date = QDate::currentDate().toString("dd-MM-yyyy");
     if (date != NULL)
@@ -201,17 +202,17 @@ void MainWindow::setLapTimerTime(void)
 }
 
 
-void MainWindow::startLapTimer(void)
+void MainWindow::startLapTimerSlot(void)
 {
     LOG (LOG_MAINWINDOW, "%s - lap timer started", CLASS_INFO);
 
     if (!lapTimerStarted) {
         lapTimerStarted = true;
-        buttonStyleUpdate(ui->timerButton, true);
+        buttonStyleUpdate(ui->timerButton, "clicked", true);
         ui->timerButton->setText("Stop Timer");
         lapTimer->start(10);
     } else {
-        buttonStyleUpdate(ui->timerButton, false);
+        buttonStyleUpdate(ui->timerButton, "clicked", false);
         ui->timerButton->setText("Start Timer");
         sleepTimer->start();
         lapTimer->stop();
@@ -220,7 +221,7 @@ void MainWindow::startLapTimer(void)
 }
 
 
-void MainWindow::updateLapTimer(void)
+void MainWindow::updateLapTimerSlot(void)
 {
     if (ms < 100)
         ms += 1;
@@ -240,7 +241,7 @@ void MainWindow::updateLapTimer(void)
 }
 
 
-void MainWindow::resetLapTimer(void)
+void MainWindow::resetLapTimerSlot(void)
 {
     LOG (LOG_MAINWINDOW, "%s - resetting lap timer", CLASS_INFO);
 

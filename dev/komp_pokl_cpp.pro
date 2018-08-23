@@ -17,18 +17,21 @@ SOURCES += \
     ../src/main.cpp \
     ../src/mainwindow.cpp \
     ../src/connections.cpp \
-    ../src/rpmwidget.cpp
+    ../src/rpmwidget.cpp \
+    ../src/alerts.cpp
 
 HEADERS  += \
     ../src/mainwindow.h \
     ../src/connections.h \
     ../src/logger.h \
     ../src/rpmwidget.h \
-    ../src/parameters.h
+    ../src/parameters.h \
+    ../src/alerts.h
 
 FORMS += \
     ../ui/mainwindow.ui \
-    ../ui/rpmwidget.ui
+    ../ui/rpmwidget.ui \
+    ../ui/alerts.ui
 
 RESOURCES += \
     ../img/img.qrc
