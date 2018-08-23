@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QList>
+#include <QFrame>
 
 namespace Ui {
 class Alerts;
@@ -17,6 +19,10 @@ public:
     ~Alerts();
 
 private:
+
+    void initControllerWidget(void);
+
+    QList<QFrame *> ledSlots;
     Ui::Alerts *controller;
 };
 
