@@ -48,7 +48,7 @@ void RpmWidget::initWidget()
     rpm->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     rpm->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    this->updateWidget(1300);
+    this->updateWidget(0);
 }
 
 void RpmWidget::drawLine(int value)

@@ -309,7 +309,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>Identification error</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -337,7 +337,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>Over voltage</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -365,7 +365,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>Low voltage</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -393,7 +393,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>motor provide speed feedback</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -421,7 +421,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>Internal volts fault</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -449,7 +449,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>Over temperature</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -477,7 +477,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>Throttle error at power-up</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -505,7 +505,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>internal reset</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -533,7 +533,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>hall throttle open</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -561,7 +561,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>angle sensor open</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -589,7 +589,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>Motor over temperature</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -617,7 +617,7 @@ color: #e6e6e6;
 }</string>
        </property>
        <property name="text">
-        <string>Hall Galvanometer sensor error</string>
+        <string/>
        </property>
       </widget>
      </item>
