@@ -20,7 +20,7 @@ LedIndicator::LedIndicator(QWidget *parent)
     this->setMinimumSize(22, 22);
     this->setCheckable(true);
     this->setStyleSheet("border: 1px solid red");
-//    this->setText("DUPA");
+
     /* defining green color of led */
     onColor1 = QColor(153, 255, 153);
     onColor2 = QColor(153, 255, 153);
@@ -57,12 +57,11 @@ void LedIndicator::paintEvent(QPaintEvent *)
 
     painter.setRenderHint(QPainter::Antialiasing);
     painter.translate(this->width()/2 , this->height()/2);
-    LOG (LOG_LEDINDICATOR, "%s - %s width %d, height %d", CLASS_INFO, Q_FUNC_INFO, this->width(), this->height());
     painter.scale(realSize / scaledSize, realSize / scaledSize);
 
     QRadialGradient gradient(QPointF(-450, -450), 1500, QPointF(-450, -450));
     gradient.setColorAt(0, QColor(245, 245, 245));
-    gradient.setColorAt(1, QColor(100, 100, 100));
+    gradient.setColorAt(1, QColor(120, 120, 120));
 
     painter.setPen(pen);
     painter.setBrush(QBrush(gradient));
@@ -80,5 +79,5 @@ void LedIndicator::paintEvent(QPaintEvent *)
     }
 
     painter.setBrush(QBrush(gradient));
-    painter.drawEllipse(QPointF(0, 0), 260, 260);
+    painter.drawEllipse(QPointF(0, 0), 250, 250);
 }
