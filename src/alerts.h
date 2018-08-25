@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QList>
 #include <QFrame>
+#include "ledindicator.h"
 
 namespace Ui {
 class Alerts;
@@ -22,6 +23,7 @@ private:
 
     void initControllerWidget(void);
 
+    LedIndicator *led;
     QList<QFrame *> ledSlots;
     Ui::Alerts *controller;
 };
