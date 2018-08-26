@@ -1855,7 +1855,7 @@ padding: 2px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>698</width>
+            <width>703</width>
             <height>481</height>
            </rect>
           </property>
@@ -1870,9 +1870,12 @@ padding: 2px;
                   <widget class="QLabel" name="label">
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
+                     <width>335</width>
                      <height>25</height>
                     </size>
+                   </property>
+                   <property name="layoutDirection">
+                    <enum>Qt::LeftToRight</enum>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">QLabel{
@@ -1902,13 +1905,13 @@ color: #e6e6e6;
                   <widget class="QWidget" name="controllerWidget" native="true">
                    <property name="minimumSize">
                     <size>
-                     <width>335</width>
+                     <width>340</width>
                      <height>440</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>335</width>
+                     <width>340</width>
                      <height>440</height>
                     </size>
                    </property>
@@ -1926,7 +1929,7 @@ color: #e6e6e6;
                   <widget class="QLabel" name="label_3">
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
+                     <width>336</width>
                      <height>25</height>
                     </size>
                    </property>
@@ -1951,17 +1954,20 @@ color: #e6e6e6;
                </item>
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <property name="spacing">
+                  <number>4</number>
+                 </property>
                  <item>
                   <widget class="QWidget" name="batteryWidget" native="true">
                    <property name="minimumSize">
                     <size>
-                     <width>335</width>
+                     <width>345</width>
                      <height>440</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>335</width>
+                     <width>340</width>
                      <height>440</height>
                     </size>
                    </property>

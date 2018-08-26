@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     rpm = new RpmWidget(ui->rpm_widget);
 
     /* create converter alerts widget */
-    alerts = new Alerts(ui->controllerWidget);
+    alerts = new Alerts(ui->controllerWidget, ui->batteryWidget);
 
     /* set buttons map */
     map["vfMain"] = 0;

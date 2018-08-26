@@ -5,30 +5,31 @@
 #include <QWidget>
 #include <QList>
 #include <QFrame>
-#include "ledindicator.h"
 #include <QMap>
+#include "controllerwidget.h"
+#include "batterywidget.h"
+#include "ledindicator.h"
 
-namespace Ui {
-    class Alerts;
-}
 
 class Alerts : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Alerts(QWidget *parent = 0);
+    explicit Alerts(QWidget *controllerWidget, QWidget *batteryWidget);
     ~Alerts();
 
 private:
-    void initControllerWidget(void);
-    void initControllerErrors(void);
 
-    QMap<int, QString> controllerErrors;
+    ControllerWidget *con;
+    BatteryWidget *bat;
     LedIndicator *led;
     QList<QFrame *> ledSlots;
-    QList<QString> leds;
-    Ui::Alerts *controller;
+    QList<QString> controllerLeds, batteryLeds;
+
+protected:
+    void initWidget(QWidget *widget);
+
 };
 
 #endif // ALERTS_H
