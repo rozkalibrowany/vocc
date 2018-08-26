@@ -1908,8 +1908,8 @@ color: #e6e6e6;
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>340</width>
-                     <height>16777215</height>
+                     <width>335</width>
+                     <height>440</height>
                     </size>
                    </property>
                   </widget>
@@ -1952,7 +1952,7 @@ color: #e6e6e6;
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_9">
                  <item>
-                  <widget class="QLabel" name="label_2">
+                  <widget class="QWidget" name="batteryWidget" native="true">
                    <property name="minimumSize">
                     <size>
                      <width>335</width>
@@ -1964,9 +1964,6 @@ color: #e6e6e6;
                      <width>335</width>
                      <height>440</height>
                     </size>
-                   </property>
-                   <property name="text">
-                    <string/>
                    </property>
                   </widget>
                  </item>
