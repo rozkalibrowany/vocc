@@ -18,10 +18,10 @@ SOURCES += \
     ../src/mainwindow.cpp \
     ../src/connections.cpp \
     ../src/rpmwidget.cpp \
-    ../src/alerts.cpp \
     ../src/ledindicator.cpp \
-    ../src/controllerwidget.cpp \
-    ../src/batterywidget.cpp
+    ../src/alerts/alerts.cpp \
+    ../src/alerts/batterywidget.cpp \
+    ../src/alerts/controllerwidget.cpp
 
 HEADERS  += \
     ../src/mainwindow.h \
@@ -29,10 +29,10 @@ HEADERS  += \
     ../src/logger.h \
     ../src/rpmwidget.h \
     ../src/parameters.h \
-    ../src/alerts.h \
     ../src/ledindicator.h \
-    ../src/controllerwidget.h \
-    ../src/batterywidget.h
+    ../src/alerts/alerts.h \
+    ../src/alerts/batterywidget.h \
+    ../src/alerts/controllerwidget.h
 
 FORMS += \
     ../ui/mainwindow.ui \

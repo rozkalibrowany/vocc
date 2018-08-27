@@ -12,7 +12,7 @@
 #include <QTimer>
 #include "connections.h"
 #include "rpmwidget.h"
-#include "alerts.h"
+#include "alerts/alerts.h"
 
 namespace Ui {
     class MainWindow;

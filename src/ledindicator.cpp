@@ -60,12 +60,12 @@ void LedIndicator::paintEvent(QPaintEvent *)
     painter.scale(realSize / scaledSize, realSize / scaledSize);
 
     QRadialGradient gradient(QPointF(-450, -450), 1500, QPointF(-450, -450));
-    gradient.setColorAt(0, QColor(245, 245, 245));
-    gradient.setColorAt(1, QColor(120, 120, 120));
+//    gradient.setColorAt(0, QColor(245, 245, 245));
+//    gradient.setColorAt(1, QColor(120, 120, 120));
 
-    painter.setPen(pen);
-    painter.setBrush(QBrush(gradient));
-    painter.drawEllipse(QPointF(0, 0), 310, 310);
+//    painter.setPen(pen);
+//    painter.setBrush(QBrush(gradient));
+//    painter.drawEllipse(QPointF(0, 0), 310, 310);
 
     painter.setPen(pen);
     if (this->isChecked()) {
