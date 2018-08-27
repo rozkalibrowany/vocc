@@ -1,5 +1,3 @@
-#include "ledindicator.h"
-#include "logger.h"
 #include <QColor>
 #include <QtGlobal>
 #include <QPen>
@@ -7,6 +5,8 @@
 #include <QRadialGradient>
 #include <QPointF>
 #include <QBrush>
+#include "ledindicator.h"
+#include "../logger.h"
 
 #define CLASS_INFO          "led"
 

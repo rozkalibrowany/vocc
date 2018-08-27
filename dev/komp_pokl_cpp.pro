@@ -18,7 +18,7 @@ SOURCES += \
     ../src/mainwindow.cpp \
     ../src/connections.cpp \
     ../src/rpmwidget.cpp \
-    ../src/ledindicator.cpp \
+    ../src/alerts/ledindicator.cpp \
     ../src/alerts/alerts.cpp \
     ../src/alerts/batterywidget.cpp \
     ../src/alerts/controllerwidget.cpp
@@ -29,7 +29,7 @@ HEADERS  += \
     ../src/logger.h \
     ../src/rpmwidget.h \
     ../src/parameters.h \
-    ../src/ledindicator.h \
+    ../src/alerts/ledindicator.h \
     ../src/alerts/alerts.h \
     ../src/alerts/batterywidget.h \
     ../src/alerts/controllerwidget.h

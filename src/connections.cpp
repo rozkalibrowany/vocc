@@ -1,4 +1,7 @@
 #include "connections.h"
+#include "logger.h"
+
+#define CLASS_INFO      "connections"
 
 Connections::Connections()
 {
