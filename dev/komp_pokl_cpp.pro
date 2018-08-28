@@ -22,7 +22,7 @@ SOURCES += \
     ../src/alerts/alerts.cpp \
     ../src/alerts/batterywidget.cpp \
     ../src/alerts/controllerwidget.cpp \
-    ../ui/settings.cpp
+    ../src/settings/settings.cpp
 
 HEADERS  += \
     ../src/mainwindow.h \
@@ -34,7 +34,7 @@ HEADERS  += \
     ../src/alerts/alerts.h \
     ../src/alerts/batterywidget.h \
     ../src/alerts/controllerwidget.h \
-    ../ui/settings.h
+    ../src/settings/settings.h
 
 FORMS += \
     ../ui/mainwindow.ui \
