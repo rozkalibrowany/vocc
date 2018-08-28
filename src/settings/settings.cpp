@@ -1,14 +1,19 @@
 #include "settings.h"
 #include "ui_settings.h"
+#include "../logger.h"
+
+#define CLASS_INFO      "settings"
 
 Settings::Settings(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Settings)
+    settings(new Ui::Settings)
 {
-    ui->setupUi(this);
+    LOG (LOG_SETTINGS, "%s - in contructor", CLASS_INFO);
+
+    settings->setupUi(this);
 }
 
 Settings::~Settings()
 {
-    delete ui;
+    delete settings;
 }

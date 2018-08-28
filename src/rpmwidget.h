@@ -11,7 +11,7 @@
 #include <QGraphicsEllipseItem>
 
 namespace Ui {
-class RpmWidget;
+    class RpmWidget;
 }
 
 class RpmWidget : public QWidget

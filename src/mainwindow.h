@@ -13,6 +13,8 @@
 #include "connections.h"
 #include "rpmwidget.h"
 #include "alerts/alerts.h"
+#include "settings/settings.h"
+
 
 namespace Ui {
     class MainWindow;
@@ -43,11 +45,13 @@ private:
     QFrame *lastButtonObject;
     QString date, time, lapTime;
     QTimer *lapTimer, *sleepTimer;
-    Ui::MainWindow *ui;
     QDesktopWidget resolution;
+    Ui::MainWindow *ui;  
+    Settings *settings;
     Alerts *alerts;
     Connections *connection;
     RpmWidget *rpm;
+
 
 protected:
     template <typename T> void buttonStyleUpdate(T *widget, const char* property, bool isChanged);

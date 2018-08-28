@@ -10,6 +10,7 @@
 #define LOG_MAINWINDOW          0x0010
 #define LOG_ALERTS              0x0020
 #define LOG_LEDINDICATOR        0x0040
+#define LOG_SETTINGS            0x0080
 
 #define LOG_ERROR               0x8000
 

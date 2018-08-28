@@ -25,11 +25,14 @@ MainWindow::MainWindow(QWidget *parent)
         delete connection;
     connection = new Connections();
 
-    /* create Rpm Widget */
+    /* create rpm widget */
     rpm = new RpmWidget(ui->rpm_widget);
 
     /* create converter alerts widget */
     alerts = new Alerts(ui->controllerWidget, ui->batteryWidget);
+
+    /* create settings widget */
+    settings = new Settings(ui->settingsWidget);
 
     /* set buttons map */
     map["vfMain"] = 0;

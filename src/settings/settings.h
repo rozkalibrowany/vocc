@@ -4,7 +4,7 @@
 #include <QWidget>
 
 namespace Ui {
-class Settings;
+    class Settings;
 }
 
 class Settings : public QWidget
@@ -16,7 +16,7 @@ public:
     ~Settings();
 
 private:
-    Ui::Settings *ui;
+    Ui::Settings *settings;
 };
 
 #endif // SETTINGS_H
