@@ -21,7 +21,8 @@ SOURCES += \
     ../src/alerts/ledindicator.cpp \
     ../src/alerts/alerts.cpp \
     ../src/alerts/batterywidget.cpp \
-    ../src/alerts/controllerwidget.cpp
+    ../src/alerts/controllerwidget.cpp \
+    ../ui/settings.cpp
 
 HEADERS  += \
     ../src/mainwindow.h \
@@ -32,13 +33,15 @@ HEADERS  += \
     ../src/alerts/ledindicator.h \
     ../src/alerts/alerts.h \
     ../src/alerts/batterywidget.h \
-    ../src/alerts/controllerwidget.h
+    ../src/alerts/controllerwidget.h \
+    ../ui/settings.h
 
 FORMS += \
     ../ui/mainwindow.ui \
     ../ui/rpmwidget.ui \
     ../ui/controllerwidget.ui \
-    ../ui/batterywidget.ui
+    ../ui/batterywidget.ui \
+    ../ui/settings.ui
 
 RESOURCES += \
     ../img/img.qrc
