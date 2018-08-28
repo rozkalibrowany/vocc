@@ -8,7 +8,7 @@
 #include <QMap>
 #include "controllerwidget.h"
 #include "batterywidget.h"
-#include "../ledindicator.h"
+#include "ledindicator.h"
 
 
 class Alerts : public QWidget

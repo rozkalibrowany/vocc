@@ -1,6 +1,5 @@
 #include "alerts.h"
 #include "ui_alerts.h"
-#include "../ledindicator.h"
 #include "../logger.h"
 
 #define CLASS_INFO  "alerts"
