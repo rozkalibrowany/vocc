@@ -15,9 +15,9 @@ public:
 
 private:
     QProcess *process;
-
     bool isConnected;
 
+    void initializeConnection(void);
     bool getConnectionStatus();
 
 signals:
