@@ -13,18 +13,21 @@ public:
     Connections();
     ~Connections();
 
-private:
-    QProcess *process;
     bool isConnected;
 
-    void initializeConnection(void);
+private:
+    QProcess *process;
+
+    void establishConnection(void);
     bool getConnectionStatus();
 
 signals:
     void readyReadStandardOutput();
+    void setConnectionState(bool);
 
 public slots:
     void readLine();
+    void initializeConnection(void);
 };
 
 #endif // CONNECTIONS_H

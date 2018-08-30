@@ -20,11 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
     lastButtonObject = NULL;
     lapTimerStarted = false;
 
-    /* create connection */
-    if (connection != NULL)
-        delete connection;
-    connection = new Connections();
-
     /* create rpm widget */
     rpm = new RpmWidget(ui->rpm_widget);
 
@@ -33,6 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     /* create settings widget */
     settings = new Settings(ui->settingsWidget);
+
+    /* create connection */
+    if (connection != NULL)
+        delete connection;
+    connection = new Connections();
 
     /* set buttons map */
     map["vfMain"] = 0;
@@ -52,6 +52,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     /* set start page */
     menuButtonChanged(ui->vfMain);
+
+    /* set connection button state */
+    setStateConnectionButton(connection->isConnected);
 
 }
 
@@ -85,6 +88,9 @@ void MainWindow::initializeFunctionButtons(void)
                 [this] { menuButtonChanged(ui->vfStats); });
     connect (ui->settingsButton, &QPushButton::clicked,
                 [this] { menuButtonChanged(ui->vfSettings); });
+    connect (ui->canButton, &QPushButton::clicked, connection, &Connections::initializeConnection);
+    connect (connection, &Connections::setConnectionState,
+                [=] (bool isConnected) { setStateConnectionButton(isConnected); });
 }
 
 
@@ -92,10 +98,10 @@ void MainWindow::initializeLapTimer(void)
 {
     LOG (LOG_MAINWINDOW, "%s - initializing lap timer", CLASS_INFO);
 
+    ui->timerButton->setText("Start Timer");
+
     lapTimer = new QTimer(this);
     sleepTimer = new QTimer(this);
-
-    ui->timerButton->setText("Start Timer");
 
     sleepTimer->setInterval(2500);
     sleepTimer->setSingleShot(true);
@@ -164,6 +170,19 @@ void MainWindow::buttonStyleUpdate(QFrame *frame, bool isChanged)
 
 }
 
+
+void MainWindow::setStateConnectionButton(bool isConnected)
+{
+    LOG (LOG_MAINWINDOW, "%s - connection established: %d", CLASS_INFO, isConnected);
+
+    if (isConnected) {
+        buttonStyleUpdate(ui->canButton, "connected", true);
+        ui->canButton->setText("Connected");
+    } else {
+        buttonStyleUpdate(ui->canButton, "connected", false);
+        ui->canButton->setText(">Connect<");
+    }
+}
 
 template <typename T> void MainWindow::buttonStyleUpdate(T *widget, const char* property, bool isChanged)
 {
@@ -249,5 +268,9 @@ void MainWindow::resetLapTimerSlot(void)
     LOG (LOG_MAINWINDOW, "%s - resetting lap timer", CLASS_INFO);
 
     s = m = ms = 0;
+
+    if (lapTimer != NULL)
+        delete lapTimer;
+
     setLapTimerTime();
 }

@@ -56,8 +56,8 @@ private:
 protected:
     template <typename T> void buttonStyleUpdate(T *widget, const char* property, bool isChanged);
 
-//public slots:
-//    void setAlertStatusSlot(bool &isAlert, int &alarmNr);
+public slots:
+    void setStateConnectionButton(bool isConnected);
 
 private slots:
     void setSystemDateSlot(void);
