@@ -55,7 +55,6 @@ void Connections::readLine()
    LOG (LOG_CONNECTIONS_DATA, "%s - got line - ", CLASS_INFO, \
         process->readLine().toStdString().c_str() );
 
-
 }
 
 
