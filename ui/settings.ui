@@ -57,15 +57,21 @@
         </property>
         <item>
          <widget class="QFrame" name="verticalFrame_10">
+          <property name="minimumSize">
+           <size>
+            <width>335</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>332</width>
+            <width>335</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="styleSheet">
            <string notr="true">QFrame{
-border: 1.5px solid #00ffc1;
+border: 1px solid #00ffc1;
 border-radius: 0px;
 padding: 0px;
 color: #00ffc1;
@@ -169,7 +175,7 @@ color: #e6e6e6;</string>
                    <property name="maximumSize">
                     <size>
                      <width>110</width>
-                     <height>16777215</height>
+                     <height>72</height>
                     </size>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_32">
@@ -193,8 +199,17 @@ color: #e6e6e6;</string>
                       <property name="spacing">
                        <number>0</number>
                       </property>
+                      <property name="sizeConstraint">
+                       <enum>QLayout::SetDefaultConstraint</enum>
+                      </property>
                       <item>
                        <widget class="QLabel" name="label_5">
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>20</height>
+                         </size>
+                        </property>
                         <property name="styleSheet">
                          <string notr="true">border: none;
 padding: 2px;
@@ -221,11 +236,11 @@ color: #e6e6e6;</string>
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
-                          <height>30</height>
+                          <height>35</height>
                          </size>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true">background-color: rgb(85,85,85);</string>
+                         <string notr="true">background-color: #e6e6e6;</string>
                         </property>
                        </widget>
                       </item>
@@ -276,6 +291,18 @@ color: #e6e6e6;</string>
                         </property>
                         <item>
                          <widget class="QLabel" name="label_4">
+                          <property name="minimumSize">
+                           <size>
+                            <width>0</width>
+                            <height>25</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>16777215</width>
+                            <height>25</height>
+                           </size>
+                          </property>
                           <property name="styleSheet">
                            <string notr="true">border: none;
 padding: 2px;
@@ -308,21 +335,21 @@ color: #e6e6e6;</string>
                              <number>2</number>
                             </property>
                             <property name="rightMargin">
-                             <number>1</number>
+                             <number>2</number>
                             </property>
                             <item>
                              <widget class="QRadioButton" name="radioButton">
                               <property name="minimumSize">
                                <size>
                                 <width>0</width>
-                                <height>30</height>
+                                <height>35</height>
                                </size>
                               </property>
                               <property name="styleSheet">
                                <string notr="true">padding: 2px;
-font: 9pt &quot;Halvetica&quot; ;
+font: 75 bold 9pt &quot;Halvetica&quot; ;
 color: #e6e6e6;
-background-color: rgb(85,85,85);</string>
+background-color: rgb(65,65,65);</string>
                               </property>
                               <property name="text">
                                <string>TEST</string>
@@ -337,22 +364,21 @@ background-color: rgb(85,85,85);</string>
                              <number>2</number>
                             </property>
                             <property name="leftMargin">
-                             <number>1</number>
+                             <number>2</number>
                             </property>
                             <item>
                              <widget class="QRadioButton" name="radioButton_2">
                               <property name="minimumSize">
                                <size>
                                 <width>0</width>
-                                <height>30</height>
+                                <height>35</height>
                                </size>
                               </property>
                               <property name="styleSheet">
                                <string notr="true">padding: 2px;
-font: 9pt &quot;Halvetica&quot; ;
+font: 75 bold 9pt &quot;Halvetica&quot; ;
 color: #e6e6e6;
-background-color: rgb(85,85,85);
-</string>
+background-color: rgb(65,65,65);</string>
                               </property>
                               <property name="text">
                                <string>CONVERTER</string>
@@ -398,6 +424,9 @@ background-color: rgb(85,85,85);
                      <height>16777215</height>
                     </size>
                    </property>
+                   <property name="lineWidth">
+                    <number>1</number>
+                   </property>
                    <layout class="QVBoxLayout" name="verticalLayout_20">
                     <property name="spacing">
                      <number>0</number>
@@ -415,6 +444,32 @@ background-color: rgb(85,85,85);
                      <number>0</number>
                     </property>
                     <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_6">
+                      <item>
+                       <widget class="QPushButton" name="pushButton">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>100</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-color: #e6e6e6;</string>
+                        </property>
+                        <property name="text">
+                         <string>Advanced</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_5">
                       <property name="spacing">
                        <number>0</number>
@@ -424,15 +479,20 @@ background-color: rgb(85,85,85);
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
-                          <height>47</height>
+                          <height>25</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>100</width>
+                          <height>30</height>
                          </size>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">border: none;
-padding: 2px;
 font: 75 bold 9pt &quot;Halvetica&quot; ;
 color: #e6e6e6;
-background-color: rgb(85,85,85);</string>
+background-color: rgb(65,65,65);</string>
                         </property>
                         <property name="text">
                          <string>Debbuger</string>
@@ -451,18 +511,23 @@ background-color: rgb(85,85,85);</string>
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
-                          <height>47</height>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>100</width>
+                          <height>30</height>
                          </size>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">border: none;
-padding: 2px;
 font: 75 bold 9pt &quot;Halvetica&quot; ;
 color: #e6e6e6;
-background-color: rgb(85,85,85);</string>
+background-color: rgb(65,65,65);</string>
                         </property>
                         <property name="text">
-                         <string>Debbuger</string>
+                         <string>Console</string>
                         </property>
                        </widget>
                       </item>
@@ -479,7 +544,7 @@ background-color: rgb(85,85,85);</string>
                    <item>
                     <widget class="QTextEdit" name="textEdit">
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(85,85,85);</string>
+                      <string notr="true">background-color: rgb(65,65,65);</string>
                      </property>
                     </widget>
                    </item>
@@ -820,9 +885,6 @@ color: #e6e6e6;</string>
                 </size>
                </property>
               </spacer>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboBox"/>
              </item>
             </layout>
            </item>
