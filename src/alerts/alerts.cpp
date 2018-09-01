@@ -4,7 +4,6 @@
 
 #define CLASS_INFO  "alerts"
 
-
 Alerts::Alerts(QWidget *controllerWidget, QWidget *batteryWidget)
 {
     LOG (LOG_ALERTS, "%s - in contructor", CLASS_INFO);

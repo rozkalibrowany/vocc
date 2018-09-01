@@ -232,15 +232,42 @@ color: #e6e6e6;</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QComboBox" name="comboBox_3">
+                       <widget class="QComboBox" name="canSpeedCombo">
                         <property name="minimumSize">
                          <size>
-                          <width>0</width>
-                          <height>35</height>
+                          <width>111</width>
+                          <height>36</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>30</height>
                          </size>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true">background-color: #e6e6e6;</string>
+                         <string notr="true">selection-color: yellow;
+font: 75 bold 11pt &quot;Halvetica&quot; ;
+color:  #ffff99;
+padding: 1px 1px 1px 1px;
+background-color: rgb(65,65,65);
+min-width: 105px;
+min-height: 30px;</string>
+                        </property>
+                        <property name="maxVisibleItems">
+                         <number>10</number>
+                        </property>
+                        <property name="sizeAdjustPolicy">
+                         <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+                        </property>
+                        <property name="minimumContentsLength">
+                         <number>120</number>
+                        </property>
+                        <property name="iconSize">
+                         <size>
+                          <width>30</width>
+                          <height>30</height>
+                         </size>
                         </property>
                        </widget>
                       </item>
@@ -338,7 +365,7 @@ color: #e6e6e6;</string>
                              <number>2</number>
                             </property>
                             <item>
-                             <widget class="QRadioButton" name="radioButton">
+                             <widget class="QRadioButton" name="testRadioBtn">
                               <property name="minimumSize">
                                <size>
                                 <width>0</width>
@@ -367,7 +394,7 @@ background-color: rgb(65,65,65);</string>
                              <number>2</number>
                             </property>
                             <item>
-                             <widget class="QRadioButton" name="radioButton_2">
+                             <widget class="QRadioButton" name="convRadioBtn">
                               <property name="minimumSize">
                                <size>
                                 <width>0</width>
@@ -446,7 +473,7 @@ background-color: rgb(65,65,65);</string>
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_6">
                       <item>
-                       <widget class="QPushButton" name="pushButton">
+                       <widget class="QPushButton" name="advancedBtn">
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
@@ -460,7 +487,9 @@ background-color: rgb(65,65,65);</string>
                          </size>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true">background-color: #e6e6e6;</string>
+                         <string notr="true">padding: 2px;
+font: 75 bold 10pt &quot;Halvetica&quot; ;
+background-color: #e6e6e6;</string>
                         </property>
                         <property name="text">
                          <string>Advanced</string>
@@ -475,27 +504,25 @@ background-color: rgb(65,65,65);</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QCheckBox" name="checkBox_2">
+                       <widget class="QPushButton" name="clearConsoleBtn">
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
-                          <height>25</height>
+                          <height>30</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
                           <width>100</width>
-                          <height>30</height>
+                          <height>16777215</height>
                          </size>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true">border: none;
-font: 75 bold 9pt &quot;Halvetica&quot; ;
-color: #e6e6e6;
-background-color: rgb(65,65,65);</string>
+                         <string notr="true">font: 75 bold 9.5pt &quot;Halvetica&quot; ;
+background-color: #e6e6e6;</string>
                         </property>
                         <property name="text">
-                         <string>Debbuger</string>
+                         <string>Clear console</string>
                         </property>
                        </widget>
                       </item>
@@ -507,7 +534,7 @@ background-color: rgb(65,65,65);</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QCheckBox" name="checkBox">
+                       <widget class="QCheckBox" name="consoleCheck">
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
@@ -542,9 +569,15 @@ background-color: rgb(65,65,65);</string>
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QTextEdit" name="textEdit">
+                    <widget class="QTextEdit" name="outputConsole">
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(65,65,65);</string>
+                      <string notr="true">padding: 2px;
+font: 9pt &quot;Halvetica&quot; ;
+color: #e6e6e6;
+background-color: rgb(65,65,65);</string>
+                     </property>
+                     <property name="readOnly">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
@@ -561,11 +594,17 @@ background-color: rgb(65,65,65);</string>
         </item>
         <item>
          <widget class="QFrame" name="verticalFrame_9">
+          <property name="maximumSize">
+           <size>
+            <width>335</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">QFrame{
-border: 1.5px solid #00ffc1;
-border-radius: 4px;
-padding: 2px;
+border: 1px solid #00ffc1;
+border-radius: 0px;
+padding: 0px;
 color: #00ffc1;
 background: transparent;
 }</string>
@@ -685,9 +724,9 @@ color: #e6e6e6;</string>
          <widget class="QFrame" name="verticalFrame_11">
           <property name="styleSheet">
            <string notr="true">QFrame{
-border: 1.5px solid #00ffc1;
-border-radius: 4px;
-padding: 2px;
+border: 1px solid #00ffc1;
+border-radius: 0px;
+padding: 0px;
 color: #00ffc1;
 background: transparent;
 }</string>
@@ -790,9 +829,9 @@ color: #e6e6e6;</string>
          <widget class="QFrame" name="verticalFrame_7">
           <property name="styleSheet">
            <string notr="true">QFrame{
-border: 1.5px solid #00ffc1;
-border-radius: 4px;
-padding: 2px;
+border: 1px solid #00ffc1;
+border-radius: 0px;
+padding: 0px;
 color: #00ffc1;
 background: transparent;
 }</string>

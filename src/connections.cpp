@@ -8,12 +8,14 @@ Connections::Connections()
 {
     LOG (LOG_CONNECTIONS, "%s - in contructor", CLASS_INFO);
 
-    isConnected = false;
 }
 
 
 Connections::~Connections()
 {
+    LOG (LOG_CONNECTIONS, "%s - in destructor", CLASS_INFO);
+
+    process->close();
     delete process;
 }
 
@@ -22,11 +24,11 @@ void Connections::initializeConnection(void)
 {
     LOG (LOG_CONNECTIONS, "%s - initializing connection: %s", CLASS_INFO, isConnected ? "false" : "true");
 
-    if (isConnected) {
+    if (getConnectionStatus()) {
         process->close();
         isConnected = false;
         delete process;
-        emit setConnectionState(isConnected);
+        emit setConnectionStateButton(getConnectionStatus());
         return;
     }
 
@@ -37,6 +39,10 @@ void Connections::initializeConnection(void)
 }
 
 
+void Connections::baudRateChanged(int value)
+{
+    LOG (LOG_CONNECTIONS, "%s - baud rate changed %d", CLASS_INFO, value);
+}
 void Connections::establishConnection(void)
 {
     LOG (LOG_CONNECTIONS, "%s - establishing CAN connection", CLASS_INFO);
@@ -44,9 +50,9 @@ void Connections::establishConnection(void)
     process->setProcessChannelMode(process->MergedChannels);
     process->start(RUN_LOCAL_CMD);
     if (process->pid() != 0)
-        isConnected = true;
+        setConnectionStatus(true);
     LOG (LOG_CONNECTIONS, "%s - process PID: %d", CLASS_INFO, process->pid());
-    emit setConnectionState(isConnected);
+    emit setConnectionStateButton(getConnectionStatus());
 }
 
 
@@ -61,4 +67,10 @@ void Connections::readLine()
 bool Connections::getConnectionStatus()
 {
     return isConnected;
+}
+
+
+void Connections::setConnectionStatus(bool value)
+{
+    isConnected = value;
 }

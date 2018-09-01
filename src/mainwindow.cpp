@@ -26,13 +26,19 @@ MainWindow::MainWindow(QWidget *parent)
     /* create converter alerts widget */
     alerts = new Alerts(ui->controllerWidget, ui->batteryWidget);
 
-    /* create settings widget */
-    settings = new Settings(ui->settingsWidget);
-
     /* create connection */
     if (connection != NULL)
         delete connection;
     connection = new Connections();
+
+    /* create settings widget */
+    settings = new Settings(ui->settingsWidget, connection);
+
+    /* set connection status */
+    connection->setConnectionStatus(false);
+
+    /* set connection button state */
+    setStateConnectionButton(connection->getConnectionStatus());
 
     /* set buttons map */
     map["vfMain"] = 0;
@@ -52,9 +58,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     /* set start page */
     menuButtonChanged(ui->vfMain);
-
-    /* set connection button state */
-    setStateConnectionButton(connection->isConnected);
 
 }
 
@@ -88,8 +91,11 @@ void MainWindow::initializeFunctionButtons(void)
                 [this] { menuButtonChanged(ui->vfStats); });
     connect (ui->settingsButton, &QPushButton::clicked,
                 [this] { menuButtonChanged(ui->vfSettings); });
-    connect (ui->canButton, &QPushButton::clicked, connection, &Connections::initializeConnection);
-    connect (connection, &Connections::setConnectionState,
+
+    connect (ui->canButton, &QPushButton::clicked,
+                connection, &Connections::initializeConnection);
+
+    connect (connection, &Connections::setConnectionStateButton,
                 [=] (bool isConnected) { setStateConnectionButton(isConnected); });
 }
 

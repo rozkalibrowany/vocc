@@ -12,22 +12,22 @@ class Connections : public QObject
 public:
     Connections();
     ~Connections();
-
     bool isConnected;
+    bool getConnectionStatus();
+    void setConnectionStatus(bool value);
 
 private:
     QProcess *process;
-
     void establishConnection(void);
-    bool getConnectionStatus();
 
 signals:
     void readyReadStandardOutput();
-    void setConnectionState(bool);
+    void setConnectionStateButton(bool);
 
 public slots:
     void readLine();
     void initializeConnection(void);
+    void baudRateChanged(int value);
 };
 
 #endif // CONNECTIONS_H
