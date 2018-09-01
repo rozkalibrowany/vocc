@@ -175,7 +175,7 @@ color: #e6e6e6;</string>
                    <property name="maximumSize">
                     <size>
                      <width>110</width>
-                     <height>72</height>
+                     <height>70</height>
                     </size>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_32">
@@ -207,7 +207,7 @@ color: #e6e6e6;</string>
                         <property name="maximumSize">
                          <size>
                           <width>16777215</width>
-                          <height>20</height>
+                          <height>25</height>
                          </size>
                         </property>
                         <property name="styleSheet">
@@ -232,17 +232,17 @@ color: #e6e6e6;</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QComboBox" name="canSpeedCombo">
+                       <widget class="QComboBox" name="canBaud">
                         <property name="minimumSize">
                          <size>
                           <width>111</width>
-                          <height>36</height>
+                          <height>41</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
                           <width>16777215</width>
-                          <height>30</height>
+                          <height>35</height>
                          </size>
                         </property>
                         <property name="styleSheet">
@@ -252,7 +252,7 @@ color:  #ffff99;
 padding: 1px 1px 1px 1px;
 background-color: rgb(65,65,65);
 min-width: 105px;
-min-height: 30px;</string>
+min-height: 35px;</string>
                         </property>
                         <property name="maxVisibleItems">
                          <number>10</number>

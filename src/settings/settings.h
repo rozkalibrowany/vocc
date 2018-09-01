@@ -36,6 +36,7 @@ private:
     int connectionsGetCurrentBaudIndex(void);
     void connectionsSetCurrentBaudIndex(int value);
     void consolePrintMessage(QString string, int level);
+    int stripBaudRateToInt(QString baud);
 
     int index;
     QString lastMessage;

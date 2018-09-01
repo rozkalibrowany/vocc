@@ -2,6 +2,7 @@
 #include <QStringListModel>
 #include <QSize>
 #include <QObject>
+#include <QString>
 #include "settings.h"
 #include "ui_settings.h"
 #include "../logger.h"
@@ -43,13 +44,13 @@ void Settings::connectionsFillCanBaudComboBox(void)
     QStringListModel *model = new QStringListModel();
 
     /* add can baudrates */
-    list << "125 kbit/s" << "250 kbit/s" << "500 kbit/s" << "1 Mbit/s";
+    list << "125 kbit/s" << "250 kbit/s" << "500 kbit/s" << "1000 kbit/s";
     /* fill QComboBox */
     model->setStringList(list);
-    settings->canSpeedCombo->setModel(model);
+    settings->canBaud->setModel(model);
     /* set default baudrate */
     connectionsSetCurrentBaudIndex(1);
-    settings->canSpeedCombo->setCurrentIndex(connectionsGetCurrentBaudIndex());
+    settings->canBaud->setCurrentIndex(connectionsGetCurrentBaudIndex());
 }
 
 void Settings::connectionsInitializeSignals(void)
@@ -57,7 +58,7 @@ void Settings::connectionsInitializeSignals(void)
     LOG (LOG_SETTINGS, "%s - initializing connection settings signals", CLASS_INFO);
 
     /* signal activated when can baud changed */
-    connect (settings->canSpeedCombo, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    connect (settings->canBaud, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
                 [=](int value) { onConnectionsCanBaudChange(value); });
     /* signal activated when clear console button clicked */
     connect (settings->clearConsoleBtn, &QPushButton::clicked,
@@ -71,12 +72,16 @@ void Settings::connectionsInitializeSignals(void)
     /* signal used to set can mode in connections class */
     connect (this, &Settings::connectionsSetCanMode,
                 [=](bool mode) { con->setCanMode(mode); });
+    /* signal used to set can baudrate in connections class */
+    connect (this, &Settings::connectionsChangeCanBaud,
+                [=](int value) { con->setCanBaudrate(value); });
+
 }
 
 
 /* returns:
- *          0 - CONVERTER MODE
- *          1 - TEST mode_t
+ *          0 - TEST mode
+ *          1 - CONVERTER mode
  */
 bool Settings::connectionsGetCanModeState(void)
 {
@@ -90,10 +95,17 @@ bool Settings::connectionsGetCanModeState(void)
 void Settings::onConnectionsSetCanModeToggled(bool mode)
 {
     LOG (LOG_SETTINGS, "%s - CAN mode changed: %s", CLASS_INFO,
-            mode ? "test mode" : "converter mode");
+            mode ? "converter mode" : "test mode");
 
-    emit connectionsSetCanMode(mode);
-    consolePrintMessage("CAN mode changed succesfully", 0);
+    /* if connection is inactive change mode*/
+    if (!con->getConnectionStatus()) {
+        emit connectionsSetCanMode(mode);
+        consolePrintMessage("CAN mode changed succesfully", 0);
+    }
+    /* if connection is active print message */
+    else {
+        consolePrintMessage("Cannot change mode while connection is active!", 1);
+    }
 }
 
 
@@ -127,17 +139,17 @@ void Settings::connectionsSetCurrentBaudIndex(int value)
 void Settings::onConnectionsCanBaudChange(int value)
 {
     LOG (LOG_SETTINGS, "%s - can baud changed: %s", CLASS_INFO,
-            settings->canSpeedCombo->itemText(value).toStdString().c_str());
+            settings->canBaud->itemText(value).toStdString().c_str());
 
-    /* check whether connection is inactive */
+    /* if connection is inactive change baud rate */
     if (!con->getConnectionStatus()) {
-        emit connectionsChangeCanBaud(value);
         connectionsSetCurrentBaudIndex(value);
+        emit connectionsChangeCanBaud(stripBaudRateToInt(settings->canBaud->currentText()));
         consolePrintMessage("Baud rate changed successfully", 0);
     }
-    /* if connection is active set old index */
+    /* if connection is active set old index and print message */
     else {
-        settings->canSpeedCombo->setCurrentIndex(connectionsGetCurrentBaudIndex());
+        settings->canBaud->setCurrentIndex(connectionsGetCurrentBaudIndex());
         consolePrintMessage("Cannot set baudrate while connection is active!", 1);
     }
 }
@@ -173,4 +185,14 @@ void Settings::consolePrintMessage(QString string, int level)
         string = "> " + string;
         settings->outputConsole->append(string);
     }
+}
+
+
+int Settings::stripBaudRateToInt(QString baud)
+{
+    QString baudStripped;
+    baudStripped = baud.mid(0, baud.indexOf(" "));
+
+    return baudStripped.toInt();
+
 }

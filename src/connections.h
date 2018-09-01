@@ -17,8 +17,16 @@ public:
     void setConnectionStatus(bool value);
 
 private:
-    QProcess *process;
+
+    void initializeCan(void);
+    void closeConnection(void);
     void establishConnection(void);
+    int getCanBaudrate(void);
+
+    bool canMode;
+    int canBaud;
+    QProcess *process;
+    QString getCanMode(void);
 
 signals:
     void readyReadStandardOutput();
@@ -29,6 +37,7 @@ public slots:
     void initializeConnection(void);
     void baudRateChanged(int value);
     void setCanMode(bool mode);
+    void setCanBaudrate(int value);
 };
 
 #endif // CONNECTIONS_H
