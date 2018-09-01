@@ -16,16 +16,17 @@ class Settings : public QWidget
 public:
     explicit Settings(QWidget *parent, Connections *connection);
     ~Settings();
-    int index;
+
 
 private slots:
     void onConnectionsCanBaudChange(int value);
     void onClearConsoleButtonClicked(void);
     void onConnectionsSetConsoleState(int state);
-    void onConnectionsSetCanMode(bool mode);
+    void onConnectionsSetCanModeToggled(bool mode);
 
 signals:
     void connectionsChangeCanBaud(int);
+    void connectionsSetCanMode(bool);
 
 private:
     void connectionsFillCanBaudComboBox(void);
@@ -36,6 +37,7 @@ private:
     void connectionsSetCurrentBaudIndex(int value);
     void consolePrintMessage(QString string, int level);
 
+    int index;
     QString lastMessage;
     Connections *con;
     Ui::Settings *settings;

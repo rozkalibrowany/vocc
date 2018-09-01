@@ -28,6 +28,7 @@ public slots:
     void readLine();
     void initializeConnection(void);
     void baudRateChanged(int value);
+    void setCanMode(bool mode);
 };
 
 #endif // CONNECTIONS_H

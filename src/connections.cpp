@@ -48,7 +48,7 @@ void Connections::establishConnection(void)
     LOG (LOG_CONNECTIONS, "%s - establishing CAN connection", CLASS_INFO);
 
     process->setProcessChannelMode(process->MergedChannels);
-    process->start(RUN_LOCAL_CMD);
+    process->start(RUN_TEST_CMD);
     if (process->pid() != 0)
         setConnectionStatus(true);
     LOG (LOG_CONNECTIONS, "%s - process PID: %d", CLASS_INFO, process->pid());
@@ -67,6 +67,15 @@ void Connections::readLine()
 bool Connections::getConnectionStatus()
 {
     return isConnected;
+}
+
+
+void Connections::setCanMode(bool mode)
+{
+   LOG (LOG_CONNECTIONS, "%s - CAN mode set: %s", CLASS_INFO,
+            mode ? "test mode" : "converter mode");
+
+
 }
 
 

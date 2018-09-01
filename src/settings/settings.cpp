@@ -67,7 +67,10 @@ void Settings::connectionsInitializeSignals(void)
                 [=](int state) { onConnectionsSetConsoleState(state); });
     /* signal activated when can mode changed */
     connect (settings->convRadioBtn, &QRadioButton::toggled,
-             [=](bool checked) { onConnectionsSetCanMode(checked);} );
+                [=](bool checked) { onConnectionsSetCanModeToggled(checked);} );
+    /* signal used to set can mode in connections class */
+    connect (this, &Settings::connectionsSetCanMode,
+                [=](bool mode) { con->setCanMode(mode); });
 }
 
 
@@ -84,11 +87,12 @@ bool Settings::connectionsGetCanModeState(void)
 }
 
 
-void Settings::onConnectionsSetCanMode(bool mode)
+void Settings::onConnectionsSetCanModeToggled(bool mode)
 {
     LOG (LOG_SETTINGS, "%s - CAN mode changed: %s", CLASS_INFO,
             mode ? "test mode" : "converter mode");
 
+    emit connectionsSetCanMode(mode);
     consolePrintMessage("CAN mode changed succesfully", 0);
 }
 
