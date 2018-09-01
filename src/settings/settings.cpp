@@ -27,8 +27,11 @@ Settings::Settings(QWidget *parent, Connections *connection) :
     onConnectionsSetConsoleState(1);
     /* set default CAN mode (test) */
     settings->testRadioBtn->setChecked(true);
+    /* set default baudrate */
+   // onConnectionsCanBaudChange(1);
 
 }
+
 
 Settings::~Settings()
 {
@@ -48,10 +51,8 @@ void Settings::connectionsFillCanBaudComboBox(void)
     /* fill QComboBox */
     model->setStringList(list);
     settings->canBaud->setModel(model);
-    /* set default baudrate */
-    connectionsSetCurrentBaudIndex(1);
-    settings->canBaud->setCurrentIndex(connectionsGetCurrentBaudIndex());
 }
+
 
 void Settings::connectionsInitializeSignals(void)
 {
@@ -117,6 +118,7 @@ void Settings::onConnectionsSetConsoleState(int state)
     settings->consoleCheck->setChecked(state);
 }
 
+
 bool Settings::connectionsGetConsoleState(void)
 {
     return settings->consoleCheck->isChecked();
@@ -125,14 +127,7 @@ bool Settings::connectionsGetConsoleState(void)
 
 int Settings::connectionsGetCurrentBaudIndex(void)
 {
-    if (index != -1)
-        return index;
-}
-
-
-void Settings::connectionsSetCurrentBaudIndex(int value)
-{
-    index = value;
+    return settings->canBaud->currentIndex();
 }
 
 
@@ -143,9 +138,9 @@ void Settings::onConnectionsCanBaudChange(int value)
 
     /* if connection is inactive change baud rate */
     if (!con->getConnectionStatus()) {
-        connectionsSetCurrentBaudIndex(value);
+        settings->canBaud->setCurrentIndex(value);
         emit connectionsChangeCanBaud(stripBaudRateToInt(settings->canBaud->currentText()));
-        consolePrintMessage("Baud rate changed successfully", 0);
+        consolePrintMessage("CAN baudrate changed successfully", 0);
     }
     /* if connection is active set old index and print message */
     else {

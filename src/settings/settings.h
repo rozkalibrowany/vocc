@@ -34,7 +34,6 @@ private:
     bool connectionsGetConsoleState(void);
     bool connectionsGetCanModeState(void);
     int connectionsGetCurrentBaudIndex(void);
-    void connectionsSetCurrentBaudIndex(int value);
     void consolePrintMessage(QString string, int level);
     int stripBaudRateToInt(QString baud);
 
