@@ -24,6 +24,8 @@ Settings::Settings(QWidget *parent, Connections *connection) :
     connectionsInitializeSignals();
     /* enable console output (default) */
     onConnectionsSetConsoleState(1);
+    /* set default CAN mode (test) */
+    settings->testRadioBtn->setChecked(true);
 
 }
 
@@ -63,6 +65,31 @@ void Settings::connectionsInitializeSignals(void)
     /* signal activated when console check box clicked */
     connect (settings->consoleCheck, &QCheckBox::stateChanged,
                 [=](int state) { onConnectionsSetConsoleState(state); });
+    /* signal activated when can mode changed */
+    connect (settings->convRadioBtn, &QRadioButton::toggled,
+             [=](bool checked) { onConnectionsSetCanMode(checked);} );
+}
+
+
+/* returns:
+ *          0 - CONVERTER MODE
+ *          1 - TEST mode_t
+ */
+bool Settings::connectionsGetCanModeState(void)
+{
+    if (settings->testRadioBtn->isChecked())
+        return 1;
+    else
+        return 0;
+}
+
+
+void Settings::onConnectionsSetCanMode(bool mode)
+{
+    LOG (LOG_SETTINGS, "%s - CAN mode changed: %s", CLASS_INFO,
+            mode ? "test mode" : "converter mode");
+
+    consolePrintMessage("CAN mode changed succesfully", 0);
 }
 
 
@@ -102,11 +129,12 @@ void Settings::onConnectionsCanBaudChange(int value)
     if (!con->getConnectionStatus()) {
         emit connectionsChangeCanBaud(value);
         connectionsSetCurrentBaudIndex(value);
+        consolePrintMessage("Baud rate changed successfully", 0);
     }
     /* if connection is active set old index */
     else {
-        consolePrintMessage("Cannot set baudrate while connection is active!", 0);
         settings->canSpeedCombo->setCurrentIndex(connectionsGetCurrentBaudIndex());
+        consolePrintMessage("Cannot set baudrate while connection is active!", 1);
     }
 }
 
@@ -127,16 +155,13 @@ void Settings::consolePrintMessage(QString string, int level)
         LOG (LOG_SETTINGS, "%s - message: %s", CLASS_INFO,
                 string.toStdString().c_str());
 
-        if (!QString::compare(lastMessage, string, Qt::CaseSensitive))
-            settings->outputConsole->clear();
-
         lastMessage = string;
         QString colorStr;
         /* defining text alerts colors */
         switch(level) {
-            case 0: colorStr = "#00ffc1"; break;
-            case 1: colorStr = "#ffff99"; break;
-            case 2: colorStr = "#ff4d4d"; break;
+            case 0: colorStr = "#99ff99"; break; /* green */
+            case 1: colorStr = "#ffff99"; break; /* yellow */
+            case 2: colorStr = "#ff4d4d"; break; /* red */
             default: colorStr = "#00ffc1"; break;
         }
         QColor color(colorStr);
