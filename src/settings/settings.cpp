@@ -16,12 +16,15 @@ Settings::Settings(QWidget *parent, Connections *connection) :
 
     settings->setupUi(this);
     con = connection;
+    lastMessage = "";
+
     /* set CAN baud rates */
     connectionsFillCanBaudComboBox();
     /* connect connection signals */
     connectionsInitializeSignals();
     /* enable console output (default) */
-    connectionsSetConsoleState(true);
+    onConnectionsSetConsoleState(1);
+
 }
 
 Settings::~Settings()
@@ -57,15 +60,18 @@ void Settings::connectionsInitializeSignals(void)
     /* signal activated when clear console button clicked */
     connect (settings->clearConsoleBtn, &QPushButton::clicked,
                 this, &Settings::onClearConsoleButtonClicked);
+    /* signal activated when console check box clicked */
+    connect (settings->consoleCheck, &QCheckBox::stateChanged,
+                [=](int state) { onConnectionsSetConsoleState(state); });
 }
 
 
-void Settings::connectionsSetConsoleState(bool isChecked)
+void Settings::onConnectionsSetConsoleState(int state)
 {
     LOG (LOG_SETTINGS, "%s - console enabled: %s", CLASS_INFO,
-            isChecked ? "true" : "false");
+            state ? "true" : "false");
 
-    settings->consoleCheck->setChecked(isChecked);
+    settings->consoleCheck->setChecked(state);
 }
 
 bool Settings::connectionsGetConsoleState(void)
@@ -92,19 +98,15 @@ void Settings::onConnectionsCanBaudChange(int value)
     LOG (LOG_SETTINGS, "%s - can baud changed: %s", CLASS_INFO,
             settings->canSpeedCombo->itemText(value).toStdString().c_str());
 
-    LOG (LOG_SETTINGS, "connectionStatus: %d", con->getConnectionStatus());
-
-    /* check whether connection is active */
+    /* check whether connection is inactive */
     if (!con->getConnectionStatus()) {
         emit connectionsChangeCanBaud(value);
         connectionsSetCurrentBaudIndex(value);
-        LOG (LOG_SETTINGS, "DUPA1");
     }
     /* if connection is active set old index */
     else {
-        consolePrintMessage("Cannot set baudrate while connection is active");
+        consolePrintMessage("Cannot set baudrate while connection is active!", 0);
         settings->canSpeedCombo->setCurrentIndex(connectionsGetCurrentBaudIndex());
-        LOG (LOG_SETTINGS, "DUPA2");
     }
 }
 
@@ -117,14 +119,29 @@ void Settings::onClearConsoleButtonClicked(void)
 }
 
 
-void Settings::consolePrintMessage(const QString string)
+void Settings::consolePrintMessage(QString string, int level)
 {
-    if (connectionsGetConsoleState()) {
-        LOG (LOG_SETTINGS, "%s - printing message to output: %s", CLASS_INFO,
-                string.toStdString().c_str());
-        QString outputMessage;
 
-        outputMessage = "> " + string;
-        settings->outputConsole->append(outputMessage);
+    /* printing message to output console */
+    if (connectionsGetConsoleState()) {
+        LOG (LOG_SETTINGS, "%s - message: %s", CLASS_INFO,
+                string.toStdString().c_str());
+
+        if (!QString::compare(lastMessage, string, Qt::CaseSensitive))
+            settings->outputConsole->clear();
+
+        lastMessage = string;
+        QString colorStr;
+        /* defining text alerts colors */
+        switch(level) {
+            case 0: colorStr = "#00ffc1"; break;
+            case 1: colorStr = "#ffff99"; break;
+            case 2: colorStr = "#ff4d4d"; break;
+            default: colorStr = "#00ffc1"; break;
+        }
+        QColor color(colorStr);
+        settings->outputConsole->setTextColor(color);
+        string = "> " + string;
+        settings->outputConsole->append(string);
     }
 }

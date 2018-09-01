@@ -572,7 +572,7 @@ background-color: rgb(65,65,65);</string>
                     <widget class="QTextEdit" name="outputConsole">
                      <property name="styleSheet">
                       <string notr="true">padding: 2px;
-font: 9pt &quot;Halvetica&quot; ;
+font: 75 bold 10pt &quot;Halvetica&quot; ;
 color: #e6e6e6;
 background-color: rgb(65,65,65);</string>
                      </property>

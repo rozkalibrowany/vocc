@@ -2,6 +2,7 @@
 #define SETTINGS_H
 
 #include <QWidget>
+#include <QString>
 #include "../connections.h"
 
 namespace Ui {
@@ -20,6 +21,7 @@ public:
 private slots:
     void onConnectionsCanBaudChange(int value);
     void onClearConsoleButtonClicked(void);
+    void onConnectionsSetConsoleState(int state);
 
 signals:
     void connectionsChangeCanBaud(int);
@@ -28,11 +30,11 @@ private:
     void connectionsFillCanBaudComboBox(void);
     void connectionsInitializeSignals(void);
     bool connectionsGetConsoleState(void);
-    void connectionsSetConsoleState(bool isChecked);
     int connectionsGetCurrentBaudIndex(void);
     void connectionsSetCurrentBaudIndex(int value);
-    void consolePrintMessage(const QString string);
+    void consolePrintMessage(QString string, int level);
 
+    QString lastMessage;
     Connections *con;
     Ui::Settings *settings;
 };
