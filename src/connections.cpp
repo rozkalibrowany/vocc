@@ -14,6 +14,7 @@ Connections::Connections(RpmWidget *rpm)
 
     connect (this, &Connections::updateRpmSpeed,
              [=](quint16 speed) { mRpm->updateWidget(speed); });
+
 }
 
 
@@ -60,6 +61,9 @@ void Connections::closeConnection(void)
 {
     process->close();
     isConnected = false;
+    avgRpm.clear();
+    avgCurrent.clear();
+    avgVoltage.clear();
     delete process;
     emit setConnectionStateButton(getConnectionStatus());
 }
@@ -112,30 +116,53 @@ void Connections::readLine()
             lsb = data[0].toUInt(&valid_l, 16);
             msb = data[1].toUInt(&valid_m, 16);
             quint16 rpm = msb*256 + lsb;
-            if (valid_l && valid_m)
-                emit updateRpmSpeed(rpm);   /* update rpm widget */
+            if (valid_l && valid_m) /* update rpm widget (3 samples) */
+                emit updateRpmSpeed(calculateAvg(avgRpm, rpm, 3));
             /* read battery current (base 16) */
             lsb = data[2].toUInt(&valid_l, 16);
             msb = data[3].toUInt(&valid_m, 16);
             quint16 current = (msb*256 + lsb)/10;
-            if (valid_l && valid_m)
-                emit updateBatteryCurrent(current);
+            if (valid_l && valid_m) /* update current (6 samples) */
+                emit updateBatteryCurrent(calculateAvg(avgCurrent, current, 6));
             /* read battery voltage (base 16) */
             lsb = data[4].toUInt(&valid_l, 16);
             msb = data[5].toUInt(&valid_m, 16);
             quint16 voltage = (msb*256 + lsb)/10;
-            if (valid_l && valid_m)
-                emit updateBatteryVoltage(voltage);
+            if (valid_l && valid_m) /* update voltage (5 samples) */
+                emit updateBatteryVoltage(calculateAvg(avgVoltage, voltage, 5));
             /* calculate power */
             float power = current * voltage;
-            power = power/1000;
-            if (power > 0.0) {
-                emit updatePower(power);
-            }
-
+            power = power/1000; /* update power (5 samples) */
+            emit updatePower(calculateAvg(avgPower, power, 5));
 
     }
 
+}
+
+
+template <typename T> T Connections::calculateAvg(QVector<T> &container, T value, quint16 _size)
+{
+    if (value == 0)
+        return 0;
+
+    T avgValue = 0;
+    container.resize(_size);
+
+    for (int i = 0 ; i < container.size(); ++i) {
+        avgValue = avgValue + container.at(i);
+        if (container.at(i) == 0) {
+            container.insert(i, value);
+            break;
+        } else if (i == container.size()-1){
+            container.insert(i+1, value);
+            container.pop_front();
+            break;
+        }
+    }
+
+    avgValue = avgValue / container.size();
+
+    return avgValue;
 }
 
 

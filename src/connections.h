@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QProcess>
 #include <QDebug>
+#include <QVector>
 #include "rpmwidget.h"
 
 class Connections : public QObject
@@ -18,16 +19,20 @@ public:
     void setConnectionStatus(bool value);
 
 private:
-
+    template <typename T> T calculateAvg(QVector<T> &container, T value, quint16 _size);
     void initializeCan(void);
     void closeConnection(void);
     void establishConnection(void);
     int getCanBaudrate(void);
+    QString getCanMode(void);
 
     bool canMode;
     int canBaud;
+    QVector <quint16> avgRpm;
+    QVector <quint16> avgCurrent;
+    QVector <quint16> avgVoltage;
+    QVector <float> avgPower;
     QProcess *process;
-    QString getCanMode(void);
     RpmWidget *mRpm;
 
 signals:
