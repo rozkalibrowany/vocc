@@ -42,6 +42,9 @@ signals:
     void updateBatteryCurrent(quint16);
     void updateBatteryVoltage(quint16);
     void updatePower(float);
+    void updateThrottle(quint16);
+    void updateControllerTemp(quint16);
+    void updateMotorTemp(quint16);
 
 public slots:
     void readLine();

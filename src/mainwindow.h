@@ -61,6 +61,9 @@ public slots:
     void updateBatteryCurrent(quint16 current);
     void updateBatteryVoltage(quint16 voltage);
     void updatePower(float power);
+    void updateThrottle(quint16 throttle);
+    void updateControllerTemp(quint16 temp);
+    void updateMotorTemp(quint16 temp);
 
 private slots:
     void setSystemDateSlot(void);

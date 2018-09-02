@@ -106,6 +106,15 @@ void MainWindow::initializeFunctionButtons(void)
 
     connect (connection, &Connections::updatePower,
                 [=] (float power) { updatePower(power); });
+
+    connect (connection, &Connections::updateThrottle,
+                [=] (quint16 throttle) { updateThrottle(throttle); });
+
+    connect (connection, &Connections::updateControllerTemp,
+                [=] (quint16 temp) { updateControllerTemp(temp); });
+
+    connect (connection, &Connections::updateMotorTemp,
+                [=] (quint16 temp) { updateMotorTemp(temp); });
 }
 
 
@@ -237,18 +246,46 @@ void MainWindow::updateBatteryVoltage(quint16 voltage)
     LOG (LOG_MAINWINDOW_DATA, "%s - battery voltage - %d [V]", CLASS_INFO, voltage);
 
     ui->batteryVoltageLcd->display(voltage);
-    lcdStyleUpdate(ui->batteryVoltage, voltage, 86, 74, false); /* TODO not working properly */
-    lcdStyleUpdate(ui->batteryVoltageLcd, voltage, 86, 74, false);
+    lcdStyleUpdate(ui->batteryVoltage, voltage, 84, 74, false); /* TODO not working properly */
+    lcdStyleUpdate(ui->batteryVoltageLcd, voltage, 84, 74, false);
 }
 
 
 void MainWindow::updatePower(float power)
 {
-    LOG (LOG_MAINWINDOW_DATA, "%s - battery power - %d [V]", CLASS_INFO, power);
+    LOG (LOG_MAINWINDOW_DATA, "%s - battery power - %d [W]", CLASS_INFO, power);
 
     ui->avrPowerLcd->display(power);
     lcdStyleUpdate(ui->avrPower, power, 8, 20, true);
     lcdStyleUpdate(ui->avrPowerLcd, power, 8, 20, true);
+}
+
+
+void MainWindow::updateThrottle(quint16 throttle)
+{
+    LOG (LOG_MAINWINDOW_DATA, "%s - throttle - %d [%]", CLASS_INFO, throttle);
+
+    ui->throttleLcd->display(throttle);
+}
+
+
+void MainWindow::updateControllerTemp(quint16 temp)
+{
+    LOG (LOG_MAINWINDOW_DATA, "%s - controller temperature - %d [C]", CLASS_INFO, temp);
+
+    ui->contrTempLcd->display(temp);
+    lcdStyleUpdate(ui->contrTemp, temp, 45, 65, true);
+    lcdStyleUpdate(ui->contrTempLcd, temp, 45, 65, true);
+}
+
+
+void MainWindow::updateMotorTemp(quint16 temp)
+{
+    LOG (LOG_MAINWINDOW_DATA, "%s - motor temperature - %d [C]", CLASS_INFO, temp);
+
+    ui->motorTempLcd->display(temp);
+    lcdStyleUpdate(ui->motorTemp, temp, 50, 65, true);
+    lcdStyleUpdate(ui->motorTempLcd, temp, 50, 65, true);
 }
 
 

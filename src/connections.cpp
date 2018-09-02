@@ -135,8 +135,29 @@ void Connections::readLine()
             power = power/1000; /* update power (5 samples) */
             emit updatePower(calculateAvg(avgPower, power, 5));
 
-    }
+            LOG (LOG_CONNECTIONS_DATA, "%s - rpm: %d\t current: %d\t voltage: %d\t power: %.2f",
+                    CLASS_INFO, rpm, current, voltage, power);
+    } else if (data[0] == MESSAGE_2) {
+                /* remove first 2 elements (no of bytes and address */
+                for (int i = 0; i <= 1; i++)
+                    data.removeFirst();
+                /* read throttle signal (base 16) */
+                lsb = data[0].toUInt(&valid_l, 16);
+                quint16 throttle = lsb/2.55;
+                if (valid_l)
+                    emit updateThrottle(throttle);
+                /* read controller temperature (base 16) */
+                lsb = data[1].toUInt(&valid_l, 16);
+                quint16 controllerTemp = lsb - 40;
+                if (valid_l)
+                    emit updateControllerTemp(controllerTemp);
+                /* read motor temperature (base 16) */
+                lsb = data[2].toUInt(&valid_l, 16);
+                quint16 motorTemp = lsb - 30;
+                if (valid_l)
+                    emit updateMotorTemp(motorTemp);
 
+    }
 }
 
 
