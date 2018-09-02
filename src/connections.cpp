@@ -1,3 +1,5 @@
+#include <QStringList>
+#include <QByteArrayList>
 #include "connections.h"
 #include "logger.h"
 #include "parameters.h"
@@ -46,6 +48,7 @@ void Connections::initializeCan(void)
     command = "ip link set can0 up type can bitrate";
     command = command + " " + canBaud;
     can->start(command);
+    /* TODO: check operation status */
 }
 
 
@@ -79,8 +82,34 @@ void Connections::establishConnection(void)
 
 void Connections::readLine()
 {
-   LOG (LOG_CONNECTIONS_DATA, "%s - got line - %s", CLASS_INFO, \
-            process->readLine().toStdString().c_str() );
+    /* read output (unsplitted line) */
+    QByteArray data_Uns(process->readAllStandardOutput().simplified());
+    LOG (LOG_CONNECTIONS_DATA, "%s - got line - %s", CLASS_INFO, \
+             data_Uns.toStdString().c_str());
+
+    /* split data */
+    QString data_s (data_Uns);
+    QStringList data(data_s.split(' '));
+
+    if (data[0] != "can0")
+        return;
+
+    /* remove first element (interface name - can0) */
+    data.removeFirst();
+
+    int lsb, msb;
+    bool valid_l, valid_m;
+
+    if (data[0] == MESSAGE_1) {
+            /* remove first 2 elements (no of bytes and address */
+            for (int i = 0; i <= 1; i++)
+                data.removeFirst();
+            /* read rpm speed */
+            lsb = data[0].toUInt(&valid_l, 16);
+            msb = data[1].toUInt(&valid_m, 16);
+            quint16 rpm = msb*256 + lsb;
+
+    }
 
 }
 
