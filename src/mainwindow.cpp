@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     /* create connection */
     if (connection != NULL)
         delete connection;
-    connection = new Connections();
+    connection = new Connections(rpm);
 
     /* create settings widget */
     settings = new Settings(ui->settingsWidget, connection);
@@ -97,6 +97,15 @@ void MainWindow::initializeFunctionButtons(void)
 
     connect (connection, &Connections::setConnectionStateButton,
                 [=] (bool isConnected) { setStateConnectionButton(isConnected); });
+
+    connect (connection, &Connections::updateBatteryCurrent,
+                [=] (quint16 current) { updateBatteryCurrent(current); });
+
+    connect (connection, &Connections::updateBatteryVoltage,
+                [=] (quint16 voltage) { updateBatteryVoltage(voltage); });
+
+    connect (connection, &Connections::updatePower,
+                [=] (float power) { updatePower(power); });
 }
 
 
@@ -179,7 +188,7 @@ void MainWindow::buttonStyleUpdate(QFrame *frame, bool isChanged)
 
 void MainWindow::setStateConnectionButton(bool isConnected)
 {
-    LOG (LOG_MAINWINDOW, "%s - connection established: %d", CLASS_INFO, isConnected);
+    LOG (LOG_MAINWINDOW, "%s - connection established - %d", CLASS_INFO, isConnected);
 
     if (isConnected) {
         buttonStyleUpdate(ui->canButton, "connected", true);
@@ -192,14 +201,56 @@ void MainWindow::setStateConnectionButton(bool isConnected)
 
 template <typename T> void MainWindow::buttonStyleUpdate(T *widget, const char* property, bool isChanged)
 {
-    LOG (LOG_MAINWINDOW, "%s - %s - %s", CLASS_INFO, Q_FUNC_INFO, \
-         widget->objectName().toStdString().c_str());
-
     widget->setProperty(property, isChanged);
     widget->style()->unpolish(widget);
     widget->style()->polish(widget);
     widget->update();
 }
+
+
+template <typename T> void MainWindow::lcdStyleUpdate(T *widget, quint16 value, quint16 limit, quint16 max, bool isChanged)
+{
+    if (value > max)
+        buttonStyleUpdate(widget, "warning2", isChanged);
+    else if (value > limit) {
+        buttonStyleUpdate(widget, "warning", isChanged);
+        buttonStyleUpdate(widget, "warning2", !isChanged);
+    } else {
+        buttonStyleUpdate(widget, "warning", !isChanged);
+        buttonStyleUpdate(widget, "warning2", !isChanged);
+    }
+}
+
+
+void MainWindow::updateBatteryCurrent(quint16 current)
+{
+    LOG (LOG_MAINWINDOW_DATA, "%s - battery current - %d [A]", CLASS_INFO, current);
+
+    ui->batteryCurrentLcd->display(current);
+    lcdStyleUpdate(ui->batteryCurrent, current, 80, 140, true);
+    lcdStyleUpdate(ui->batteryCurrentLcd, current, 80, 140, true);
+}
+
+
+void MainWindow::updateBatteryVoltage(quint16 voltage)
+{
+    LOG (LOG_MAINWINDOW_DATA, "%s - battery voltage - %d [V]", CLASS_INFO, voltage);
+
+    ui->batteryVoltageLcd->display(voltage);
+    lcdStyleUpdate(ui->batteryVoltage, voltage, 86, 74, false); /* TODO not working properly */
+    lcdStyleUpdate(ui->batteryVoltageLcd, voltage, 86, 74, false);
+}
+
+
+void MainWindow::updatePower(float power)
+{
+    LOG (LOG_MAINWINDOW_DATA, "%s - battery power - %d [V]", CLASS_INFO, power);
+
+    ui->avrPowerLcd->display(power);
+    lcdStyleUpdate(ui->avrPower, power, 8, 20, true);
+    lcdStyleUpdate(ui->avrPowerLcd, power, 8, 20, true);
+}
+
 
 void MainWindow::setNewPage(int index)
 {

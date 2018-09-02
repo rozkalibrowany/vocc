@@ -30,6 +30,7 @@ public:
 
 
 private:
+    template <typename T> void lcdStyleUpdate(T *widget, quint16 value, quint16 limit, quint16 max, bool isChanged);
     void buttonStyleUpdate(QFrame *frame, bool isChanged);
     void centerOnScreen(void);
     void initializeFunctionButtons(void);
@@ -52,12 +53,14 @@ private:
     Connections *connection;
     RpmWidget *rpm;
 
-
 protected:
     template <typename T> void buttonStyleUpdate(T *widget, const char* property, bool isChanged);
 
 public slots:
     void setStateConnectionButton(bool isConnected);
+    void updateBatteryCurrent(quint16 current);
+    void updateBatteryVoltage(quint16 voltage);
+    void updatePower(float power);
 
 private slots:
     void setSystemDateSlot(void);

@@ -6,10 +6,14 @@
 
 #define CLASS_INFO      "connections"
 
-Connections::Connections()
+Connections::Connections(RpmWidget *rpm)
 {
     LOG (LOG_CONNECTIONS, "%s - in contructor", CLASS_INFO);
-    LOG (LOG_CONNECTIONS, "%s - can baud: %d", CLASS_INFO, canBaud);
+
+    mRpm = rpm;
+
+    connect (this, &Connections::updateRpmSpeed,
+             [=](quint16 speed) { mRpm->updateWidget(speed); });
 }
 
 
@@ -104,10 +108,31 @@ void Connections::readLine()
             /* remove first 2 elements (no of bytes and address */
             for (int i = 0; i <= 1; i++)
                 data.removeFirst();
-            /* read rpm speed */
+            /* read rpm speed (base 16) */
             lsb = data[0].toUInt(&valid_l, 16);
             msb = data[1].toUInt(&valid_m, 16);
             quint16 rpm = msb*256 + lsb;
+            if (valid_l && valid_m)
+                emit updateRpmSpeed(rpm);   /* update rpm widget */
+            /* read battery current (base 16) */
+            lsb = data[2].toUInt(&valid_l, 16);
+            msb = data[3].toUInt(&valid_m, 16);
+            quint16 current = (msb*256 + lsb)/10;
+            if (valid_l && valid_m)
+                emit updateBatteryCurrent(current);
+            /* read battery voltage (base 16) */
+            lsb = data[4].toUInt(&valid_l, 16);
+            msb = data[5].toUInt(&valid_m, 16);
+            quint16 voltage = (msb*256 + lsb)/10;
+            if (valid_l && valid_m)
+                emit updateBatteryVoltage(voltage);
+            /* calculate power */
+            float power = current * voltage;
+            power = power/1000;
+            if (power > 0.0) {
+                emit updatePower(power);
+            }
+
 
     }
 

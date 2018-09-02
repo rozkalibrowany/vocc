@@ -22,10 +22,12 @@ public:
     explicit RpmWidget(QWidget *parent = 0);
     ~RpmWidget();
 
+public slots:
+    void updateWidget(int value);
+
 private:
     void initWidget(void);
     void drawLine(int value);
-    void updateWidget(int value);
 
     int currentNoOfDots;
     QList<QLabel *> dots;

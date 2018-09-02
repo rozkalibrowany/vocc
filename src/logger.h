@@ -12,6 +12,7 @@
 #define LOG_LEDINDICATOR        0x0040
 #define LOG_SETTINGS            0x0080
 #define LOG_CONNECTIONS_DATA    0x0100
+#define LOG_MAINWINDOW_DATA     0x0200
 
 #define LOG_ERROR               0x8000
 

@@ -4,13 +4,14 @@
 #include <QObject>
 #include <QProcess>
 #include <QDebug>
+#include "rpmwidget.h"
 
 class Connections : public QObject
 {
     Q_OBJECT
 
 public:
-    Connections();
+    Connections(RpmWidget *rpm);
     ~Connections();
     bool isConnected;
     bool getConnectionStatus();
@@ -27,10 +28,15 @@ private:
     int canBaud;
     QProcess *process;
     QString getCanMode(void);
+    RpmWidget *mRpm;
 
 signals:
     void readyReadStandardOutput();
     void setConnectionStateButton(bool);
+    void updateRpmSpeed(quint16);
+    void updateBatteryCurrent(quint16);
+    void updateBatteryVoltage(quint16);
+    void updatePower(float);
 
 public slots:
     void readLine();
