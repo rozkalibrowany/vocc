@@ -59,6 +59,9 @@ MainWindow::MainWindow(QWidget *parent)
     /* set start page */
     menuButtonChanged(ui->vfMain);
 
+    /* set default alert status */
+    updateAlertsStatus(-1);
+
 }
 
 
@@ -118,6 +121,9 @@ void MainWindow::initializeFunctionButtons(void)
 
     connect (alerts, &Alerts::setAlertsButtonState,
                 [=] (int errors) { updateAlertsStatus(errors); });
+
+    connect (connection, &Connections::setAlertsButtonState,
+                [=] (int state) { updateAlertsStatus(state); });
 
 }
 
@@ -304,10 +310,15 @@ void MainWindow::updateAlertsStatus(int err)
     if (err > 0) {
         text = QString::number(err) + " " + "alerts!";
         buttonStyleUpdate(ui->alertStatus, "isAlert", true);
+        buttonStyleUpdate(ui->alertStatus, "noData", false);
         buttonStyleUpdate(ui->vfAlerts, "alert", true);
+    } else if ( err == -1) {
+        text = "No data";
+        buttonStyleUpdate(ui->alertStatus, "noData", true);
     } else {
         text = "No alerts";
         buttonStyleUpdate(ui->alertStatus, "isAlert", false);
+        buttonStyleUpdate(ui->alertStatus, "noData", false);
         buttonStyleUpdate(ui->vfAlerts, "alert", false);
     }
     ui->alertStatus->setText(text);

@@ -28,6 +28,8 @@ Connections::~Connections()
 
 void Connections::initializeSignalsAndSlots(void)
 {
+    LOG (LOG_CONNECTIONS, "%s - initializing signals", CLASS_INFO);
+
     connect (this, &Connections::updateRpmSpeed,
              [=](quint16 speed) { rpm->updateWidget(speed); });
 
@@ -76,6 +78,7 @@ void Connections::closeConnection(void)
     delete process;
     emit setConnectionStateButton(getConnectionStatus());
     emit enableRadioButtons(true);
+    emit setAlertsButtonState(-1);
 }
 
 
@@ -120,6 +123,7 @@ void Connections::readLine()
     bool valid_l, valid_m;
 
     if (data[0] == MESSAGE_1) {
+
         /* remove first 2 elements (no of bytes and address */
         for (int i = 0; i <= 1; i++)
             data.removeFirst();
@@ -154,16 +158,14 @@ void Connections::readLine()
             array[i] = (lsb >> i) & 1;
             array[i+8] = (msb >> i) & 1;
         }
-        for (int i = 0; i < 16; ++i) {
-            LOG (LOG_CONNECTIONS_DATA, "%s - array[%d] = %d",
-                 CLASS_INFO, i, array[i]);
-        }
         if (valid_l && valid_m)
             emit updateAlerts(array);
 
         LOG (LOG_CONNECTIONS_DATA, "%s - %s - rpm: %d\t current: %d\t voltage: %d\t power: %.2f",
              CLASS_INFO, MESSAGE_1, rpm, current, voltage, power);
+
     } else if (data[0] == MESSAGE_2) {
+
         /* remove first 2 elements (no of bytes and address */
         for (int i = 0; i <= 1; i++)
             data.removeFirst();

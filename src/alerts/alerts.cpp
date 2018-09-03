@@ -15,10 +15,12 @@ Alerts::Alerts(QWidget *controllerWidget, QWidget *batteryWidget)
     initWidget(batteryWidget);
 }
 
+
 Alerts::~Alerts()
 {
     delete con, bat;
 }
+
 
 void Alerts::initWidget(QWidget *widget)
 {

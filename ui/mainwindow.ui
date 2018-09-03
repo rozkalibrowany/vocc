@@ -1339,6 +1339,14 @@ border-radius: 4px;
 padding: 2px;
 font: 75 italic 11pt &quot;Halvetica&quot; ;
 color: #ff4d4d;
+}
+
+QLabel[noData=&quot;true&quot;] {
+border: 1.5px solid #ffa34d;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 11pt &quot;Halvetica&quot; ;
+color: #ff4d4d;
 }</string>
                  </property>
                  <property name="text">

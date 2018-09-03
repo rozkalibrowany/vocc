@@ -42,6 +42,7 @@ signals:
     void enableRadioButtons(bool);
     void readyReadStandardOutput();
     void setConnectionStateButton(bool);
+    void setAlertsButtonState(int);
     void updateRpmSpeed(quint16);
     void updateBatteryCurrent(quint16);
     void updateBatteryVoltage(quint16);
