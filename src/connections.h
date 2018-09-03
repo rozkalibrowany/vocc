@@ -36,6 +36,7 @@ private:
     RpmWidget *mRpm;
 
 signals:
+    void enableRadioButtons(bool);
     void readyReadStandardOutput();
     void setConnectionStateButton(bool);
     void updateRpmSpeed(quint16);

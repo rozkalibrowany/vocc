@@ -115,6 +115,7 @@ void MainWindow::initializeFunctionButtons(void)
 
     connect (connection, &Connections::updateMotorTemp,
                 [=] (quint16 temp) { updateMotorTemp(temp); });
+
 }
 
 

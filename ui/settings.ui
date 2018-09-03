@@ -373,13 +373,12 @@ color: #e6e6e6;</string>
                                </size>
                               </property>
                               <property name="styleSheet">
-                               <string notr="true">padding: 2px;
-font: 75 bold 9pt &quot;Halvetica&quot; ;
+                               <string notr="true">font: 75 bold 8pt &quot;Halvetica&quot; ;
 color: #e6e6e6;
 background-color: rgb(65,65,65);</string>
                               </property>
                               <property name="text">
-                               <string>TEST</string>
+                               <string>SIMULATION</string>
                               </property>
                              </widget>
                             </item>
@@ -402,8 +401,7 @@ background-color: rgb(65,65,65);</string>
                                </size>
                               </property>
                               <property name="styleSheet">
-                               <string notr="true">padding: 2px;
-font: 75 bold 9pt &quot;Halvetica&quot; ;
+                               <string notr="true">font: 75 bold 8pt &quot;Halvetica&quot; ;
 color: #e6e6e6;
 background-color: rgb(65,65,65);</string>
                               </property>

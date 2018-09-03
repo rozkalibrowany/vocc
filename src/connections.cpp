@@ -66,6 +66,7 @@ void Connections::closeConnection(void)
     avgVoltage.clear();
     delete process;
     emit setConnectionStateButton(getConnectionStatus());
+    emit enableRadioButtons(true);
 }
 
 
@@ -85,6 +86,7 @@ void Connections::establishConnection(void)
         setConnectionStatus(true);
     LOG (LOG_CONNECTIONS, "%s - process PID: %d", CLASS_INFO, process->pid());
     emit setConnectionStateButton(getConnectionStatus());
+    emit enableRadioButtons(false);
 }
 
 
@@ -109,54 +111,56 @@ void Connections::readLine()
     bool valid_l, valid_m;
 
     if (data[0] == MESSAGE_1) {
-            /* remove first 2 elements (no of bytes and address */
-            for (int i = 0; i <= 1; i++)
-                data.removeFirst();
-            /* read rpm speed (base 16) */
-            lsb = data[0].toUInt(&valid_l, 16);
-            msb = data[1].toUInt(&valid_m, 16);
-            quint16 rpm = msb*256 + lsb;
-            if (valid_l && valid_m) /* update rpm widget (3 samples) */
-                emit updateRpmSpeed(calculateAvg(avgRpm, rpm, 3));
-            /* read battery current (base 16) */
-            lsb = data[2].toUInt(&valid_l, 16);
-            msb = data[3].toUInt(&valid_m, 16);
-            quint16 current = (msb*256 + lsb)/10;
-            if (valid_l && valid_m) /* update current (6 samples) */
-                emit updateBatteryCurrent(calculateAvg(avgCurrent, current, 6));
-            /* read battery voltage (base 16) */
-            lsb = data[4].toUInt(&valid_l, 16);
-            msb = data[5].toUInt(&valid_m, 16);
-            quint16 voltage = (msb*256 + lsb)/10;
-            if (valid_l && valid_m) /* update voltage (5 samples) */
-                emit updateBatteryVoltage(calculateAvg(avgVoltage, voltage, 5));
-            /* calculate power */
-            float power = current * voltage;
-            power = power/1000; /* update power (5 samples) */
-            emit updatePower(calculateAvg(avgPower, power, 5));
+        /* remove first 2 elements (no of bytes and address */
+        for (int i = 0; i <= 1; i++)
+            data.removeFirst();
+        /* read rpm speed (base 16) */
+        lsb = data[0].toUInt(&valid_l, 16);
+        msb = data[1].toUInt(&valid_m, 16);
+        quint16 rpm = msb*256 + lsb;
+        if (valid_l && valid_m) /* update rpm widget (3 samples) */
+            emit updateRpmSpeed(calculateAvg(avgRpm, rpm, 3));
+        /* read battery current (base 16) */
+        lsb = data[2].toUInt(&valid_l, 16);
+        msb = data[3].toUInt(&valid_m, 16);
+        quint16 current = (msb*256 + lsb)/10;
+        if (valid_l && valid_m) /* update current (6 samples) */
+            emit updateBatteryCurrent(calculateAvg(avgCurrent, current, 6));
+        /* read battery voltage (base 16) */
+        lsb = data[4].toUInt(&valid_l, 16);
+        msb = data[5].toUInt(&valid_m, 16);
+        quint16 voltage = (msb*256 + lsb)/10;
+        if (valid_l && valid_m) /* update voltage (5 samples) */
+            emit updateBatteryVoltage(calculateAvg(avgVoltage, voltage, 5));
+        /* calculate power */
+        float power = current * voltage;
+        power = power/1000; /* update power (5 samples) */
+        emit updatePower(calculateAvg(avgPower, power, 5));
 
-            LOG (LOG_CONNECTIONS_DATA, "%s - rpm: %d\t current: %d\t voltage: %d\t power: %.2f",
-                    CLASS_INFO, rpm, current, voltage, power);
+        LOG (LOG_CONNECTIONS_DATA, "%s - %s - rpm: %d\t current: %d\t voltage: %d\t power: %.2f",
+             CLASS_INFO, MESSAGE_1, rpm, current, voltage, power);
     } else if (data[0] == MESSAGE_2) {
-                /* remove first 2 elements (no of bytes and address */
-                for (int i = 0; i <= 1; i++)
-                    data.removeFirst();
-                /* read throttle signal (base 16) */
-                lsb = data[0].toUInt(&valid_l, 16);
-                quint16 throttle = lsb/2.55;
-                if (valid_l)
-                    emit updateThrottle(throttle);
-                /* read controller temperature (base 16) */
-                lsb = data[1].toUInt(&valid_l, 16);
-                quint16 controllerTemp = lsb - 40;
-                if (valid_l)
-                    emit updateControllerTemp(controllerTemp);
-                /* read motor temperature (base 16) */
-                lsb = data[2].toUInt(&valid_l, 16);
-                quint16 motorTemp = lsb - 30;
-                if (valid_l)
-                    emit updateMotorTemp(motorTemp);
+        /* remove first 2 elements (no of bytes and address */
+        for (int i = 0; i <= 1; i++)
+            data.removeFirst();
+        /* read throttle signal (base 16) */
+        lsb = data[0].toUInt(&valid_l, 16);
+        quint16 throttle = lsb/2.55;
+        if (valid_l)
+            emit updateThrottle(throttle);
+        /* read controller temperature (base 16) */
+        lsb = data[1].toUInt(&valid_l, 16);
+        quint16 controllerTemp = lsb - 40;
+        if (valid_l)
+            emit updateControllerTemp(controllerTemp);
+        /* read motor temperature (base 16) */
+        lsb = data[2].toUInt(&valid_l, 16);
+        quint16 motorTemp = lsb - 30;
+        if (valid_l)
+            emit updateMotorTemp(motorTemp);
 
+        LOG (LOG_CONNECTIONS_DATA, "%s - %s - throttle: %d\t cont temp: %d\t motor temp: %d",
+             CLASS_INFO, MESSAGE_2, throttle, controllerTemp, motorTemp);
     }
 }
 

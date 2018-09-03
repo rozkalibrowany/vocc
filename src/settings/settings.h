@@ -17,6 +17,8 @@ public:
     explicit Settings(QWidget *parent, Connections *connection);
     ~Settings();
 
+public slots:
+    void enableRadioButtons(bool enable);
 
 private slots:
     void onConnectionsCanBaudChange(int value);

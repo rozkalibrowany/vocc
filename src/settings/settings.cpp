@@ -76,9 +76,21 @@ void Settings::connectionsInitializeSignals(void)
     /* signal used to set can baudrate in connections class */
     connect (this, &Settings::connectionsChangeCanBaud,
                 [=](int value) { con->setCanBaudrate(value); });
+    /* signal activated when connection established or closed */
+    connect (con, &Connections::enableRadioButtons,
+                [=](bool enable) { enableRadioButtons(enable); });
 
 }
 
+
+void Settings::enableRadioButtons(bool enable)
+{
+    LOG (LOG_SETTINGS, "%s - can mode buttons blocked: %s", CLASS_INFO,
+            enable ? "false" : "true");
+
+    settings->convRadioBtn->setEnabled(enable);
+    settings->testRadioBtn->setEnabled(enable);
+}
 
 /* returns:
  *          0 - TEST mode
