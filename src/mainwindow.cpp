@@ -129,6 +129,9 @@ void MainWindow::initializeFunctionButtons(void)
     connect (connection, &Connections::setAlertsButtonState,
                 [=] (int state) { updateAlertsStatus(state); });
 
+    connect (settings, &Settings::updateBackgroundContrast,
+                [=] (int value) { updateBackgroundContrast(value); });
+
 }
 
 
@@ -302,6 +305,19 @@ void MainWindow::updateMotorTemp(quint16 temp)
     ui->motorTempLcd->display(temp);
     lcdStyleUpdate(ui->motorTemp, temp, 50, 65, true);
     lcdStyleUpdate(ui->motorTempLcd, temp, 50, 65, true);
+}
+
+
+void MainWindow::updateBackgroundContrast(int value)
+{
+    LOG (LOG_MAINWINDOW_DATA, "%s - background contrast changed to (%d,%d,%d)", CLASS_INFO,
+            value, value, value);
+
+    QString style = "background-color: rgb(%1, %2, %3);";
+    ui->centralwidget->setStyleSheet(style.arg(value).arg(value).arg(value));
+    ui->gridFrame->setStyleSheet(style.arg(value).arg(value).arg(value));
+    ui->stackedWidget->setStyleSheet(style.arg(value).arg(value).arg(value));
+    ui->menuButtonsGroup->setStyleSheet(style.arg(value).arg(value).arg(value));
 }
 
 

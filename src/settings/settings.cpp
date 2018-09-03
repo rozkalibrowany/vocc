@@ -72,6 +72,9 @@ void Settings::connectionsInitializeSignals(void)
     /* signal activated when can mode changed */
     connect (settings->convRadioBtn, &QRadioButton::toggled,
                 [=](bool checked) { onConnectionsSetCanModeToggled(checked);} );
+    /* signal activated when value of background color slider changed */
+    connect (settings->colorSlider, &QSlider::valueChanged,
+                [=](int value) { onContrastSliderValueChanged(value); });
     /* signal used to set can mode in connections class */
     connect (this, &Settings::connectionsSetCanMode,
                 [=](bool mode) { con->setCanMode(mode); });
@@ -131,6 +134,16 @@ void Settings::onConnectionsSetConsoleState(int state)
             state ? "true" : "false");
 
     settings->consoleCheck->setChecked(state);
+}
+
+
+void Settings::onContrastSliderValueChanged(int value)
+{
+    LOG (LOG_SETTINGS, "%s - color changed %d", CLASS_INFO, value);
+
+    QString style = "background-color: rgb(%1, %2, %3);";
+    settings->gridFrame->setStyleSheet(style.arg(value).arg(value).arg(value));
+    emit updateBackgroundContrast(value);
 }
 
 

@@ -25,10 +25,12 @@ private slots:
     void onClearConsoleButtonClicked(void);
     void onConnectionsSetConsoleState(int state);
     void onConnectionsSetCanModeToggled(bool mode);
+    void onContrastSliderValueChanged(int value);
 
 signals:
     void connectionsChangeCanBaud(int);
     void connectionsSetCanMode(bool);
+    void updateBackgroundContrast(int);
 
 private:
     void connectionsFillCanBaudComboBox(void);

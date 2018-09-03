@@ -65,6 +65,7 @@ public slots:
     void updateControllerTemp(quint16 temp);
     void updateMotorTemp(quint16 temp);
     void updateAlertsStatus(int err);
+    void updateBackgroundContrast(int value);
 
 private slots:
     void setSystemDateSlot(void);
