@@ -18,7 +18,12 @@ Alerts::Alerts(QWidget *controllerWidget, QWidget *batteryWidget)
 
 Alerts::~Alerts()
 {
-    delete con, bat;
+    LOG (LOG_ALERTS, "%s - in destructor", CLASS_INFO);
+
+    if (con != NULL)
+        delete con;
+    if (bat != NULL)
+        delete bat;
 }
 
 

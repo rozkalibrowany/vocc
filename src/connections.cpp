@@ -21,8 +21,10 @@ Connections::~Connections()
 {
     LOG (LOG_CONNECTIONS, "%s - in destructor", CLASS_INFO);
 
-    process->close();
-    delete process;
+    if (process != NULL) {
+        process->close();
+        delete process;
+    }
 }
 
 

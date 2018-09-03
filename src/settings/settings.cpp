@@ -35,6 +35,8 @@ Settings::Settings(QWidget *parent, Connections *connection) :
 
 Settings::~Settings()
 {
+    LOG (LOG_SETTINGS, "%s - in destructor", CLASS_INFO);
+
     delete settings;
 }
 

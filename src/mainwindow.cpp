@@ -70,6 +70,10 @@ MainWindow::~MainWindow()
     LOG (LOG_MAINWINDOW, "%s - destructor", CLASS_INFO);
 
     delete ui;
+    delete rpm;
+    delete settings;
+    delete connection;
+    delete alerts;
 }
 
 
@@ -303,7 +307,8 @@ void MainWindow::updateMotorTemp(quint16 temp)
 
 void MainWindow::updateAlertsStatus(int err)
 {
-    LOG (LOG_MAINWINDOW_DATA, "%s - found %d alerts!", CLASS_INFO, err);
+    if (err != -1)
+        LOG (LOG_MAINWINDOW_DATA, "%s - found %d alerts!", CLASS_INFO, err);
 
     QString text;
 
@@ -399,8 +404,6 @@ void MainWindow::resetLapTimerSlot(void)
 
     s = m = ms = 0;
 
-    if (lapTimer != NULL)
-        delete lapTimer;
-
+    lapTimer->stop();
     setLapTimerTime();
 }
