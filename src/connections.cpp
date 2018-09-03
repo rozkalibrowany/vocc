@@ -6,15 +6,14 @@
 
 #define CLASS_INFO      "connections"
 
-Connections::Connections(RpmWidget *rpm)
+Connections::Connections(RpmWidget *m_rpm, Alerts *m_alerts)
 {
     LOG (LOG_CONNECTIONS, "%s - in contructor", CLASS_INFO);
 
-    mRpm = rpm;
+    rpm = m_rpm;
+    alerts = m_alerts;
 
-    connect (this, &Connections::updateRpmSpeed,
-             [=](quint16 speed) { mRpm->updateWidget(speed); });
-
+    initializeSignalsAndSlots();
 }
 
 
@@ -24,6 +23,16 @@ Connections::~Connections()
 
     process->close();
     delete process;
+}
+
+
+void Connections::initializeSignalsAndSlots(void)
+{
+    connect (this, &Connections::updateRpmSpeed,
+             [=](quint16 speed) { rpm->updateWidget(speed); });
+
+    connect (this, &Connections::updateAlerts,
+             [=](char errors[16]) { alerts->updateAlertsState(errors); });
 }
 
 
@@ -136,6 +145,21 @@ void Connections::readLine()
         float power = current * voltage;
         power = power/1000; /* update power (5 samples) */
         emit updatePower(calculateAvg(avgPower, power, 5));
+
+        /* read converter alerts */
+        lsb = data[6].toUInt(&valid_l, 16);
+        msb = data[7].toUInt(&valid_m, 16);
+        char array[16];
+        for (int i = 0; i < 8; ++i) {
+            array[i] = (lsb >> i) & 1;
+            array[i+8] = (msb >> i) & 1;
+        }
+        for (int i = 0; i < 16; ++i) {
+            LOG (LOG_CONNECTIONS_DATA, "%s - array[%d] = %d",
+                 CLASS_INFO, i, array[i]);
+        }
+        if (valid_l && valid_m)
+            emit updateAlerts(array);
 
         LOG (LOG_CONNECTIONS_DATA, "%s - %s - rpm: %d\t current: %d\t voltage: %d\t power: %.2f",
              CLASS_INFO, MESSAGE_1, rpm, current, voltage, power);

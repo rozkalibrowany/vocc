@@ -1690,7 +1690,7 @@ background: transparent;
 }
 
 QFrame[warning=&quot;true&quot;] {
-border: 4px solid #ffff99;
+border: 4px solid #99ff99;
 border-radius: 4px;
 padding: 2px;
 font: 75 italic 11pt &quot;Halvetica&quot; ;
@@ -1769,7 +1769,7 @@ color:  &quot;#00ffc1&quot;;
 QLCDNumber[warning=&quot;true&quot;] {
 border: none;
 font: 16pt &quot;Ubuntu&quot;;
-color:  &quot;#ffff99&quot;;
+color:  &quot;#99ff99&quot;;
 }
 
 QLCDNumber[warning2=&quot;true&quot;] {

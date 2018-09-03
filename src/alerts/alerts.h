@@ -19,13 +19,18 @@ public:
     explicit Alerts(QWidget *controllerWidget, QWidget *batteryWidget);
     ~Alerts();
 
-private:
+public slots:
+    void updateAlertsState(char alerts[16]);
 
+signals:
+    void setAlertsButtonState(int);
+
+private:
     ControllerWidget *con;
     BatteryWidget *bat;
     LedIndicator *led;
     QList<QFrame *> ledSlots;
-    QList<QString> controllerLeds, batteryLeds;
+    QList<LedIndicator *> controllerLeds, batteryLeds;
 
 protected:
     void initWidget(QWidget *widget);

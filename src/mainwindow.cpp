@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     /* create connection */
     if (connection != NULL)
         delete connection;
-    connection = new Connections(rpm);
+    connection = new Connections(rpm, alerts);
 
     /* create settings widget */
     settings = new Settings(ui->settingsWidget, connection);
@@ -116,6 +116,9 @@ void MainWindow::initializeFunctionButtons(void)
     connect (connection, &Connections::updateMotorTemp,
                 [=] (quint16 temp) { updateMotorTemp(temp); });
 
+    connect (alerts, &Alerts::setAlertsButtonState,
+                [=] (int errors) { updateAlertsStatus(errors); });
+
 }
 
 
@@ -148,6 +151,7 @@ void MainWindow::initializeTimerForDateTime(void)
     connect (timer, &QTimer::timeout, this, &MainWindow::setSystemDateSlot);
     timer->start(1000);
 }
+
 
 void MainWindow::menuButtonChanged(QFrame *frame)
 {
@@ -208,6 +212,7 @@ void MainWindow::setStateConnectionButton(bool isConnected)
         ui->canButton->setText(">Connect<");
     }
 }
+
 
 template <typename T> void MainWindow::buttonStyleUpdate(T *widget, const char* property, bool isChanged)
 {
@@ -287,6 +292,25 @@ void MainWindow::updateMotorTemp(quint16 temp)
     ui->motorTempLcd->display(temp);
     lcdStyleUpdate(ui->motorTemp, temp, 50, 65, true);
     lcdStyleUpdate(ui->motorTempLcd, temp, 50, 65, true);
+}
+
+
+void MainWindow::updateAlertsStatus(int err)
+{
+    LOG (LOG_MAINWINDOW_DATA, "%s - found %d alerts!", CLASS_INFO, err);
+
+    QString text;
+
+    if (err > 0) {
+        text = QString::number(err) + " " + "alerts!";
+        buttonStyleUpdate(ui->alertStatus, "isAlert", true);
+        buttonStyleUpdate(ui->vfAlerts, "alert", true);
+    } else {
+        text = "No alerts";
+        buttonStyleUpdate(ui->alertStatus, "isAlert", false);
+        buttonStyleUpdate(ui->vfAlerts, "alert", false);
+    }
+    ui->alertStatus->setText(text);
 }
 
 

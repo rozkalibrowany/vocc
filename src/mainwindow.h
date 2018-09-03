@@ -64,6 +64,7 @@ public slots:
     void updateThrottle(quint16 throttle);
     void updateControllerTemp(quint16 temp);
     void updateMotorTemp(quint16 temp);
+    void updateAlertsStatus(int err);
 
 private slots:
     void setSystemDateSlot(void);

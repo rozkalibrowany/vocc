@@ -28,7 +28,7 @@ Settings::Settings(QWidget *parent, Connections *connection) :
     /* set default CAN mode (test) */
     settings->testRadioBtn->setChecked(true);
     /* set default baudrate */
-   // onConnectionsCanBaudChange(1);
+    // onConnectionsCanBaudChange(1);
 
 }
 
@@ -91,6 +91,7 @@ void Settings::enableRadioButtons(bool enable)
     settings->convRadioBtn->setEnabled(enable);
     settings->testRadioBtn->setEnabled(enable);
 }
+
 
 /* returns:
  *          0 - TEST mode
