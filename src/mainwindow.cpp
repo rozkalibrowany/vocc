@@ -133,6 +133,8 @@ void MainWindow::initializeFunctionButtons(void)
     connect (settings, &Settings::updateBackgroundContrast,
                 [=] (int value) { updateBackgroundContrast(value); });
 
+    connect (settings, &Settings::updateFontSize,
+                [=] (QString size) { updateFontSize(size); });
 }
 
 
@@ -319,6 +321,19 @@ void MainWindow::updateBackgroundContrast(int value)
     ui->gridFrame->setStyleSheet(style.arg(value).arg(value).arg(value));
     ui->stackedWidget->setStyleSheet(style.arg(value).arg(value).arg(value));
     ui->menuButtonsGroup->setStyleSheet(style.arg(value).arg(value).arg(value));
+}
+
+
+void MainWindow::updateFontSize(QString size)
+{
+    LOG (LOG_MAINWINDOW_DATA, "%s - font size changed to - %s", CLASS_INFO,
+            size.toStdString().c_str());
+
+    QString style = "font: italic bold %1pt";
+    ui->centralwidget->setStyleSheet(style.arg(size));
+    ui->gridFrame->setStyleSheet(style.arg(size));
+    ui->stackedWidget->setStyleSheet(style.arg(size));
+    ui->menuButtonsGroup->setStyleSheet(style.arg(size));
 }
 
 

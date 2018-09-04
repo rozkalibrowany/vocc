@@ -33,6 +33,7 @@ signals:
     void connectionsChangeCanBaud(int);
     void connectionsSetCanMode(bool);
     void updateBackgroundContrast(int);
+    void updateFontSize(QString);
 
 private:
     void connectionsFillCanBaudComboBox(void);

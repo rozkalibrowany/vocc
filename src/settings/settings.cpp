@@ -160,6 +160,8 @@ void Settings::onSetDefaultsButtonClicked(void)
     LOG (LOG_SETTINGS, "%s - restoring default settings", CLASS_INFO);
 
     settings->colorSlider->setValue(DEFAULT_BACKG_COLOR);
+    settings->fontSizeBox->setCurrentIndex(2);
+    settings->fontTypeBox->setCurrentIndex(0);
 
 }
 
@@ -167,6 +169,12 @@ void Settings::onFontSizeChanged(int index)
 {
     LOG (LOG_SETTINGS, "%s - changing font to - %s", CLASS_INFO,
             settings->fontSizeBox->currentText().toStdString().c_str());
+
+    emit updateFontSize(settings->fontSizeBox->currentText());
+    QString size = settings->fontSizeBox->currentText();
+    QString style = "font: 75 bold %1pt";
+    settings->gridFrame->setStyleSheet(style.arg(size));
+
 }
 
 

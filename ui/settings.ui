@@ -295,6 +295,9 @@ min-height: 35px;</string>
                        <height>70</height>
                       </size>
                      </property>
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
                      <layout class="QVBoxLayout" name="verticalLayout_23">
                       <property name="spacing">
                        <number>0</number>
@@ -952,7 +955,7 @@ QSlider::handle:horizontal {
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QLabel" name="fontTypeBox">
+                       <widget class="QLabel" name="label12">
                         <property name="styleSheet">
                          <string notr="true">border: none;
 padding: 2px;
@@ -1062,7 +1065,7 @@ color: #e6e6e6;</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QComboBox" name="comboBox_2">
+                       <widget class="QComboBox" name="fontTypeBox">
                         <property name="minimumSize">
                          <size>
                           <width>106</width>
