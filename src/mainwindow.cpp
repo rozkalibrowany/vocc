@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     LOG (LOG_MAINWINDOW, "%s - in constructor", CLASS_INFO);
 
     ui->setupUi(this);
-    this->setWindowTitle("ADek UI v0.1");
+    this->setWindowTitle("Automotive UI v0.1");
     this->centerOnScreen();
     lastButtonObject = NULL;
     lapTimerStarted = false;
@@ -72,8 +72,9 @@ MainWindow::~MainWindow()
     delete ui;
     delete rpm;
     delete settings;
-    delete connection;
     delete alerts;
+//    delete connection;
+//
 }
 
 

@@ -487,6 +487,7 @@ background-color: rgb(65,65,65);</string>
                         <property name="styleSheet">
                          <string notr="true">padding: 2px;
 font: 75 bold 10pt &quot;Halvetica&quot; ;
+color: rgb(24, 24, 24);
 background-color: #e6e6e6;</string>
                         </property>
                         <property name="text">
@@ -517,6 +518,7 @@ background-color: #e6e6e6;</string>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">font: 75 bold 9.5pt &quot;Halvetica&quot; ;
+color: rgb(24, 24, 24);
 background-color: #e6e6e6;</string>
                         </property>
                         <property name="text">
@@ -746,7 +748,7 @@ background: transparent;
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_12">
            <property name="spacing">
-            <number>2</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -765,7 +767,7 @@ background: transparent;
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>30</height>
+               <height>22</height>
               </size>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -934,14 +936,220 @@ QSlider::handle:horizontal {
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLabel" name="label_8">
-                 <property name="styleSheet">
-                  <string notr="true">border:none;</string>
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <property name="spacing">
+                  <number>0</number>
                  </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
+                 <item>
+                  <widget class="QFrame" name="verticalFrame_2">
+                   <layout class="QVBoxLayout" name="verticalLayout_21">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_38">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QLabel" name="fontTypeBox">
+                        <property name="styleSheet">
+                         <string notr="true">border: none;
+padding: 2px;
+font: 75 bold 10pt &quot;Halvetica&quot; ;
+color: #e6e6e6;</string>
+                        </property>
+                        <property name="text">
+                         <string>Font size</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_39">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QComboBox" name="fontSizeBox">
+                        <property name="minimumSize">
+                         <size>
+                          <width>71</width>
+                          <height>41</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="layoutDirection">
+                         <enum>Qt::LeftToRight</enum>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">selection-color: yellow;
+font: 75 bold 11pt &quot;Halvetica&quot; ;
+color:  #ffff99;
+padding: 1px 1px 1px 1px;
+background-color: rgb(65,65,65);
+min-width: 65px;
+min-height: 35px;</string>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>8</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>10</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>12</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>14</string>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="verticalFrame_3">
+                   <layout class="QVBoxLayout" name="verticalLayout_37">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_40">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QLabel" name="label_9">
+                        <property name="styleSheet">
+                         <string notr="true">border: none;
+padding: 2px;
+font: 75 bold 10pt &quot;Halvetica&quot; ;
+color: #e6e6e6;</string>
+                        </property>
+                        <property name="text">
+                         <string>Font type</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_13">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QComboBox" name="comboBox_2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>106</width>
+                          <height>41</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">selection-color: yellow;
+font: 75 bold 11pt &quot;Halvetica&quot; ;
+color:  #ffff99;
+padding: 1px 1px 1px 1px;
+background-color: rgb(65,65,65);
+min-width: 100px;
+min-height: 35px;</string>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>Halvetica</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Ubuntu</string>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="verticalFrame">
+                   <layout class="QVBoxLayout" name="verticalLayout_17">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_42">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_41">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QPushButton" name="setDefaultsBtn">
+                        <property name="minimumSize">
+                         <size>
+                          <width>104</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>104</width>
+                          <height>35</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">padding: 2px;
+font: 75 bold 10pt &quot;Halvetica&quot; ;
+color: rgb(24, 24, 24);
+background-color: #e6e6e6;</string>
+                        </property>
+                        <property name="text">
+                         <string>Set defaults</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>

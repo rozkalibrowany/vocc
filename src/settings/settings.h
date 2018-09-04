@@ -26,6 +26,8 @@ private slots:
     void onConnectionsSetConsoleState(int state);
     void onConnectionsSetCanModeToggled(bool mode);
     void onContrastSliderValueChanged(int value);
+    void onSetDefaultsButtonClicked(void);
+    void onFontSizeChanged(int index);
 
 signals:
     void connectionsChangeCanBaud(int);

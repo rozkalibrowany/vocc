@@ -5,6 +5,7 @@
 #include <QString>
 #include "settings.h"
 #include "ui_settings.h"
+#include "../parameters.h"
 #include "../logger.h"
 
 #define CLASS_INFO      "settings"
@@ -63,6 +64,9 @@ void Settings::connectionsInitializeSignals(void)
     /* signal activated when can baud changed */
     connect (settings->canBaud, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
                 [=](int value) { onConnectionsCanBaudChange(value); });
+    /* signal activated when font size changed */
+    connect (settings->fontSizeBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                [=](int index) { onFontSizeChanged(index); });
     /* signal activated when clear console button clicked */
     connect (settings->clearConsoleBtn, &QPushButton::clicked,
                 this, &Settings::onClearConsoleButtonClicked);
@@ -84,6 +88,10 @@ void Settings::connectionsInitializeSignals(void)
     /* signal activated when connection established or closed */
     connect (con, &Connections::enableRadioButtons,
                 [=](bool enable) { enableRadioButtons(enable); });
+    /* signal activated when set defaults button clicked */
+    connect (settings->setDefaultsBtn, &QPushButton::clicked,
+                this, &Settings::onSetDefaultsButtonClicked);
+
 
 }
 
@@ -144,6 +152,21 @@ void Settings::onContrastSliderValueChanged(int value)
     QString style = "background-color: rgb(%1, %2, %3);";
     settings->gridFrame->setStyleSheet(style.arg(value).arg(value).arg(value));
     emit updateBackgroundContrast(value);
+}
+
+
+void Settings::onSetDefaultsButtonClicked(void)
+{
+    LOG (LOG_SETTINGS, "%s - restoring default settings", CLASS_INFO);
+
+    settings->colorSlider->setValue(DEFAULT_BACKG_COLOR);
+
+}
+
+void Settings::onFontSizeChanged(int index)
+{
+    LOG (LOG_SETTINGS, "%s - changing font to - %s", CLASS_INFO,
+            settings->fontSizeBox->currentText().toStdString().c_str());
 }
 
 

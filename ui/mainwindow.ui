@@ -26,6 +26,9 @@
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
     <string notr="true">background-color: rgb(24, 24, 24);
+border: none;
+font: 12pt &quot;Ubuntu&quot;;
+color:  #6affcd;
 </string>
    </property>
    <widget class="QGroupBox" name="menuButtonsGroup">
@@ -1181,9 +1184,9 @@ color: #00ffc1;
                     <property name="font">
                      <font>
                       <family>Ubuntu</family>
-                      <pointsize>16</pointsize>
+                      <pointsize>12</pointsize>
                       <weight>50</weight>
-                      <italic>true</italic>
+                      <italic>false</italic>
                       <bold>false</bold>
                      </font>
                     </property>
