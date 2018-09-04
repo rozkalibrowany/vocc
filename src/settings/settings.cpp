@@ -24,12 +24,12 @@ Settings::Settings(QWidget *parent, Connections *connection) :
     connectionsFillCanBaudComboBox();
     /* connect connection signals */
     connectionsInitializeSignals();
-    /* enable console output (default) */
-    onConnectionsSetConsoleState(1);
     /* set default CAN mode (test) */
     settings->testRadioBtn->setChecked(true);
-    /* set default baudrate */
-    // onConnectionsCanBaudChange(1);
+    /* set default settings */
+    onSetDefaultsButtonClicked();
+    /* enable console output (default) */
+    onConnectionsSetConsoleState(1);
 
 }
 
@@ -162,7 +162,7 @@ void Settings::onSetDefaultsButtonClicked(void)
     settings->colorSlider->setValue(DEFAULT_BACKG_COLOR);
     settings->fontSizeBox->setCurrentIndex(2);
     settings->fontTypeBox->setCurrentIndex(0);
-
+    consolePrintMessage("Default settings restored", 0);
 }
 
 void Settings::onFontSizeChanged(int index)
@@ -174,6 +174,7 @@ void Settings::onFontSizeChanged(int index)
     QString size = settings->fontSizeBox->currentText();
     QString style = "font: 75 bold %1pt";
     settings->gridFrame->setStyleSheet(style.arg(size));
+    consolePrintMessage("Font size changed", 0);
 
 }
 

@@ -1245,7 +1245,7 @@ font: 75 italic bold 12pt &quot;Halvetica&quot; ;
 color: #e6e6e6;</string>
                 </property>
                 <property name="text">
-                 <string>THEME</string>
+                 <string>LOGGER</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>

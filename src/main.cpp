@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
                      << "LOG_GUI \t\t 0x0002\n\t\t" << "LOG_CONNECTIONS \t 0x0004\n\t\t" \
                      << "LOG_RPM \t\t 0x0008\n\t\t" << "LOG_MAINWINDOW \t 0x0010\n\t\t" \
                      << "LOG_ALERTS \t\t 0x0020\n\t\t" << "LOG_LEDINDICATOR \t 0x0040\n\t\t" \
-                     << "LOG_SETTINGS \t\t 0x0080\n\t\t" << "LOG_CONNECTIONS_DATA \t 0x0100\n";
+                     << "LOG_SETTINGS \t\t 0x0080\n\t\t" << "LOG_CONNECTIONS_DATA \t 0x0100\n\t\t" \
+                     << "LOG_MAINWINDOW_DATA \t 0x0200\n";
             exit(EXIT_FAILURE);
             break;
         case 'l':
