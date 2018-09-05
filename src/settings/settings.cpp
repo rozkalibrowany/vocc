@@ -5,8 +5,8 @@
 #include <QString>
 #include "settings.h"
 #include "ui_settings.h"
-#include "../parameters.h"
-#include "../logger.h"
+#include "../common/parameters.h"
+#include "../common/logger.h"
 
 #define CLASS_INFO      "settings"
 

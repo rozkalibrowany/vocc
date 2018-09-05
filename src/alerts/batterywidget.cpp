@@ -1,6 +1,6 @@
 #include "batterywidget.h"
 #include "ui_batterywidget.h"
-#include "../logger.h"
+#include "../common/logger.h"
 
 #define CLASS_INFO  "battery widget"
 

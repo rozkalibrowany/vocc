@@ -6,7 +6,7 @@
 #include <QPointF>
 #include <QBrush>
 #include "ledindicator.h"
-#include "../logger.h"
+#include "../common/logger.h"
 
 #define CLASS_INFO          "led"
 

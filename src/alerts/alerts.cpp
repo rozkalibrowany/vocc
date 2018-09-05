@@ -1,6 +1,6 @@
 #include <QLabel>
 #include "alerts.h"
-#include "../logger.h"
+#include "../common/logger.h"
 
 #define CLASS_INFO  "alerts"
 

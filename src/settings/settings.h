@@ -19,7 +19,7 @@
 
 #include <QWidget>
 #include <QString>
-#include "../connections.h"
+#include "../connections/connections.h"
 
 namespace Ui {
     class Settings;
