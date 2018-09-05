@@ -56,10 +56,15 @@ void Alerts::initWidget(QWidget *widget)
 
                 LOG (LOG_ALERTS, "%s - found %s", CLASS_INFO, \
                      ledSlots.at(i)->objectName().toStdString().c_str());
-
-                ledNumber = ledSlots.at(i)->objectName().replace("label_err", "").toInt();
-                QLabel *label = qobject_cast<QLabel *>(ledSlots.at(i));
-                label->setText(con->controllerErrors[ledNumber]);
+                if (widget->objectName() == "controllerWidget") {
+                    ledNumber = ledSlots.at(i)->objectName().replace("label_err", "").toInt();
+                    QLabel *label = qobject_cast<QLabel *>(ledSlots.at(i));
+                    label->setText(con->controllerErrors[ledNumber]);
+                } else if (widget->objectName() == "batteryWidget") {
+                    ledNumber = ledSlots.at(i)->objectName().replace("label_err", "").toInt();
+                    QLabel *label = qobject_cast<QLabel *>(ledSlots.at(i));
+                    label->setText(bat->batteryErrors[ledNumber]);
+                }
             }
         }
     }

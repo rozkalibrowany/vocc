@@ -134,7 +134,7 @@ void Connections::readLine()
         msb = data[1].toUInt(&valid_m, 16);
         quint16 rpm = msb*256 + lsb;
         if (valid_l && valid_m) /* update rpm widget (3 samples) */
-            emit updateRpmSpeed(calculateAvg(avgRpm, rpm, 3));
+            emit updateRpmSpeed(calculateAvg(avgRpm, rpm, 8));
         /* read battery current (base 16) */
         lsb = data[2].toUInt(&valid_l, 16);
         msb = data[3].toUInt(&valid_m, 16);
