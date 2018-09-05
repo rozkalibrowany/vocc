@@ -5,7 +5,10 @@ var searchData=
   ['setcanmode',['setCanMode',['../class_connections.html#a3e4026db4fd0b69cc88f6023cb7f0a67',1,'Connections']]],
   ['setconnectionstatebutton',['setConnectionStateButton',['../class_connections.html#af898e9957bac71a2fa4c41236a54b357',1,'Connections']]],
   ['setconnectionstatus',['setConnectionStatus',['../class_connections.html#a74cdfcab2c0544c76d4b545bf5892bce',1,'Connections']]],
+  ['setlaptime',['setLapTime',['../class_statistics.html#a045a6118effbb66caa1ed437314bbcc5',1,'Statistics']]],
   ['setstateconnectionbutton',['setStateConnectionButton',['../class_main_window.html#a9b31067ae29b2fa03dc8d82c7ad3ba13',1,'MainWindow']]],
+  ['settings',['Settings',['../class_ui_1_1_settings.html',1,'Ui']]],
   ['settings',['Settings',['../class_settings.html',1,'Settings'],['../class_settings.html#a04593ef85f4c5811c3f4d88b8f2e2d4a',1,'Settings::Settings()']]],
-  ['settings',['Settings',['../class_ui_1_1_settings.html',1,'Ui']]]
+  ['statistics',['Statistics',['../class_statistics.html',1,'Statistics'],['../class_statistics.html#a061e925cf2c283dbe1755ff69c26388f',1,'Statistics::Statistics()']]],
+  ['statistics',['Statistics',['../class_ui_1_1_statistics.html',1,'Ui']]]
 ];

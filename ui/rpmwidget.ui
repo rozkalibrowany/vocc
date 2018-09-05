@@ -1260,11 +1260,23 @@ color: #6affcd;</string>
   <widget class="QLabel" name="rpmCaption_8">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>100</x>
      <y>100</y>
-     <width>91</width>
+     <width>100</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>100</width>
+     <height>16777215</height>
+    </size>
    </property>
    <property name="font">
     <font>
@@ -1277,9 +1289,8 @@ color: #6affcd;</string>
    </property>
    <property name="styleSheet">
     <string notr="true">color: white; 
-font: 14pt &quot;Ubuntu Mono&quot;;
+padding: 1px;
 background:none;
-font: 63 italic 14pt &quot;Ubuntu&quot;;
 color: #6affcd;
 font: italic 14pt &quot;Ubuntu&quot;;</string>
    </property>

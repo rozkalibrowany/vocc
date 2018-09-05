@@ -28,10 +28,11 @@
 #include <QPushButton>
 #include <QString>
 #include <QTimer>
-#include "../connections/connections.h"
 #include "rpmwidget.h"
+#include "../connections/connections.h"
 #include "../alerts/alerts.h"
 #include "../settings/settings.h"
+#include "../stats/statistics.h"
 
 
 namespace Ui {
@@ -48,6 +49,11 @@ public:
     /// destructs a MainWindow
     ~MainWindow();
 
+signals:
+    /**
+     * @brief addLapTime - signal emitted when timer stopped
+     */
+    void addLapTime(QString);
 
 private:
     /// This method is used to change property of panel LCD objects in MainWindow
@@ -81,6 +87,7 @@ private:
     Alerts *alerts; /// pointer to Alerts class
     Connections *connection; /// pointer to Connections class
     RpmWidget *rpm; /// pointer to RpmWidget class
+    Statistics *stats; /// pointer to Statistics class
 
 protected:
     /// This method updates style of type T widget

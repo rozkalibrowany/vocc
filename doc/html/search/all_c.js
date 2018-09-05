@@ -5,6 +5,7 @@ var searchData=
   ['ui_5fmainwindow',['Ui_MainWindow',['../class_ui___main_window.html',1,'']]],
   ['ui_5frpmwidget',['Ui_RpmWidget',['../class_ui___rpm_widget.html',1,'']]],
   ['ui_5fsettings',['Ui_Settings',['../class_ui___settings.html',1,'']]],
+  ['ui_5fstatistics',['Ui_Statistics',['../class_ui___statistics.html',1,'']]],
   ['updatealerts',['updateAlerts',['../class_connections.html#a390f7930ec8ddc39727c9f7a0bb9e6fa',1,'Connections']]],
   ['updatealertsstate',['updateAlertsState',['../class_alerts.html#a2d951dc8389a6136a74d515671fb7764',1,'Alerts']]],
   ['updatealertsstatus',['updateAlertsStatus',['../class_main_window.html#a24dbe1a06cce13d844e171a647ad1a4f',1,'MainWindow']]],

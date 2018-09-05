@@ -546,7 +546,7 @@ color:  #6affcd;</string>
      <item row="0" column="0" rowspan="2">
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="drive">
         <property name="styleSheet">
@@ -1996,7 +1996,22 @@ color: #e6e6e6;
          </widget>
         </widget>
        </widget>
-       <widget class="QWidget" name="stats"/>
+       <widget class="QWidget" name="stats">
+        <widget class="QWidget" name="statsWidget" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>690</width>
+           <height>460</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3"/>
+        </widget>
+       </widget>
        <widget class="QWidget" name="settings">
         <widget class="QWidget" name="settingsWidget" native="true">
          <property name="geometry">

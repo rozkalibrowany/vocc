@@ -34,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent)
     /* create settings widget */
     settings = new Settings(ui->settingsWidget, connection);
 
+    /* create statistics widget */
+    stats = new Statistics(ui->statsWidget);
+
     /* set connection status */
     connection->setConnectionStatus(false);
 
@@ -135,6 +138,9 @@ void MainWindow::initializeFunctionButtons(void)
 
     connect (settings, &Settings::updateFontSize,
                 [=] (QString size) { updateFontSize(size); });
+
+    connect (this, &MainWindow::addLapTime,
+                [=] (QString lapTime) { stats->setLapTime(lapTime); } );
 }
 
 
@@ -436,6 +442,7 @@ void MainWindow::resetLapTimerSlot(void)
 
     s = m = ms = 0;
 
+    emit addLapTime(lapTime);
     lapTimer->stop();
     setLapTimerTime();
 }
