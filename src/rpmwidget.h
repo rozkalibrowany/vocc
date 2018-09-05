@@ -1,3 +1,20 @@
+/**
+ * \class RpmWidget
+ *
+ * \brief
+ *
+ * This class construct UI widget needed for MainWindow UI
+ *
+ *
+ * \author $Author: bv $
+ *
+ * \version $Revision: 1.0 $
+ *
+ * \date $Date: 2018/09/05 14:16:20 $
+ *
+ * Contact: karolsiegied@gmail.com
+ *
+ */
 #ifndef RPMWIDGET_H
 #define RPMWIDGET_H
 
