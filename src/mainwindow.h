@@ -1,3 +1,21 @@
+/**
+ * \class MainWindow
+ *
+ * \brief Class description
+ *
+ * This class construct UI window and construct other objects
+ *
+ *
+ * \author $Author: bv $
+ *
+ * \version $Revision: 1.0 $
+ *
+ * \date $Date: 2018/09/05 14:16:20 $
+ *
+ * Contact: karolsiegied@gmail.com
+ *
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -25,11 +43,14 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    /// creates a MainWindow
     MainWindow(QWidget *parent = 0);
+    /// destructs a MainWindow
     ~MainWindow();
 
 
 private:
+    /// This method is used to change property of panel LCD objects in MainWindow
     template <typename T> void lcdStyleUpdate(T *widget, quint16 value, quint16 limit, quint16 max, bool isChanged);
     void buttonStyleUpdate(QFrame *frame, bool isChanged);
     void centerOnScreen(void);
