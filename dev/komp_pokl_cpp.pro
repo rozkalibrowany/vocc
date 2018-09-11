@@ -15,6 +15,10 @@ CONFIG += c++11
 
 DESTDIR = ../bin
 
+OBJECTS_DIR = obj/
+
+MOC_DIR = moc/
+
 SOURCES += \
     ../src/main.cpp \
     ../src/alerts/ledindicator.cpp \
