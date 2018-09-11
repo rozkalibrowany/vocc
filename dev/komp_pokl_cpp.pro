@@ -13,6 +13,8 @@ TEMPLATE = app
 
 CONFIG += c++11
 
+DESTDIR = ../bin
+
 SOURCES += \
     ../src/main.cpp \
     ../src/alerts/ledindicator.cpp \
