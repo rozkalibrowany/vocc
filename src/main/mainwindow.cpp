@@ -141,6 +141,8 @@ void MainWindow::initializeFunctionButtons(void)
 
     connect (this, &MainWindow::addLapTime,
                 [=] (QString lapTime) { stats->setLapTime(lapTime); } );
+
+
 }
 
 
@@ -153,8 +155,9 @@ void MainWindow::initializeLapTimer(void)
     lapTimer = new QTimer(this);
     sleepTimer = new QTimer(this);
 
-    sleepTimer->setInterval(2500);
+    sleepTimer->setInterval(5000);
     sleepTimer->setSingleShot(true);
+
 
     m = ms = s = 0;
 
@@ -443,6 +446,5 @@ void MainWindow::resetLapTimerSlot(void)
     s = m = ms = 0;
 
     emit addLapTime(lapTime);
-    lapTimer->stop();
     setLapTimerTime();
 }
