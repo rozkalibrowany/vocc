@@ -13,35 +13,44 @@ TEMPLATE = app
 
 CONFIG += c++11
 
+DESTDIR = ../bin
+
+OBJECTS_DIR = obj/
+
+MOC_DIR = moc/
+
 SOURCES += \
     ../src/main.cpp \
-    ../src/mainwindow.cpp \
-    ../src/connections.cpp \
-    ../src/rpmwidget.cpp \
     ../src/alerts/ledindicator.cpp \
     ../src/alerts/alerts.cpp \
     ../src/alerts/batterywidget.cpp \
     ../src/alerts/controllerwidget.cpp \
-    ../src/settings/settings.cpp
+    ../src/settings/settings.cpp \
+    ../src/connections/connections.cpp \
+    ../src/main/mainwindow.cpp \
+    ../src/main/rpmwidget.cpp \
+    ../src/stats/statistics.cpp \
 
 HEADERS  += \
-    ../src/mainwindow.h \
-    ../src/connections.h \
-    ../src/logger.h \
-    ../src/rpmwidget.h \
-    ../src/parameters.h \
     ../src/alerts/ledindicator.h \
     ../src/alerts/alerts.h \
     ../src/alerts/batterywidget.h \
     ../src/alerts/controllerwidget.h \
-    ../src/settings/settings.h
+    ../src/settings/settings.h \
+    ../src/common/logger.h \
+    ../src/common/parameters.h \
+    ../src/connections/connections.h \
+    ../src/main/mainwindow.h \
+    ../src/main/rpmwidget.h \
+    ../src/stats/statistics.h \
 
 FORMS += \
     ../ui/mainwindow.ui \
     ../ui/rpmwidget.ui \
     ../ui/controllerwidget.ui \
     ../ui/batterywidget.ui \
-    ../ui/settings.ui
+    ../ui/settings.ui \
+    ../ui/statistics.ui
 
 RESOURCES += \
     ../img/img.qrc

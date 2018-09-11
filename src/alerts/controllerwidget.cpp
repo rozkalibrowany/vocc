@@ -1,6 +1,6 @@
 #include "controllerwidget.h"
 #include "ui_controllerwidget.h"
-#include "../logger.h"
+#include "../common/logger.h"
 
 #define CLASS_INFO  "controller widget"
 

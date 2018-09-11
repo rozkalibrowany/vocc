@@ -4,3 +4,7 @@
 *.user
 *.o
 versions/
+dev/moc/
+Makefile
+dev/ui*
+bin/

@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <cstdarg>
 
-#include "mainwindow.h"
-#include "logger.h"
-#include "rpmwidget.h"
+#include "main/mainwindow.h"
+#include "common/logger.h"
+#include "main/rpmwidget.h"
 
 #define     BUF_LEN         255
 #define     EXIT_FAILURE    1
