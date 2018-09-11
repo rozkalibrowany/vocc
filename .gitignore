@@ -6,3 +6,5 @@
 versions/
 dev/moc/
 Makefile
+dev/ui*
+bin/
