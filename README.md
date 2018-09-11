@@ -2,10 +2,10 @@
 
 # Requirements
  - C++11
- - Qt5
+ - Qt5.x
 
 # Compilation
-* cd dev
+* cd dev/
 * qmake komp_pokl_cpp.pro
 * make 
 # Output files
