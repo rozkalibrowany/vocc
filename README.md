@@ -3,7 +3,8 @@
 
 # Requirements
  - C++11
- - Qt5.x
+ - Qt5
+ - qmake
 
 # Compilation
 * cd dev/
