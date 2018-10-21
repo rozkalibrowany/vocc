@@ -30,6 +30,7 @@ SOURCES += \
     ../src/main/mainwindow.cpp \
     ../src/main/rpmwidget.cpp \
     ../src/stats/statistics.cpp \
+    ../src/settings/parser.c
 
 HEADERS  += \
     ../src/alerts/ledindicator.h \
@@ -43,6 +44,7 @@ HEADERS  += \
     ../src/main/mainwindow.h \
     ../src/main/rpmwidget.h \
     ../src/stats/statistics.h \
+    ../src/settings/parser.h
 
 FORMS += \
     ../ui/mainwindow.ui \

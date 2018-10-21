@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../common/logger.h"
+#include "../settings/parser.h"
 
 
 #define CLASS_INFO          "main window"
@@ -65,6 +66,10 @@ MainWindow::MainWindow(QWidget *parent)
     /* set default alert status */
     updateAlertsStatus(-1);
 
+    conf_exit();
+    int key = conf_init ("settings.conf");
+
+    LOG (LOG_MAINWINDOW, "%s - key - %d", CLASS_INFO, key);
 }
 
 

@@ -11,6 +11,6 @@ length = len(lines)
 while True:
     print lines[i%length]
     stdout.flush()
-    time.sleep(0.04)
+    time.sleep(0.03)
     i += 1
     
