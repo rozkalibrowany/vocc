@@ -28,8 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
     alerts = new Alerts(ui->controllerWidget, ui->batteryWidget);
 
     /* create connection */
-    if (connection != NULL)
-        delete connection;
     connection = new Connections(rpm, alerts);
 
     /* create settings widget */
