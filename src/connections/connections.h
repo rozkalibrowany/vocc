@@ -56,13 +56,18 @@ private:
      */
     template <typename T> T calculateAvg(QVector<T> &container, T value, quint16 _size);
     /**
-     * @brief initializeCan - is a method initializing system CAN bus
+     * @brief initializeCanInterface - is a method initializing CAN bus interface
      */
-    void initializeCan(void);
+    int initializeCanInterface(void);
     /**
      * @brief initializeSignalsAndSlots - is a method initializing signals and slots
      */
     void initializeSignalsAndSlots(void);
+    /**
+     * @brief initializeSimulation - initializes pythonic can simulation
+     * @return
+     */
+    int initializeSimulation(void);
     /**
      * @brief closeConnection - is a method for killing QProcess and closing connection
      */
@@ -80,10 +85,11 @@ private:
      * @brief getCanMode - method that provides information about current can mode
      * @return
      */
-    QString getCanMode(void);
+    const QString getCanMode(void);
 
-    bool canMode; /// - keeps an information about can mode (0-Converter, 1-Simulation)
-    int canBaud; /// - keeps an information about can baudrate (125, 250, 500, 1000 kbit/s)
+    QString mFilePath; /// - keeps the path of python can simulation file
+    bool mCanMode; /// - keeps an information about can mode (0-Converter, 1-Simulation)
+    int mCanBaud; /// - keeps an information about can baudrate (125, 250, 500, 1000 kbit/s)
     QVector <quint16> avgRpm; /// - container that keeps samples of rpm value
     QVector <quint16> avgCurrent; /// - container that keeps samples of current
     QVector <quint16> avgVoltage; /// - container that keeps samples of voltage
@@ -166,6 +172,10 @@ public slots:
      * @param value - is an int value
      */
     void setCanBaudrate(int value);
+    /**
+     * @brief CANerrorOccured - method that catches Qprocess error
+     * @param error
+     */
 };
 
 #endif // CONNECTIONS_H

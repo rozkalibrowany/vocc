@@ -1,10 +1,16 @@
 #include <QStringList>
 #include <QByteArrayList>
+#include <QDir>
+#include <QFileInfo>
 #include "connections.h"
 #include "../common/logger.h"
 #include "../common/parameters.h"
 
-#define CLASS_INFO      "connections"
+#define CLASS_INFO              "connections"
+#define DEFAULT_CAN_MODE        0
+#define DEFAULT_CAN_BAUD        250000
+
+
 
 Connections::Connections(RpmWidget *m_rpm, Alerts *m_alerts)
 {
@@ -14,6 +20,11 @@ Connections::Connections(RpmWidget *m_rpm, Alerts *m_alerts)
     alerts = m_alerts;
 
     initializeSignalsAndSlots();
+
+    /* default CAN settings */
+    mCanMode = DEFAULT_CAN_MODE;
+    mCanBaud = DEFAULT_CAN_BAUD;
+
 }
 
 
@@ -42,31 +53,91 @@ void Connections::initializeSignalsAndSlots(void)
 
 void Connections::initializeConnection(void)
 {
-    LOG (LOG_CONNECTIONS, "%s - initializing connection: %s", CLASS_INFO, isConnected ? "false" : "true");
+    LOG (LOG_CONNECTIONS, "%s - %s connection", CLASS_INFO, isConnected ? "closing" : "initializing");
+
+    int exitCode = 0;
 
     if (getConnectionStatus()) {
         closeConnection();
         return;
     }
 
+    /* if CAN is in conv mode set iface */
+    if (mCanMode)
+        exitCode = initializeCanInterface();
+    else /* else, initialize pythonic symulation */
+        exitCode = initializeSimulation();
+
+    if (exitCode) {
+        return;
+    }
+
+    /* create new QProcess object */
     process = new QProcess();
-    connect(process, &QProcess::readyReadStandardOutput,
-            this, &Connections::readLine);
+
+    /* connect output to read */
+    connect (process, &QProcess::readyReadStandardOutput,
+             this, &Connections::readLine);
+
     establishConnection();
+
 }
 
 
-void Connections::initializeCan(void)
+int Connections::initializeSimulation(void)
 {
-    LOG (LOG_CONNECTIONS, "%s - initializing CAN bus", CLASS_INFO);
+    LOG (LOG_CONNECTIONS, "%s - initializing python CAN simulation", CLASS_INFO);
 
-    QString command;
+    QString currentPath;
 
-    QProcess *can = new QProcess();
-    command = "ip link set can0 up type can bitrate";
-    command = command + " " + canBaud;
-    can->start(command);
-    /* TODO: check operation status */
+    QDir tmpCurrDir = QDir::current();
+    bool dirPresent = tmpCurrDir.cdUp();
+
+    if (dirPresent)
+         currentPath = tmpCurrDir.path();
+    else {
+        LOG (LOG_CONNECTIONS, "%s - cannot find parent directory", CLASS_INFO);
+        return 1;
+    }
+
+    mFilePath = currentPath + "/" + QString::fromUtf8(SIMULATION_FILE);
+
+    QFileInfo checkFile(mFilePath);
+
+    if (checkFile.exists() && checkFile.isFile()) {
+        LOG (LOG_CONNECTIONS, "%s - file \"%s\" found", CLASS_INFO,
+             mFilePath.toStdString().c_str());
+        return 0;
+    } else {
+        LOG (LOG_CONNECTIONS, "%s - file \"%s\" not found", CLASS_INFO,
+             QString::fromUtf8(SIMULATION_FILE).toStdString().c_str());
+        return 1;
+    }
+
+}
+
+
+int Connections::initializeCanInterface(void)
+{
+    LOG (LOG_CONNECTIONS, "%s - initializing CAN interface", CLASS_INFO);
+
+    QString ifaceCmd;
+
+    QProcess *iface = new QProcess();
+
+    ifaceCmd = QString::fromUtf8(CAN_INIT);
+    ifaceCmd = ifaceCmd + " " + QString::number(getCanBaudrate());
+    LOG (LOG_CONNECTIONS, "%s - CAN interface command \"%s\"", CLASS_INFO,
+         ifaceCmd.toStdString().c_str());
+
+    iface->start(ifaceCmd);
+    iface->waitForFinished();
+    if (iface->exitCode()){
+        LOG (LOG_CONNECTIONS, "%s - ERROR: %s", CLASS_INFO,
+             iface->readAllStandardError().toStdString().c_str());
+    }
+
+    return iface->exitCode();
 }
 
 
@@ -95,7 +166,12 @@ void Connections::establishConnection(void)
     LOG (LOG_CONNECTIONS, "%s - establishing CAN connection", CLASS_INFO);
 
     process->setProcessChannelMode(process->MergedChannels);
-    process->start(getCanMode());
+    if (getCanMode() == RUN_CAN_CMD)
+        process->start(RUN_CAN_CMD);
+    else {
+        QString cmd = QString::fromUtf8(PYTHON_CMD) + " " + mFilePath;
+        process->start(cmd);
+    }
     if (process->pid() != 0)
         setConnectionStatus(true);
     LOG (LOG_CONNECTIONS, "%s - process PID: %d", CLASS_INFO, process->pid());
@@ -225,15 +301,15 @@ bool Connections::getConnectionStatus()
 }
 
 
-QString Connections::getCanMode(void)
+const QString Connections::getCanMode(void)
 {
     LOG (LOG_CONNECTIONS, "%s - CAN mode - %s", CLASS_INFO,
-             canMode ? "converter mode" : "test mode");
+             mCanMode ? "converter mode" : "test mode");
 
-    if (canMode)
+    if (mCanMode)
         return RUN_CAN_CMD;
     else
-        return RUN_TEST_CMD;
+        return PYTHON_CMD;
 }
 
 
@@ -242,13 +318,13 @@ void Connections::setCanMode(bool mode)
    LOG (LOG_CONNECTIONS, "%s - CAN mode set - %s", CLASS_INFO,
             mode ? "converter mode" : "test mode");
 
-   canMode = mode;
+   mCanMode = mode;
 }
 
 
 int Connections::getCanBaudrate(void)
 {
-    return canBaud;
+    return mCanBaud;
 }
 
 
@@ -256,7 +332,7 @@ void Connections::setCanBaudrate(int value)
 {
    LOG (LOG_CONNECTIONS, "%s - CAN baud rate - %d", CLASS_INFO, value);
 
-   canBaud = value;
+   mCanBaud = value;
 
 }
 
