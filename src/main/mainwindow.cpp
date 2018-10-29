@@ -69,7 +69,15 @@ MainWindow::MainWindow(QWidget *parent)
     conf_exit();
     int key = conf_init ("settings.conf");
 
+    char *value;
+
     LOG (LOG_MAINWINDOW, "%s - key - %d", CLASS_INFO, key);
+    int found = conf_find_key(GLOBAL, "LODODO", NULL);
+    LOG (LOG_MAINWINDOW, "%s - key found? - %d", CLASS_INFO, found);
+    int key2 = conf_get_value(found, &value);
+    LOG (LOG_MAINWINDOW, "%s - key value - %s", CLASS_INFO, value);
+
+
 }
 
 
