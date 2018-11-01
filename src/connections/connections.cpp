@@ -59,6 +59,8 @@ void Connections::initializeConnection(void)
 
     if (getConnectionStatus()) {
         closeConnection();
+        LOG (LOG_CONNECTIONS, "%s - connection closed", CLASS_INFO);
+        emit printMessage(QString("connection closed"), 1);
         return;
     }
 
@@ -69,13 +71,15 @@ void Connections::initializeConnection(void)
         exitCode = initializeSimulation();
 
     if (exitCode) {
+        LOG (LOG_CONNECTIONS, "%s - connection failed", CLASS_INFO);
+        emit printMessage(QString("connection failed"), 2);
         return;
     }
 
     /* create new QProcess object */
     process = new QProcess();
 
-    /* connect output to read */
+    /* connect output to read by method */
     connect (process, &QProcess::readyReadStandardOutput,
              this, &Connections::readLine);
 
@@ -97,6 +101,7 @@ int Connections::initializeSimulation(void)
          currentPath = tmpCurrDir.path();
     else {
         LOG (LOG_CONNECTIONS, "%s - cannot find parent directory", CLASS_INFO);
+        emit printMessage(QString("Cannot find parent directory"), 2);
         return 1;
     }
 
@@ -107,10 +112,12 @@ int Connections::initializeSimulation(void)
     if (checkFile.exists() && checkFile.isFile()) {
         LOG (LOG_CONNECTIONS, "%s - file \"%s\" found", CLASS_INFO,
              mFilePath.toStdString().c_str());
+        emit printMessage(QString("File %1 found").arg(mFilePath), 0);
         return 0;
     } else {
         LOG (LOG_CONNECTIONS, "%s - file \"%s\" not found", CLASS_INFO,
              QString::fromUtf8(SIMULATION_FILE).toStdString().c_str());
+        emit printMessage(QString("File %1 not found").arg(mFilePath), 2);
         return 1;
     }
 
@@ -129,12 +136,15 @@ int Connections::initializeCanInterface(void)
     ifaceCmd = ifaceCmd + " " + QString::number(getCanBaudrate());
     LOG (LOG_CONNECTIONS, "%s - CAN interface command \"%s\"", CLASS_INFO,
          ifaceCmd.toStdString().c_str());
+    emit printMessage(QString("CAN interface command \"%1\"").arg(ifaceCmd), 0);
 
     iface->start(ifaceCmd);
     iface->waitForFinished();
     if (iface->exitCode()){
+        QString msg = iface->readAllStandardError();
         LOG (LOG_CONNECTIONS, "%s - ERROR: %s", CLASS_INFO,
-             iface->readAllStandardError().toStdString().c_str());
+             msg.toStdString().c_str());
+        emit printMessage(QString("ERROR: %1").arg(msg), 2);
     }
 
     return iface->exitCode();
@@ -155,12 +165,6 @@ void Connections::closeConnection(void)
 }
 
 
-void Connections::baudRateChanged(int value)
-{
-    LOG (LOG_CONNECTIONS, "%s - baud rate changed %d", CLASS_INFO, value);
-}
-
-
 void Connections::establishConnection(void)
 {
     LOG (LOG_CONNECTIONS, "%s - establishing CAN connection", CLASS_INFO);
@@ -172,9 +176,11 @@ void Connections::establishConnection(void)
         QString cmd = QString::fromUtf8(PYTHON_CMD) + " " + mFilePath;
         process->start(cmd);
     }
-    if (process->pid() != 0)
+    if (process->pid() != 0) {
         setConnectionStatus(true);
-    LOG (LOG_CONNECTIONS, "%s - process PID: %d", CLASS_INFO, process->pid());
+        LOG (LOG_CONNECTIONS, "%s - process PID: %d", CLASS_INFO, process->pid());
+        emit printMessage(QString("connection established, PID: %1").arg(process->pid()), 0);
+    }
     emit setConnectionStateButton(getConnectionStatus());
     emit enableRadioButtons(false);
 }
@@ -332,7 +338,7 @@ void Connections::setCanBaudrate(int value)
 {
    LOG (LOG_CONNECTIONS, "%s - CAN baud rate - %d", CLASS_INFO, value);
 
-   mCanBaud = value;
+   mCanBaud = value * 1000;
 
 }
 

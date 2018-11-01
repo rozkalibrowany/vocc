@@ -573,6 +573,15 @@ background-color: rgb(65,65,65);</string>
                    </property>
                    <item>
                     <widget class="QTextEdit" name="outputConsole">
+                     <property name="font">
+                      <font>
+                       <family>Halvetica</family>
+                       <pointsize>10</pointsize>
+                       <weight>75</weight>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true">padding: 2px;
 font: 75 bold 10pt &quot;Halvetica&quot; ;
@@ -944,7 +953,7 @@ QSlider::handle:horizontal {
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QFrame" name="verticalFrame_2">
+                  <widget class="QFrame" name="verticalFrame_21">
                    <layout class="QVBoxLayout" name="verticalLayout_21">
                     <property name="spacing">
                      <number>0</number>
@@ -1031,7 +1040,7 @@ min-height: 35px;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QFrame" name="verticalFrame_3">
+                  <widget class="QFrame" name="verticalFrame_31">
                    <layout class="QVBoxLayout" name="verticalLayout_37">
                     <property name="spacing">
                      <number>0</number>
@@ -1105,7 +1114,7 @@ min-height: 35px;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QFrame" name="verticalFrame">
+                  <widget class="QFrame" name="verticalFrame_99">
                    <layout class="QVBoxLayout" name="verticalLayout_17">
                     <property name="spacing">
                      <number>0</number>

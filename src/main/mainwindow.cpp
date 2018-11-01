@@ -51,6 +51,9 @@ MainWindow::MainWindow(QWidget *parent)
     /* initialize functions buttons */
     initializeFunctionButtons();
 
+    /* initialize signals and slots */
+    initializeSignalsAndSlots();
+
     /* set system datetime */
     setSystemDateSlot();
     initializeTimerForDateTime();
@@ -113,6 +116,18 @@ void MainWindow::initializeFunctionButtons(void)
                 [this] { menuButtonChanged(ui->vfStats); });
     connect (ui->settingsButton, &QPushButton::clicked,
                 [this] { menuButtonChanged(ui->vfSettings); });
+}
+
+
+void MainWindow::initializeSignalsAndSlots(void)
+{
+    LOG (LOG_MAINWINDOW, "%s - initializing signals and slots", CLASS_INFO);
+
+    connect (this, &MainWindow::printMessageToConsole, settings,
+                [=](QString msg, int level) {settings->consolePrintExternalMessage(msg,level);});
+
+    connect (connection, &Connections::printMessage,
+                [=](QString msg, int level) { emit printMessageToConsole(msg, level);});
 
     connect (ui->canButton, &QPushButton::clicked,
                 connection, &Connections::initializeConnection);
@@ -152,7 +167,6 @@ void MainWindow::initializeFunctionButtons(void)
 
     connect (this, &MainWindow::addLapTime,
                 [=] (QString lapTime) { stats->setLapTime(lapTime); } );
-
 
 }
 

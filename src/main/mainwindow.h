@@ -54,6 +54,10 @@ signals:
      * @brief addLapTime - signal emitted when timer stopped
      */
     void addLapTime(QString);
+    /**
+     * @brief printMessageToConsole - signal emitted when message to print appears
+     */
+    void printMessageToConsole(QString, int);
 
 private:
     /// This method is used to change property of panel LCD objects in MainWindow
@@ -62,8 +66,10 @@ private:
     void buttonStyleUpdate(QFrame *frame, bool isChanged);
     /// This method is used to center the window in screen
     void centerOnScreen(void);
-    /// This method is used to connect signals with slots
+    /// This method is used to connect signals with slots from main buttons
     void initializeFunctionButtons(void);
+    /// This method is called to connect other signals and slots
+    void initializeSignalsAndSlots(void);
     /// This method is used to create QTimer objects needed for lap timer tool
     void initializeLapTimer(void);
     /// In this method we create new QTimer object and set timeout

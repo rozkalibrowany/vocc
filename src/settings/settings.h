@@ -30,54 +30,33 @@ class Settings : public QWidget
     Q_OBJECT
 
 public:
-    /**
-     * @brief Settings - constructs Settings object and takes two arguments
-     * @param parent - QWidget parent object
-     * @param connection - pointer to Connections object
-     */
+    /// constructs Settings object and takes two arguments
     explicit Settings(QWidget *parent, Connections *connection);
     ~Settings();
 
+    /// method that prints message to output console
+    void consolePrintMessage(QString msg, int level);
+
 public slots:
-    /**
-     * @brief enableRadioButtons - method called to enable/disable radio buttons pool
-     * @param enable
-     */
+    /// method called to enable/disable radio buttons pool
     void enableRadioButtons(bool enable);
+    /// calls a local method to print message
+    void consolePrintExternalMessage(QString msg, int level);
 
 private slots:
-    /**
-     * @brief onConnectionsCanBaudChange - method called when can baudrate changed
-     * @param value - is an int value representing can baudrate
-     */
+    /// method called when can baudrate changed
     void onConnectionsCanBaudChange(int value);
-    /**
-     * @brief onClearConsoleButtonClicked - method called when clear console button clicked
-     */
+    /// method called when clear console button clicked
     void onClearConsoleButtonClicked(void);
-    /**
-     * @brief onConnectionsSetConsoleState - method called to enable/disable console output
-     * @param state
-     */
+    /// method called to enable/disable console output
     void onConnectionsSetConsoleState(int state);
-    /**
-     * @brief onConnectionsSetCanModeToggled - method called to change can mode
-     * @param mode
-     */
+    /// method called to change can mode
     void onConnectionsSetCanModeToggled(bool mode);
-    /**
-     * @brief onContrastSliderValueChanged - method called to change contrast of GUI backgroud
-     * @param value
-     */
+    /// method called to change contrast of GUI backgroud
     void onContrastSliderValueChanged(int value);
-    /**
-     * @brief onSetDefaultsButtonClicked - method called to restore default settings
-     */
+    /// method called to restore default settings
     void onSetDefaultsButtonClicked(void);
-    /**
-     * @brief onFontSizeChanged - method called to change font size
-     * @param index
-     */
+    /// method called to change font size
     void onFontSizeChanged(int index);
 
 signals:
@@ -122,12 +101,7 @@ private:
      * @return
      */
     int connectionsGetCurrentBaudIndex(void);
-    /**
-     * @brief consolePrintMessage - method that prints message to output console
-     * @param string
-     * @param level
-     */
-    void consolePrintMessage(QString string, int level);
+
     /**
      * @brief stripBaudRateToInt - method that strips and convert QString baudrate to int
      * @param baud
@@ -136,7 +110,6 @@ private:
     int stripBaudRateToInt(QString baud);
 
     int index;
-    QString lastMessage;
     Connections *con;
     Ui::Settings *settings;
 };

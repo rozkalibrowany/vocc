@@ -18,7 +18,6 @@ Settings::Settings(QWidget *parent, Connections *connection) :
 
     settings->setupUi(this);
     con = connection;
-    lastMessage = "";
 
     /* set CAN baud rates */
     connectionsFillCanBaudComboBox();
@@ -218,15 +217,14 @@ void Settings::onClearConsoleButtonClicked(void)
 }
 
 
-void Settings::consolePrintMessage(QString string, int level)
+void Settings::consolePrintMessage(QString msg, int level)
 {
 
     /* printing message to output console */
     if (connectionsGetConsoleState()) {
-        LOG (LOG_SETTINGS, "%s - message: %s", CLASS_INFO,
-                string.toStdString().c_str());
+        LOG (LOG_SETTINGS, "%s - message: %s", CLASS_INFO, msg);
 
-        lastMessage = string;
+        // TODO : static QString lastMessage = msg;
         QString colorStr;
         /* defining text alerts colors */
         switch(level) {
@@ -237,9 +235,16 @@ void Settings::consolePrintMessage(QString string, int level)
         }
         QColor color(colorStr);
         settings->outputConsole->setTextColor(color);
-        string = "> " + string;
-        settings->outputConsole->append(string);
+        msg = "> " + msg;
+        settings->outputConsole->append(msg);
     }
+}
+
+
+void Settings::consolePrintExternalMessage(QString msg, int level)
+{
+    //QString qMsg = QString::fromUtf16((ushort*)(msg));
+    consolePrintMessage(msg, level);
 }
 
 
