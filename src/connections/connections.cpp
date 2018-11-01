@@ -197,8 +197,15 @@ void Connections::readLine()
     QString data_s (data_Uns);
     QStringList data(data_s.split(' '));
 
-    if (data[0] != "can0")
+    if (data[0] != "can0") {
+        LOG (LOG_CONNECTIONS_DATA, "%s - wrong data - %s", CLASS_INFO, \
+                 data_s.toStdString().c_str());
+        emit printMessage(QString("wrong CAN data: %1").arg(data_s), 2);
         return;
+    }
+
+    if (mCanToConsole)
+        emit printMessage(QString("Data: %1").arg(data_s), 1);
 
     /* remove first element (interface name - can0) */
     data.removeFirst();
@@ -316,6 +323,21 @@ const QString Connections::getCanMode(void)
         return RUN_CAN_CMD;
     else
         return PYTHON_CMD;
+}
+
+
+bool Connections::isCanToConsoleEnabled(void)
+{
+    return mCanToConsole;
+}
+
+
+void Connections::setCanDataToConsole(bool enable)
+{
+    LOG (LOG_CONNECTIONS, "%s - CAN data to console %s", CLASS_INFO,
+             enable ? "enabled" : "disabled");
+
+    mCanToConsole = enable;
 }
 
 

@@ -123,12 +123,6 @@ void MainWindow::initializeSignalsAndSlots(void)
 {
     LOG (LOG_MAINWINDOW, "%s - initializing signals and slots", CLASS_INFO);
 
-    connect (this, &MainWindow::printMessageToConsole, settings,
-                [=](QString msg, int level) {settings->consolePrintExternalMessage(msg,level);});
-
-    connect (connection, &Connections::printMessage,
-                [=](QString msg, int level) { emit printMessageToConsole(msg, level);});
-
     connect (ui->canButton, &QPushButton::clicked,
                 connection, &Connections::initializeConnection);
 

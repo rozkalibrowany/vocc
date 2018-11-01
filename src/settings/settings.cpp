@@ -22,9 +22,11 @@ Settings::Settings(QWidget *parent, Connections *connection) :
     /* set CAN baud rates */
     connectionsFillCanBaudComboBox();
     /* connect connection signals */
-    connectionsInitializeSignals();
+    initializeSignalsAndSlots();
     /* set default CAN mode (test) */
     settings->testRadioBtn->setChecked(true);
+    /* set default output of CAN data */
+    settings->canDataCheck->setChecked(false);
     /* set default settings */
     onSetDefaultsButtonClicked();
     /* enable console output (default) */
@@ -56,10 +58,13 @@ void Settings::connectionsFillCanBaudComboBox(void)
 }
 
 
-void Settings::connectionsInitializeSignals(void)
+void Settings::initializeSignalsAndSlots(void)
 {
     LOG (LOG_SETTINGS, "%s - initializing connection settings signals", CLASS_INFO);
 
+    /* signal activated when message to print appears */
+    connect (con, &Connections::printMessage,
+                [=](QString msg, int level) { consolePrintExternalMessage(msg,level); });
     /* signal activated when can baud changed */
     connect (settings->canBaud, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
                 [=](int value) { onConnectionsCanBaudChange(value); });
@@ -72,6 +77,12 @@ void Settings::connectionsInitializeSignals(void)
     /* signal activated when console check box clicked */
     connect (settings->consoleCheck, &QCheckBox::stateChanged,
                 [=](int state) { onConnectionsSetConsoleState(state); });
+    /* signal activated when CAN data check box clicked */
+    connect (settings->canDataCheck, &QCheckBox::stateChanged,
+                [=](int state) { onConnectionsSetCanCheckBox(state); });
+    /* signal activated to enable CAN output to console */
+    connect (this, &Settings::enableCanToConsole, con,
+                [=](bool enable) { con->setCanDataToConsole(enable); });
     /* signal activated when can mode changed */
     connect (settings->convRadioBtn, &QRadioButton::toggled,
                 [=](bool checked) { onConnectionsSetCanModeToggled(checked);} );
@@ -137,12 +148,24 @@ void Settings::onConnectionsSetCanModeToggled(bool mode)
 
 void Settings::onConnectionsSetConsoleState(int state)
 {
-    LOG (LOG_SETTINGS, "%s - console enabled: %s", CLASS_INFO,
-            state ? "true" : "false");
+    LOG (LOG_SETTINGS, "%s - console %s", CLASS_INFO,
+            state ? "enabled" : "disabled");
 
     settings->consoleCheck->setChecked(state);
 }
 
+
+void Settings::onConnectionsSetCanCheckBox(int state)
+{
+    LOG (LOG_SETTINGS, "%s - CAN data to console %s", CLASS_INFO,
+            state ? "enabled" : "disabled");
+
+    settings->canDataCheck->setChecked(state);
+    if (state)
+        emit enableCanToConsole(true);
+    else
+        emit enableCanToConsole(false);
+}
 
 void Settings::onContrastSliderValueChanged(int value)
 {

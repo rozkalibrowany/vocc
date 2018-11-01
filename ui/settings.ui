@@ -383,6 +383,12 @@ background-color: rgb(65,65,65);</string>
                               <property name="text">
                                <string>SIMULATION</string>
                               </property>
+                              <property name="iconSize">
+                               <size>
+                                <width>20</width>
+                                <height>20</height>
+                               </size>
+                              </property>
                              </widget>
                             </item>
                            </layout>
@@ -402,6 +408,15 @@ background-color: rgb(65,65,65);</string>
                                 <width>0</width>
                                 <height>35</height>
                                </size>
+                              </property>
+                              <property name="baseSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="cursor">
+                               <cursorShape>SizeAllCursor</cursorShape>
                               </property>
                               <property name="styleSheet">
                                <string notr="true">font: 75 bold 8pt &quot;Halvetica&quot; ;
@@ -474,38 +489,6 @@ background-color: rgb(65,65,65);</string>
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_6">
                       <item>
-                       <widget class="QPushButton" name="advancedBtn">
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>30</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>100</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">padding: 2px;
-font: 75 bold 10pt &quot;Halvetica&quot; ;
-color: rgb(24, 24, 24);
-background-color: #e6e6e6;</string>
-                        </property>
-                        <property name="text">
-                         <string>Advanced</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_5">
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <item>
                        <widget class="QPushButton" name="clearConsoleBtn">
                         <property name="minimumSize">
                          <size>
@@ -526,6 +509,38 @@ background-color: #e6e6e6;</string>
                         </property>
                         <property name="text">
                          <string>Clear console</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_5">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QCheckBox" name="canDataCheck">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>100</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">border: none;
+font: 75 bold 9pt &quot;Halvetica&quot; ;
+color: #e6e6e6;
+background-color: rgb(65,65,65);</string>
+                        </property>
+                        <property name="text">
+                         <string>CAN Data</string>
                         </property>
                        </widget>
                       </item>
@@ -1254,7 +1269,7 @@ font: 75 italic bold 12pt &quot;Halvetica&quot; ;
 color: #e6e6e6;</string>
                 </property>
                 <property name="text">
-                 <string>LOGGER</string>
+                 <string>SYSTEM</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>

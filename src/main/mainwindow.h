@@ -50,14 +50,8 @@ public:
     ~MainWindow();
 
 signals:
-    /**
-     * @brief addLapTime - signal emitted when timer stopped
-     */
+    /// signal emitted when timer stopped
     void addLapTime(QString);
-    /**
-     * @brief printMessageToConsole - signal emitted when message to print appears
-     */
-    void printMessageToConsole(QString, int);
 
 private:
     /// This method is used to change property of panel LCD objects in MainWindow

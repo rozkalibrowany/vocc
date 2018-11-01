@@ -62,7 +62,10 @@ private:
     int getCanBaudrate(void);
     /// method that provides information about current can mode
     const QString getCanMode(void);
+    /// method that returns information about CAN data check box
+    bool isCanToConsoleEnabled(void);
 
+    bool mCanToConsole; /// - enable/disable output CAN data to console
     QString mFilePath; /// - keeps the path of python can simulation file
     bool mCanMode; /// - keeps an information about can mode (0-Converter, 1-Simulation)
     int mCanBaud; /// - keeps an information about can baudrate (125, 250, 500, 1000 kbit/s)
@@ -111,6 +114,8 @@ public slots:
     void setCanMode(bool mode);
     /// method called to set can baudrate
     void setCanBaudrate(int value);
+    /// method called to enable/disable CAN data output to console
+    void setCanDataToConsole(bool enable);
 
 };
 

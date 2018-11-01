@@ -50,6 +50,8 @@ private slots:
     void onClearConsoleButtonClicked(void);
     /// method called to enable/disable console output
     void onConnectionsSetConsoleState(int state);
+    /// method called to enable/disable CAN data to console
+    void onConnectionsSetCanCheckBox(int state);
     /// method called to change can mode
     void onConnectionsSetCanModeToggled(bool mode);
     /// method called to change contrast of GUI backgroud
@@ -60,53 +62,29 @@ private slots:
     void onFontSizeChanged(int index);
 
 signals:
-    /**
-     * @brief connectionsChangeCanBaud - signal emitted when can baudrate changed
-     */
+    /// signal emitted when can baudrate changed
     void connectionsChangeCanBaud(int);
-    /**
-     * @brief connectionsSetCanMode - signal emitted when can mode changed
-     */
+    /// signal emitted when can mode changed
     void connectionsSetCanMode(bool);
-    /**
-     * @brief updateBackgroundContrast - signal emitted when background contrast changed
-     */
+    /// signal emitted when background contrast changed
     void updateBackgroundContrast(int);
-    /**
-     * @brief updateFontSize - signal emitted when font size changed
-     */
+    /// signal emitted when font size changed
     void updateFontSize(QString);
+    /// signal emitted when CAN data check box changed
+    void enableCanToConsole(bool);
 
 private:
-    /**
-     * @brief connectionsFillCanBaudComboBox - method which fills canbaud combobox with values
-     */
+    /// method which fills canbaud combobox with values
     void connectionsFillCanBaudComboBox(void);
-    /**
-     * @brief connectionsInitializeSignals - method that connects signals and slots
-     */
-    void connectionsInitializeSignals(void);
-    /**
-     * @brief connectionsGetConsoleState - method that returns console state enable/disable
-     * @return 0 - disable or 1 - enable
-     */
+    /// method that connects signals and slots
+    void initializeSignalsAndSlots(void);
+    /// method that returns console state enable/disable
     bool connectionsGetConsoleState(void);
-    /**
-     * @brief connectionsGetCanModeState - method that returns can mode state
-     * @return 0 - disabled or 1 - enabled
-     */
+    /// method that returns can mode state
     bool connectionsGetCanModeState(void);
-    /**
-     * @brief connectionsGetCurrentBaudIndex - method that returns current baudrate index
-     * @return
-     */
+    /// method that returns current baudrate index
     int connectionsGetCurrentBaudIndex(void);
-
-    /**
-     * @brief stripBaudRateToInt - method that strips and convert QString baudrate to int
-     * @param baud
-     * @return
-     */
+    /// method that strips and convert QString baudrate to int
     int stripBaudRateToInt(QString baud);
 
     int index;
