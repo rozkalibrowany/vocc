@@ -2,7 +2,7 @@
 ![alt text](https://preview.ibb.co/eZY4c9/Zrzut_ekranu_z_2018_09_11_20_43_48.png)
 
 # Requirements
- - C++11
+ - gcc 
  - Qt5
  - qmake
 
