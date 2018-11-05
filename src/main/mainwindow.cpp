@@ -364,7 +364,13 @@ void MainWindow::updateFontSize(QString size)
     ui->menuButtonsGroup->setStyleSheet(style.arg(size));
 }
 
-
+/* 0x0 - no alerts
+ * 0x1 - 0x18 - number of active alerts
+ * 0x1A - no data
+ * 0x1B - CAN init error
+ * 0x1C - wrong CAN frame
+ *
+ */
 void MainWindow::updateAlertsStatus(int err)
 {
     if (err != -1)

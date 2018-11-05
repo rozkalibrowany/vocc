@@ -226,9 +226,6 @@ background: #365546;
 
 QFrame[alert=&quot;true&quot;] {
 border: 3.5px solid #ff4d4d;
-border-radius: 4px;
-padding: 2px;
-background: transparent;
 }</string>
          </property>
          <layout class="QVBoxLayout" name="vlMain_2">
@@ -1348,6 +1345,14 @@ color: #ff4d4d;
 
 QLabel[noData=&quot;true&quot;] {
 border: 1.5px solid #ffa34d;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 11pt &quot;Halvetica&quot; ;
+color: #ff4d4d;
+}
+
+QLabel[error=&quot;true&quot;] {
+border: 1.5px solid #ff4d4d;
 border-radius: 4px;
 padding: 2px;
 font: 75 italic 11pt &quot;Halvetica&quot; ;
