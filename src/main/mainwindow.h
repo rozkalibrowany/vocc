@@ -66,6 +66,8 @@ private:
     void initializeSignalsAndSlots(void);
     /// This method is used to create QTimer objects needed for lap timer tool
     void initializeLapTimer(void);
+    /// This method is used to create QTimer object for flash timer
+    void initializeFlashTimer(void);
     /// In this method we create new QTimer object and set timeout
     void initializeTimerForDateTime(void);
     /// This method is called when page in QStackedWidget is changed
@@ -74,13 +76,17 @@ private:
     void setNewPage(int index);
     /// This method is called when lap timer button is clicked
     void setLapTimerTime(void);
+    /// This method is called to set flashing button
+    void setButtonFlashing(QFrame &frame, bool start);
+
 
     bool lapTimerStarted; /// keeps information whether lap timer has started or not
+    bool flashingActivated, setFlash; /// keeps information whether timer for flashing button started
     int s, m, ms; /// keeps information about lap (minutes, seconds, miliseconds)
     QMap<QString, int> map; /// mapper for menu buttons page index (for example main: 0, settings: 1)
     QFrame *lastButtonObject; /// keeps information about last active pressed object
     QString date, time, lapTime; /// keeps information about time, date and lap time
-    QTimer *lapTimer, *sleepTimer; /// pointers of QTimer class
+    QTimer *lapTimer, *sleepTimer, *flashTimer; /// pointers of QTimer class
     QDesktopWidget resolution; /// keeps information about screen resolution
     Ui::MainWindow *ui; /// pointer to UI of MainWindow
     Settings *settings; /// pointer to Settings class
@@ -120,7 +126,7 @@ private slots:
     void setSystemDateSlot(void);
     /// This method is called when start lap timer button was pressed
     void startLapTimerSlot(void);
-    /// This method is called when timer occured of QTimer object
+    /// This method is called when timeout occured
     void updateLapTimerSlot(void);
     /// This method is called when we stop lap timer
     void resetLapTimerSlot(void);

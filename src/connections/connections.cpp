@@ -161,7 +161,7 @@ void Connections::closeConnection(void)
     delete process;
     emit setConnectionStateButton(getConnectionStatus());
     emit enableRadioButtons(true);
-    emit setAlertsButtonState(-1);
+    emit setAlertsButtonState(0x1A);
 }
 
 
@@ -198,7 +198,7 @@ void Connections::readLine()
     QStringList data(data_s.split(' '));
 
     if (data[0] != "can0") {
-        LOG (LOG_CONNECTIONS_DATA, "%s - wrong data - %s", CLASS_INFO, \
+        LOG (LOG_CONNECTIONS_DATA, "%s - wrong CAN data - %s", CLASS_INFO, \
                  data_s.toStdString().c_str());
         emit printMessage(QString("wrong CAN data: %1").arg(data_s), 2);
         return;

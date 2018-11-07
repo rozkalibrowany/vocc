@@ -61,6 +61,9 @@ MainWindow::MainWindow(QWidget *parent)
     /* initialize lap timer */
     initializeLapTimer();
 
+    /* initializing flashing button timer */
+    initializeFlashTimer();
+
     /* set start page */
     menuButtonChanged(ui->vfMain);
 
@@ -183,6 +186,14 @@ void MainWindow::initializeLapTimer(void)
     connect (ui->timerButton, &QPushButton::clicked, this, &MainWindow::startLapTimerSlot);
     connect (lapTimer, &QTimer::timeout, this, &MainWindow::updateLapTimerSlot);
     connect (sleepTimer, &QTimer::timeout, this, &MainWindow::resetLapTimerSlot);
+}
+
+
+void MainWindow::initializeFlashTimer(void)
+{
+    flashTimer = new QTimer();
+    flashTimer->setInterval(800);
+    setFlash = false;
 }
 
 
@@ -369,30 +380,70 @@ void MainWindow::updateFontSize(QString size)
  * 0x1A - no data
  * 0x1B - CAN init error
  * 0x1C - wrong CAN frame
- *
  */
 void MainWindow::updateAlertsStatus(int err)
 {
-    if (err != -1)
-        LOG (LOG_MAINWINDOW_DATA, "%s - found %d alerts!", CLASS_INFO, err);
-
     QString text;
 
-    if (err > 0) {
-        text = QString::number(err) + " " + "alerts!";
-        buttonStyleUpdate(ui->alertStatus, "isAlert", true);
-        buttonStyleUpdate(ui->alertStatus, "noData", false);
-        buttonStyleUpdate(ui->vfAlerts, "alert", true);
-    } else if ( err == -1) {
-        text = "No data";
-        buttonStyleUpdate(ui->alertStatus, "noData", true);
-    } else {
-        text = "No alerts";
+    if (err == 0x0) {
         buttonStyleUpdate(ui->alertStatus, "isAlert", false);
         buttonStyleUpdate(ui->alertStatus, "noData", false);
         buttonStyleUpdate(ui->vfAlerts, "alert", false);
+        setButtonFlashing(*ui->vfAlerts, false);
+
+        text = "No alerts";
     }
+
+    if (err > 0x0 && err < 0x1A) {
+        LOG (LOG_MAINWINDOW_DATA, "%s - found %d alerts!", CLASS_INFO, err);
+        buttonStyleUpdate(ui->alertStatus, "isAlert", true);
+        buttonStyleUpdate(ui->alertStatus, "noData", false);
+        buttonStyleUpdate(ui->vfAlerts, "alert", true);
+        text = QString::number(err) + " " + "alerts!";
+    } else {
+        switch (err) {
+            case 0x1A:
+                LOG (LOG_MAINWINDOW_DATA, "%s - no data!", CLASS_INFO);
+                text = "No data";
+                buttonStyleUpdate(ui->alertStatus, "noData", true);
+                break;
+            case 0x1B:
+                LOG (LOG_MAINWINDOW_DATA, "%s - CAN init error", CLASS_INFO);
+                text = "CAN init err";
+                buttonStyleUpdate(ui->alertStatus, "error", true);
+                buttonStyleUpdate(ui->vfSettings, "alert", true);
+                break;
+            case 0x1C:
+                LOG (LOG_MAINWINDOW_DATA, "%s - wrong CAN frame", CLASS_INFO);
+                text = "Wrong frame";
+                buttonStyleUpdate(ui->alertStatus, "noData", true);
+                buttonStyleUpdate(ui->vfSettings, "alert", true);
+        }
+    }
+
     ui->alertStatus->setText(text);
+}
+
+/* This method works only for 1 button simultaneously */
+void MainWindow::setButtonFlashing(QFrame &frame, bool start)
+{
+    if (flashingActivated && start)
+        return;
+
+    if (start) {
+        flashTimer->start();
+        flashingActivated = true;
+        connect (flashTimer, &QTimer::timeout, [this, &frame]
+        {
+             setFlash = !setFlash;
+             this->buttonStyleUpdate(&frame, "alert", setFlash);
+        });
+    }
+    else {
+        flashTimer->stop();
+        flashTimer->disconnect();
+        flashingActivated = false;
+    }
 }
 
 

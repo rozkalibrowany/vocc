@@ -437,6 +437,10 @@ background: #365546;
 
 QLabel[chosen=&quot;true&quot;] {
 background: #365546; 
+}
+
+QFrame[alert=&quot;true&quot;] {
+border: 3.5px solid #ff4d4d;
 }</string>
          </property>
          <layout class="QVBoxLayout" name="vlMain_4">

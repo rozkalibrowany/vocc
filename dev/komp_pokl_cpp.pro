@@ -3,6 +3,7 @@
 # Project created by QtCreator 2018-07-23T22:43:59
 #
 #-------------------------------------------------
+QMAKE_CXXFLAGS_RELEASE += -O2
 
 QT       += core gui
 
