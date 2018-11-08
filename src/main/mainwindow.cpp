@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
     initializeFlashTimer();
 
     /* set start page */
-    menuButtonChanged(ui->vfMain);
+    menuButtonChanged(*ui->vfMain);
 
     /* set default alert status */
     updateAlertsStatus(-1);
@@ -112,13 +112,13 @@ void MainWindow::initializeFunctionButtons(void)
     LOG (LOG_MAINWINDOW, "%s - initializing function buttons", CLASS_INFO);
 
     connect (ui->driveButton, &QPushButton::clicked,
-                [this] { menuButtonChanged(ui->vfMain); });
+                [this] { menuButtonChanged(*ui->vfMain); });
     connect (ui->alertsButton, &QPushButton::clicked,
-                [this] { menuButtonChanged(ui->vfAlerts); });
+                [this] { menuButtonChanged(*ui->vfAlerts); });
     connect (ui->statsButton, &QPushButton::clicked,
-                [this] { menuButtonChanged(ui->vfStats); });
+                [this] { menuButtonChanged(*ui->vfStats); });
     connect (ui->settingsButton, &QPushButton::clicked,
-                [this] { menuButtonChanged(ui->vfSettings); });
+                [this] { menuButtonChanged(*ui->vfSettings); });
 }
 
 
@@ -208,49 +208,40 @@ void MainWindow::initializeTimerForDateTime(void)
 }
 
 
-void MainWindow::menuButtonChanged(QFrame *frame)
+void MainWindow::menuButtonChanged(QFrame &frame)
 {
     LOG (LOG_MAINWINDOW, "%s - initializing function button: %s", CLASS_INFO, \
-         frame->objectName().toStdString().c_str());
+         frame.objectName().toStdString().c_str());
 
     if (lastButtonObject == NULL) {
-        lastButtonObject = frame;
-        setNewPage(map[frame->objectName()]);
+        lastButtonObject = &frame;
+        setNewPage(map[frame.objectName()]);
         buttonStyleUpdate(frame, true);
-        LOG (LOG_MAINWINDOW, "%s - newPage: %d", CLASS_INFO, map[frame->objectName()]);
-    } else if (lastButtonObject != frame) {
-        setNewPage(map[frame->objectName()]);
+        LOG (LOG_MAINWINDOW, "%s - newPage: %d", CLASS_INFO, map[frame.objectName()]);
+    } else if (lastButtonObject != &frame) {
+        setNewPage(map[frame.objectName()]);
         buttonStyleUpdate(frame, true);
-        buttonStyleUpdate(lastButtonObject, false);
-        lastButtonObject = frame;
+        buttonStyleUpdate(*lastButtonObject, false);
+        lastButtonObject = &frame;
     }
 }
 
 
-void MainWindow::buttonStyleUpdate(QFrame *frame, bool isChanged)
+void MainWindow::buttonStyleUpdate(QFrame &frame, bool isChanged)
 {
 
     LOG (LOG_MAINWINDOW, "%s - %s - %s", CLASS_INFO, Q_FUNC_INFO, \
-         frame->objectName().toStdString().c_str());
+         frame.objectName().toStdString().c_str());
 
     QPushButton *iconObject;
     QLabel *textObject;
 
-    iconObject = frame->findChild<QPushButton *>();
-    textObject = frame->findChild<QLabel *>();
+    iconObject = frame.findChild<QPushButton *>();
+    textObject = frame.findChild<QLabel *>();
 
-    frame->setProperty("chosen", isChanged);
-    frame->style()->unpolish(frame);
-    frame->style()->polish(frame);
-    frame->update();
-    iconObject->setProperty("chosen", isChanged);
-    iconObject->style()->unpolish(iconObject);
-    iconObject->style()->polish(iconObject);
-    iconObject->update();
-    textObject->setProperty("chosen", isChanged);
-    textObject->style()->unpolish(textObject);
-    textObject->style()->polish(textObject);
-    textObject->update();
+    styleUpdate(&frame, "chosen", isChanged);
+    styleUpdate(iconObject, "chosen", isChanged);
+    styleUpdate(textObject, "chosen", isChanged);
 
 }
 
@@ -260,16 +251,16 @@ void MainWindow::setStateConnectionButton(bool isConnected)
     LOG (LOG_MAINWINDOW, "%s - connection established - %d", CLASS_INFO, isConnected);
 
     if (isConnected) {
-        buttonStyleUpdate(ui->canButton, "connected", true);
+        styleUpdate(ui->canButton, "connected", true);
         ui->canButton->setText("Connected");
     } else {
-        buttonStyleUpdate(ui->canButton, "connected", false);
+        styleUpdate(ui->canButton, "connected", false);
         ui->canButton->setText(">Connect<");
     }
 }
 
 
-template <typename T> void MainWindow::buttonStyleUpdate(T *widget, const char* property, bool isChanged)
+template <typename T> void MainWindow::styleUpdate(T *widget, const char* property, bool isChanged)
 {
     widget->setProperty(property, isChanged);
     widget->style()->unpolish(widget);
@@ -278,16 +269,16 @@ template <typename T> void MainWindow::buttonStyleUpdate(T *widget, const char* 
 }
 
 
-template <typename T> void MainWindow::lcdStyleUpdate(T *widget, quint16 value, quint16 limit, quint16 max, bool isChanged)
+template <typename T> void MainWindow::lcdStyleUpdate(T &widget, quint16 value, quint16 limit, quint16 max, bool isChanged)
 {
     if (value > max)
-        buttonStyleUpdate(widget, "warning2", isChanged);
+        styleUpdate(widget, "warning2", isChanged);
     else if (value > limit) {
-        buttonStyleUpdate(widget, "warning", isChanged);
-        buttonStyleUpdate(widget, "warning2", !isChanged);
+        styleUpdate(widget, "warning", isChanged);
+        styleUpdate(widget, "warning2", !isChanged);
     } else {
-        buttonStyleUpdate(widget, "warning", !isChanged);
-        buttonStyleUpdate(widget, "warning2", !isChanged);
+        styleUpdate(widget, "warning", !isChanged);
+        styleUpdate(widget, "warning2", !isChanged);
     }
 }
 
@@ -386,9 +377,9 @@ void MainWindow::updateAlertsStatus(int err)
     QString text;
 
     if (err == 0x0) {
-        buttonStyleUpdate(ui->alertStatus, "isAlert", false);
-        buttonStyleUpdate(ui->alertStatus, "noData", false);
-        buttonStyleUpdate(ui->vfAlerts, "alert", false);
+        styleUpdate(ui->alertStatus, "isAlert", false);
+        styleUpdate(ui->alertStatus, "noData", false);
+        styleUpdate(ui->vfAlerts, "alert", false);
         setButtonFlashing(*ui->vfAlerts, false);
 
         text = "No alerts";
@@ -396,28 +387,33 @@ void MainWindow::updateAlertsStatus(int err)
 
     if (err > 0x0 && err < 0x1A) {
         LOG (LOG_MAINWINDOW_DATA, "%s - found %d alerts!", CLASS_INFO, err);
-        buttonStyleUpdate(ui->alertStatus, "isAlert", true);
-        buttonStyleUpdate(ui->alertStatus, "noData", false);
-        buttonStyleUpdate(ui->vfAlerts, "alert", true);
+        styleUpdate(ui->alertStatus, "isAlert", true);
+        styleUpdate(ui->alertStatus, "noData", false);
+        styleUpdate(ui->vfAlerts, "alert", true);
+        setButtonFlashing(*ui->vfAlerts, true);
+
         text = QString::number(err) + " " + "alerts!";
     } else {
         switch (err) {
             case 0x1A:
                 LOG (LOG_MAINWINDOW_DATA, "%s - no data!", CLASS_INFO);
                 text = "No data";
-                buttonStyleUpdate(ui->alertStatus, "noData", true);
+                styleUpdate(ui->alertStatus, "noData", true);
+                setButtonFlashing(*ui->vfSettings, true);
                 break;
             case 0x1B:
                 LOG (LOG_MAINWINDOW_DATA, "%s - CAN init error", CLASS_INFO);
                 text = "CAN init err";
-                buttonStyleUpdate(ui->alertStatus, "error", true);
-                buttonStyleUpdate(ui->vfSettings, "alert", true);
+                styleUpdate(ui->alertStatus, "error", true);
+                styleUpdate(ui->vfSettings, "alert", true);
+                setButtonFlashing(*ui->vfSettings, true);
                 break;
             case 0x1C:
                 LOG (LOG_MAINWINDOW_DATA, "%s - wrong CAN frame", CLASS_INFO);
                 text = "Wrong frame";
-                buttonStyleUpdate(ui->alertStatus, "noData", true);
-                buttonStyleUpdate(ui->vfSettings, "alert", true);
+                styleUpdate(ui->alertStatus, "noData", true);
+                styleUpdate(ui->vfSettings, "alert", true);
+                setButtonFlashing(*ui->vfSettings, true);
         }
     }
 
@@ -436,7 +432,7 @@ void MainWindow::setButtonFlashing(QFrame &frame, bool start)
         connect (flashTimer, &QTimer::timeout, [this, &frame]
         {
              setFlash = !setFlash;
-             this->buttonStyleUpdate(&frame, "alert", setFlash);
+             this->styleUpdate(&frame, "alert", setFlash);
         });
     }
     else {
@@ -482,11 +478,11 @@ void MainWindow::startLapTimerSlot(void)
 
     if (!lapTimerStarted) {
         lapTimerStarted = true;
-        buttonStyleUpdate(ui->timerButton, "clicked", true);
+        styleUpdate(ui->timerButton, "clicked", true);
         ui->timerButton->setText("Stop Timer");
         lapTimer->start(10);
     } else {
-        buttonStyleUpdate(ui->timerButton, "clicked", false);
+        styleUpdate(ui->timerButton, "clicked", false);
         ui->timerButton->setText("Start Timer");
         sleepTimer->start();
         lapTimer->stop();

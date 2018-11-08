@@ -55,9 +55,11 @@ signals:
 
 private:
     /// This method is used to change property of panel LCD objects in MainWindow
-    template <typename T> void lcdStyleUpdate(T *widget, quint16 value, quint16 limit, quint16 max, bool isChanged);
+    template <typename T> void lcdStyleUpdate(T &widget, quint16 value, quint16 limit, quint16 max, bool isChanged);
+    /// This method updates style of type T widget
+    template <typename T> void styleUpdate(T *widget, const char* property, bool isChanged);
     /// This method is used to find childs of menu buttons panel
-    void buttonStyleUpdate(QFrame *frame, bool isChanged);
+    void buttonStyleUpdate(QFrame &frame, bool isChanged);
     /// This method is used to center the window in screen
     void centerOnScreen(void);
     /// This method is used to connect signals with slots from main buttons
@@ -71,7 +73,7 @@ private:
     /// In this method we create new QTimer object and set timeout
     void initializeTimerForDateTime(void);
     /// This method is called when page in QStackedWidget is changed
-    void menuButtonChanged(QFrame *frame);
+    void menuButtonChanged(QFrame &frame);
     /// This method set new page in UI (for example: alerts, settings, etc..)
     void setNewPage(int index);
     /// This method is called when lap timer button is clicked
@@ -94,10 +96,6 @@ private:
     Connections *connection; /// pointer to Connections class
     RpmWidget *rpm; /// pointer to RpmWidget class
     Statistics *stats; /// pointer to Statistics class
-
-protected:
-    /// This method updates style of type T widget
-    template <typename T> void buttonStyleUpdate(T *widget, const char* property, bool isChanged);
 
 public slots:
     /// This method is called when connection is established or closed
