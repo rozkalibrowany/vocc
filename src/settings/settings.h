@@ -36,6 +36,8 @@ public:
 
     /// method that prints message to output console
     void consolePrintMessage(QString msg, int level);
+    /// method that reads saved settings from file
+    void readConfigFile(void);
 
 public slots:
     /// method called to enable/disable radio buttons pool
@@ -86,6 +88,8 @@ private:
     int connectionsGetCurrentBaudIndex(void);
     /// method that strips and convert QString baudrate to int
     int stripBaudRateToInt(QString baud);
+    /// saving file
+    void saveConfigFile(void);
 
     int index;
     Connections *con;

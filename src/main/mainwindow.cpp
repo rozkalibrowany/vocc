@@ -70,17 +70,22 @@ MainWindow::MainWindow(QWidget *parent)
     /* set default alert status */
     updateAlertsStatus(-1);
 
+    /* read config file */
     conf_exit();
     int key = conf_init ("settings.conf");
 
-    char *value;
-
-    LOG (LOG_MAINWINDOW, "%s - key - %d", CLASS_INFO, key);
-    int found = conf_find_key(GLOBAL, "LODODO", NULL);
-    LOG (LOG_MAINWINDOW, "%s - key found? - %d", CLASS_INFO, found);
-    int key2 = conf_get_value(found, &value);
-    LOG (LOG_MAINWINDOW, "%s - key value - %s", CLASS_INFO, value);
-
+    if (key) {
+        LOG (LOG_MAINWINDOW, "%s - CONFIG file found", CLASS_INFO);
+        settings->consolePrintExternalMessage("CONFIG file found", 0);
+        QTimer *nt = new QTimer(this);
+        nt->setInterval(1000);
+        nt->setSingleShot(true);
+        connect (nt, &QTimer::timeout, [=] { settings->readConfigFile(); });
+        nt->start();
+    } else {
+        LOG (LOG_MAINWINDOW, "%s - CONFIG file not found", CLASS_INFO);
+        settings->consolePrintExternalMessage("config file not found", 1);
+    }
 
 }
 
@@ -93,8 +98,7 @@ MainWindow::~MainWindow()
     delete rpm;
     delete settings;
     delete alerts;
-//    delete connection;
-//
+    delete connection;
 }
 
 

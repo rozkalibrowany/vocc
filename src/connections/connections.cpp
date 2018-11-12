@@ -205,7 +205,7 @@ void Connections::readLine()
     }
 
     if (mCanToConsole)
-        emit printMessage(QString("Data: %1").arg(data_s), 1);
+        emit printMessage(QString("data - %1").arg(data_s), 1);
 
     /* remove first element (interface name - can0) */
     data.removeFirst();

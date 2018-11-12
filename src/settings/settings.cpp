@@ -2,13 +2,18 @@
 #include <QStringListModel>
 #include <QSize>
 #include <QObject>
+#include <QTime>
+#include <QFile>
 #include <QString>
 #include "settings.h"
 #include "ui_settings.h"
 #include "../common/parameters.h"
 #include "../common/logger.h"
+#include "../settings/parser.h"
+
 
 #define CLASS_INFO      "settings"
+#define FILE_NAME       "settings.conf"
 
 Settings::Settings(QWidget *parent, Connections *connection) :
     QWidget(parent),
@@ -39,6 +44,8 @@ Settings::~Settings()
 {
     LOG (LOG_SETTINGS, "%s - in destructor", CLASS_INFO);
 
+    saveConfigFile();
+    conf_exit();
     delete settings;
 }
 
@@ -146,6 +153,92 @@ void Settings::onConnectionsSetCanModeToggled(bool mode)
 }
 
 
+void Settings::readConfigFile() 
+{
+    LOG (LOG_SETTINGS, "%s - reading config file", CLASS_INFO);
+    consolePrintMessage("loading settings from config file", 0);
+
+    char *value;
+
+    int key = conf_find_key(GLOBAL, "Output console", NULL);
+    int key2 = conf_get_value(key, &value);
+    if (key != -1 && key2 != 0)
+            onConnectionsSetConsoleState(atoi(value));
+
+    key = conf_find_key(GLOBAL, "Font size", NULL);
+    key2 = conf_get_value(key, &value);
+    if (key != -1 && key2 != 0) {
+        int index = settings->fontSizeBox->findText(value);
+        if (index != -1) {
+            onFontSizeChanged(index);
+            settings->fontSizeBox->setCurrentIndex(index);
+        }
+    }
+    key = conf_find_key(GLOBAL, "Font type", NULL);
+    key2 = conf_get_value(key, &value);
+    if (key != -1 && key2 != 0) {
+    /* TODO */
+    }
+    key = conf_find_key(GLOBAL, "Background contrast", NULL);
+    key2 = conf_get_value(key, &value);
+    if (key != -1 && key2 != 0) {
+        onContrastSliderValueChanged(atoi(value));
+        settings->colorSlider->setValue(atoi(value));
+        consolePrintMessage("background contrast", 0);
+    }
+    key = conf_find_key(GLOBAL, "CAN baudrate", NULL);
+    key2 = conf_get_value(key, &value);
+    if (key != -1 && key2 != 0) {
+        int index = settings->canBaud->findText(value);
+        if (index != -1) {
+            onConnectionsCanBaudChange(index);
+            settings->canBaud->setCurrentIndex(index);
+        }
+    }
+    key = conf_find_key(GLOBAL, "CAN mode", NULL);
+    key2 = conf_get_value(key, &value);
+    if (key != -1 && key2 != 0) {
+        if (strcmp(value, "CONVERTER") == 0) {
+            settings->convRadioBtn->setChecked(true);
+        } else {
+            settings->testRadioBtn->setChecked(true);
+        }
+    }
+    key = conf_find_key(GLOBAL, "Output data", NULL);
+    key2 = conf_get_value(key, &value);
+    if (key != -1 && key2 != 0)
+        onConnectionsSetCanCheckBox(atoi(value));
+}
+
+
+void Settings::saveConfigFile(void)
+{
+    LOG (LOG_SETTINGS, "%s - saving config file", CLASS_INFO);
+
+    QFile file(FILE_NAME);
+    if (file.open(QIODevice::ReadWrite)) {
+        QTextStream out(&file);
+
+        out << "# File generated automatically by application. Do not make changes.\n";
+        out << "\n";
+        out << "|Font size| = |" << settings->fontSizeBox->currentText() << "|\n";
+        out << "|Font type| = |" << settings->fontTypeBox->currentText() << "|\n";
+        out << "|Background contrast| = |" << settings->colorSlider->value() << "|\n";
+        out << "|CAN baudrate| = |" << settings->canBaud->currentText() << "|\n";
+        if (settings->testRadioBtn->isChecked())
+            out << "|CAN mode| = |" << settings->testRadioBtn->text() << "|\n";
+        else
+            out << "|CAN mode| = |" << settings->convRadioBtn->text() << "|\n";
+        out << "|Output console| = |" << settings->consoleCheck->isChecked() << "|\n";
+        out << "|Output data| = |" << settings->canDataCheck->isChecked() << "|\n";
+
+        file.close();
+    } else {
+        LOG (LOG_SETTINGS, "%s - could not save config file", CLASS_INFO);
+    }
+}
+
+
 void Settings::onConnectionsSetConsoleState(int state)
 {
     LOG (LOG_SETTINGS, "%s - console %s", CLASS_INFO,
@@ -245,7 +338,7 @@ void Settings::consolePrintMessage(QString msg, int level)
 
     /* printing message to output console */
     if (connectionsGetConsoleState()) {
-        LOG (LOG_SETTINGS, "%s - message: %s", CLASS_INFO, msg);
+        LOG (LOG_SETTINGS, "%s - message: %s", CLASS_INFO, msg.toStdString().c_str());
 
         // TODO : static QString lastMessage = msg;
         QString colorStr;
@@ -257,8 +350,9 @@ void Settings::consolePrintMessage(QString msg, int level)
             default: colorStr = "#00ffc1"; break;
         }
         QColor color(colorStr);
+        QString time = QTime::currentTime().toString("[ hh:mm:ss ] - ");
         settings->outputConsole->setTextColor(color);
-        msg = "> " + msg;
+        msg = time + msg;
         settings->outputConsole->append(msg);
     }
 }
