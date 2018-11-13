@@ -360,7 +360,6 @@ void Settings::consolePrintMessage(QString msg, int level)
 
 void Settings::consolePrintExternalMessage(QString msg, int level)
 {
-    //QString qMsg = QString::fromUtf16((ushort*)(msg));
     consolePrintMessage(msg, level);
 }
 
