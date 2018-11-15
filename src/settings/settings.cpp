@@ -108,7 +108,12 @@ void Settings::initializeSignalsAndSlots(void)
     /* signal activated when set defaults button clicked */
     connect (settings->setDefaultsBtn, &QPushButton::clicked,
                 this, &Settings::onSetDefaultsButtonClicked);
-
+    /* signal activated when quit button clicked */
+    connect (settings->quitBtn, &QPushButton::clicked,
+                this, &Settings::onQuitButtonClicked);
+    /* signal activated when shutdown button clicked */
+    connect (settings->shutdownBtn, &QPushButton::clicked,
+                this, &Settings::onShutdownButtonClicked);
 
 }
 
@@ -371,4 +376,16 @@ int Settings::stripBaudRateToInt(QString baud)
 
     return baudStripped.toInt();
 
+}
+
+
+void Settings::onQuitButtonClicked(void)
+{
+    emit quitApplication();
+}
+
+
+void Settings::onShutdownButtonClicked(void)
+{
+    emit shutdownSystem();
 }

@@ -62,6 +62,10 @@ private slots:
     void onSetDefaultsButtonClicked(void);
     /// method called to change font size
     void onFontSizeChanged(int index);
+    /// method called when quit button clicked
+    void onQuitButtonClicked(void);
+    /// method called when shutdown button clicked
+    void onShutdownButtonClicked(void);
 
 signals:
     /// signal emitted when can baudrate changed
@@ -74,6 +78,10 @@ signals:
     void updateFontSize(QString);
     /// signal emitted when CAN data check box changed
     void enableCanToConsole(bool);
+    /// signal emitted to close app
+    void quitApplication();
+    /// signal emitted to shutdown system
+    void shutdownSystem();
 
 private:
     /// method which fills canbaud combobox with values

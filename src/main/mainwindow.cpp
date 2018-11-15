@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "../common/parameters.h"
 #include "../common/logger.h"
 #include "../settings/parser.h"
 
@@ -169,6 +170,11 @@ void MainWindow::initializeSignalsAndSlots(void)
     connect (this, &MainWindow::addLapTime,
                 [=] (QString lapTime) { stats->setLapTime(lapTime); } );
 
+    connect (settings, &Settings::quitApplication,
+                [this] () { this->close(); });
+
+    connect (settings, &Settings::shutdownSystem,
+                this, &MainWindow::shutdownSystem);
 }
 
 
@@ -523,4 +529,13 @@ void MainWindow::resetLapTimerSlot(void)
 
     emit addLapTime(lapTime);
     setLapTimerTime();
+}
+
+
+void MainWindow::shutdownSystem(void)
+{
+    QProcess *proc = new QProcess();
+
+    proc->start(SHUTDOWN_CMD);
+    proc->waitForFinished();
 }

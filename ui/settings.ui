@@ -903,7 +903,7 @@ color: #e6e6e6;</string>
                       <property name="minimumSize">
                        <size>
                         <width>105</width>
-                        <height>0</height>
+                        <height>60</height>
                        </size>
                       </property>
                       <property name="maximumSize">
@@ -989,67 +989,75 @@ QSlider::handle:horizontal {
                   <widget class="QFrame" name="verticalFrame_21">
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
-                     <height>70</height>
+                     <width>103</width>
+                     <height>45</height>
                     </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border: none;</string>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_21">
                     <property name="spacing">
                      <number>0</number>
                     </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
                     <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_38">
-                      <property name="spacing">
-                       <number>0</number>
+                     <widget class="QComboBox" name="fontSizeBox">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>34</height>
+                       </size>
                       </property>
-                      <item>
-                       <widget class="QComboBox" name="fontSizeBox">
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>34</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>35</height>
-                         </size>
-                        </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">selection-color: #00ffc1;
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>45</height>
+                       </size>
+                      </property>
+                      <property name="layoutDirection">
+                       <enum>Qt::LeftToRight</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">selection-color: #00ffc1;
 border: 1px solid #00ffc1;
 font: 75 bold 11pt &quot;Halvetica&quot; ;
 color:  #00ffc1;
 padding: 1px 1px 1px 1px;
 min-height: 30px;</string>
-                        </property>
-                        <item>
-                         <property name="text">
-                          <string>8</string>
-                         </property>
-                        </item>
-                        <item>
-                         <property name="text">
-                          <string>10</string>
-                         </property>
-                        </item>
-                        <item>
-                         <property name="text">
-                          <string>12</string>
-                         </property>
-                        </item>
-                        <item>
-                         <property name="text">
-                          <string>14</string>
-                         </property>
-                        </item>
-                       </widget>
+                      </property>
+                      <item>
+                       <property name="text">
+                        <string>8</string>
+                       </property>
                       </item>
-                     </layout>
+                      <item>
+                       <property name="text">
+                        <string>10</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>12</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>14</string>
+                       </property>
+                      </item>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
@@ -1058,98 +1066,98 @@ min-height: 30px;</string>
                   <widget class="QFrame" name="verticalFrame_31">
                    <property name="minimumSize">
                     <size>
-                     <width>130</width>
+                     <width>108</width>
                      <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>130</width>
-                     <height>70</height>
+                     <height>45</height>
                     </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border: none;</string>
+                   </property>
+                   <property name="lineWidth">
+                    <number>0</number>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_37">
                     <property name="spacing">
                      <number>0</number>
                     </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
                     <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_13">
-                      <property name="spacing">
-                       <number>0</number>
+                     <widget class="QComboBox" name="fontTypeBox">
+                      <property name="minimumSize">
+                       <size>
+                        <width>104</width>
+                        <height>34</height>
+                       </size>
                       </property>
-                      <item>
-                       <widget class="QComboBox" name="fontTypeBox">
-                        <property name="minimumSize">
-                         <size>
-                          <width>104</width>
-                          <height>34</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>108</width>
-                          <height>35</height>
-                         </size>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">border: 1px solid #00ffc1;
+                      <property name="maximumSize">
+                       <size>
+                        <width>108</width>
+                        <height>45</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">border: 1px solid #00ffc1;
 selection-color: #00ffc1;
 font: 75 bold 11pt &quot;Halvetica&quot; ;
 color:  #00ffc1;
 padding: 1px 1px 1px 1px;
 min-width: 100px;
 min-height: 30px;</string>
-                        </property>
-                        <item>
-                         <property name="text">
-                          <string>Halvetica</string>
-                         </property>
-                        </item>
-                        <item>
-                         <property name="text">
-                          <string>Ubuntu</string>
-                         </property>
-                        </item>
-                       </widget>
+                      </property>
+                      <item>
+                       <property name="text">
+                        <string>Halvetica</string>
+                       </property>
                       </item>
-                     </layout>
+                      <item>
+                       <property name="text">
+                        <string>Ubuntu</string>
+                       </property>
+                      </item>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QFrame" name="verticalFrame_99">
-                   <property name="maximumSize">
+                  <widget class="QPushButton" name="setDefaultsBtn">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
                     <size>
-                     <width>16777215</width>
-                     <height>70</height>
+                     <width>112</width>
+                     <height>45</height>
                     </size>
                    </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_17">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
-                    <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_41">
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <item>
-                       <widget class="QPushButton" name="setDefaultsBtn">
-                        <property name="minimumSize">
-                         <size>
-                          <width>104</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>104</width>
-                          <height>35</height>
-                         </size>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">QPushButton {
+                   <property name="maximumSize">
+                    <size>
+                     <width>112</width>
+                     <height>45</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton {
 border: 2px solid #00ffc1;
 border-radius: 4px;
 padding: 2px;
@@ -1164,15 +1172,10 @@ padding: 2px;
 font: 75 italic 11pt &quot;Halvetica&quot; ;
 color: #00ffc1;
 }</string>
-                        </property>
-                        <property name="text">
-                         <string>Set defaults</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
+                   </property>
+                   <property name="text">
+                    <string>Set defaults</string>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -1281,20 +1284,149 @@ color: #e6e6e6;</string>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <spacer name="verticalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>18</width>
-                 <height>175</height>
-                </size>
-               </property>
-              </spacer>
+              <layout class="QVBoxLayout" name="verticalLayout_22">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_11">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_30">
+                   <item>
+                    <spacer name="horizontalSpacer">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_24">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_13">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>3</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>3</number>
+                     </property>
+                     <item>
+                      <widget class="QPushButton" name="quitBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>70</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>70</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QPushButton {
+border: 1.5px solid #ff4d4d;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 11pt &quot;Halvetica&quot; ;
+color: #ff4d4d;
+}
+
+QPushButton:pressed{
+border: 4px solid #ff4d4d;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 11pt &quot;Halvetica&quot; ;
+color: #ff4d4d;
+}</string>
+                       </property>
+                       <property name="text">
+                        <string>Quit</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_14">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>3</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>3</number>
+                     </property>
+                     <item>
+                      <widget class="QPushButton" name="shutdownBtn">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>70</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>70</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QPushButton {
+border: 1.5px solid #ff4d4d;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic  9pt &quot;Halvetica&quot; ;
+color: #ff4d4d;
+}
+
+QPushButton:pressed{
+border: 4px solid #ff4d4d;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 9pt &quot;Halvetica&quot; ;
+color: #ff4d4d;
+}</string>
+                       </property>
+                       <property name="text">
+                        <string>Shutdown </string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>

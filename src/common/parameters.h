@@ -11,6 +11,7 @@
 #define MESSAGE_1               "0CF11E05"
 #define MESSAGE_2               "0CF11F05"
 #define DEFAULT_FONT            "Halvetica"
+#define SHUTDOWN_CMD            "shutdown now"
 
 #endif // PARAMETERS
 

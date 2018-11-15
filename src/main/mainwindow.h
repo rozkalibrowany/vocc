@@ -128,6 +128,8 @@ private slots:
     void updateLapTimerSlot(void);
     /// This method is called when we stop lap timer
     void resetLapTimerSlot(void);
+    /// Method called to shutdown system
+    void shutdownSystem(void);
 
 };
 
