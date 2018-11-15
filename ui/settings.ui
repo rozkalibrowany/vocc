@@ -99,7 +99,7 @@ background: transparent;
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>30</height>
+               <height>22</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -681,7 +681,7 @@ background: transparent;
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>30</height>
+               <height>22</height>
               </size>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -721,7 +721,7 @@ font: 75 italic bold 12pt &quot;Halvetica&quot; ;
 color: #e6e6e6;</string>
                 </property>
                 <property name="text">
-                 <string>LIMITS</string>
+                 <string>NETWORK</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -732,24 +732,7 @@ color: #e6e6e6;</string>
             </widget>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
-             <item>
-              <spacer name="verticalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>18</width>
-                 <height>175</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
+            <layout class="QVBoxLayout" name="verticalLayout_5"/>
            </item>
           </layout>
          </widget>
@@ -761,7 +744,7 @@ color: #e6e6e6;</string>
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout_10">
       <property name="spacing">
-       <number>2</number>
+       <number>0</number>
       </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -1212,7 +1195,7 @@ background: transparent;
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_11">
            <property name="spacing">
-            <number>2</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -1228,15 +1211,21 @@ background: transparent;
            </property>
            <item>
             <widget class="QFrame" name="verticalFrame_3">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>22</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>30</height>
+               <height>22</height>
               </size>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <property name="spacing">
-               <number>2</number>
+               <number>0</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -1283,8 +1272,14 @@ color: #e6e6e6;</string>
            </item>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_22">
+               <property name="spacing">
+                <number>0</number>
+               </property>
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_11">
                  <property name="spacing">
@@ -1292,24 +1287,55 @@ color: #e6e6e6;</string>
                  </property>
                  <item>
                   <layout class="QVBoxLayout" name="verticalLayout_30">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>5</number>
+                   </property>
                    <item>
-                    <spacer name="horizontalSpacer">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
+                    <widget class="QFrame" name="frame">
+                     <property name="minimumSize">
                       <size>
-                       <width>40</width>
-                       <height>20</height>
+                       <width>250</width>
+                       <height>130</height>
                       </size>
                      </property>
-                    </spacer>
+                     <property name="styleSheet">
+                      <string notr="true">border: none;</string>
+                     </property>
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <widget class="QCalendarWidget" name="calendarWidget">
+                      <property name="geometry">
+                       <rect>
+                        <x>0</x>
+                        <y>0</y>
+                        <width>245</width>
+                        <height>135</height>
+                       </rect>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>135</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </widget>
                    </item>
                   </layout>
                  </item>
                  <item>
                   <layout class="QVBoxLayout" name="verticalLayout_24">
                    <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
                     <number>0</number>
                    </property>
                    <item>
