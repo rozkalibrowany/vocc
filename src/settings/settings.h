@@ -46,6 +46,8 @@ public slots:
     void consolePrintExternalMessage(QString msg, int level);
 
 private slots:
+    /// check internet connection on timeout
+    void checkInternetConnection(void);
     /// method called when can baudrate changed
     void onConnectionsCanBaudChange(int value);
     /// method called when clear console button clicked
@@ -88,6 +90,8 @@ private:
     void connectionsFillCanBaudComboBox(void);
     /// method that connects signals and slots
     void initializeSignalsAndSlots(void);
+    /// initializing timers
+    void initializeTimers(void);
     /// method that returns console state enable/disable
     bool connectionsGetConsoleState(void);
     /// method that returns can mode state

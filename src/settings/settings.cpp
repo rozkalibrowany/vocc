@@ -5,6 +5,10 @@
 #include <QTime>
 #include <QFile>
 #include <QString>
+#include <QTimer>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 #include "settings.h"
 #include "ui_settings.h"
 #include "../common/parameters.h"
@@ -14,6 +18,7 @@
 
 #define CLASS_INFO      "settings"
 #define FILE_NAME       "settings.conf"
+#define DEF_URL         "http://www.google.com"
 
 Settings::Settings(QWidget *parent, Connections *connection) :
     QWidget(parent),
@@ -36,6 +41,8 @@ Settings::Settings(QWidget *parent, Connections *connection) :
     onSetDefaultsButtonClicked();
     /* enable console output (default) */
     onConnectionsSetConsoleState(1);
+    /* initialize timers */
+    initializeTimers();
 
 }
 
@@ -118,6 +125,19 @@ void Settings::initializeSignalsAndSlots(void)
 }
 
 
+void Settings::initializeTimers(void)
+{
+    QTimer *checkConnection = new QTimer();
+
+    checkConnection->setInterval(5000);
+    checkConnection->start();
+
+    connect (checkConnection, &QTimer::timeout,
+                this, &Settings::checkInternetConnection);
+
+}
+
+
 void Settings::enableRadioButtons(bool enable)
 {
     LOG (LOG_SETTINGS, "%s - can mode buttons blocked: %s", CLASS_INFO,
@@ -125,6 +145,43 @@ void Settings::enableRadioButtons(bool enable)
 
     settings->convRadioBtn->setEnabled(enable);
     settings->testRadioBtn->setEnabled(enable);
+}
+
+
+void Settings::checkInternetConnection(void)
+{
+    LOG (LOG_SETTINGS, "%s - checking internet connection", CLASS_INFO);
+
+    QNetworkAccessManager name;
+
+    QNetworkRequest req(QUrl(DEF_URL));
+
+    QNetworkReply *reply = name.get(req);
+
+    QEventLoop loop;
+
+    connect (reply, &QNetworkReply::finished,
+                &loop, &QEventLoop::quit);
+
+    loop.exec();
+    if (reply->bytesAvailable()) {
+        LOG (LOG_SETTINGS, "%s - internet connection OK", CLASS_INFO);
+
+        settings->internetIcon->setProperty("connected", true);
+        settings->internetIcon->style()->unpolish(settings->internetIcon);
+        settings->internetIcon->style()->polish(settings->internetIcon);
+        settings->internetIcon->update();
+        settings->internetTxt->setText("Internet available");
+    } else {
+        LOG (LOG_SETTINGS, "%s - NO internet connection", CLASS_INFO);
+
+        settings->internetIcon->setProperty("connected", false);
+        settings->internetIcon->style()->unpolish(settings->internetIcon);
+        settings->internetIcon->style()->polish(settings->internetIcon);
+        settings->internetIcon->update();
+        settings->internetTxt->setText("Internet unavailable");
+    }
+
 }
 
 

@@ -732,7 +732,204 @@ color: #e6e6e6;</string>
             </widget>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_5"/>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QFrame" name="verticalFrame_4">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>45</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: none;</string>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_38">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_15">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SetMinimumSize</enum>
+                  </property>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_40">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="sizeConstraint">
+                     <enum>QLayout::SetMinimumSize</enum>
+                    </property>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_16">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="sizeConstraint">
+                       <enum>QLayout::SetMinimumSize</enum>
+                      </property>
+                      <item>
+                       <widget class="QLabel" name="internetIcon">
+                        <property name="minimumSize">
+                         <size>
+                          <width>35</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>35</width>
+                          <height>35</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QLabel {
+border-image: url(:44x44/44x44/no_internet.png);
+}
+
+QLabel[connected=&quot;true&quot;]  {
+border-image: url(:44x44/44x44/internet.png);
+}
+
+QLabel[connected=&quot;false&quot;]  {
+border-image: url(:44x44/44x44/no_internet.png);
+}</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="scaledContents">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="internetTxt">
+                        <property name="minimumSize">
+                         <size>
+                          <width>160</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">font: 75 italic 11pt &quot;Halvetica&quot; ;
+color: #00ffc1;</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_39">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="sizeConstraint">
+                     <enum>QLayout::SetMinimumSize</enum>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="netSettings">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
+border: 2px solid #00ffc1;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 10pt &quot;Halvetica&quot; ;
+color: #00ffc1;
+}
+
+QPushButton:pressed{
+border: 4px solid #00ffc1;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 10pt &quot;Halvetica&quot; ;
+color: #00ffc1;
+}</string>
+                      </property>
+                      <property name="text">
+                       <string>Internet settings</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_36">
+               <item>
+                <spacer name="verticalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_17"/>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_35"/>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
