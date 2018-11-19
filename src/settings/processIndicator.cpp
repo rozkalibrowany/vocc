@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-#include "QProgressIndicator.h"
+#include "progressIndicator.h"
 
 #include <QPainter>
 
