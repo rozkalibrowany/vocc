@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 DEFINES += GIT_VERSION="\\\"$(shell git -C \""$$_PRO_FILE_PWD_"\" describe --tags --abbrev=0)\\\""
 
-TARGET = komp_pokl_cpp
+TARGET = vocc
 TEMPLATE = app
 
 CONFIG += c++11
