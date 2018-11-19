@@ -16,8 +16,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     LOG (LOG_MAINWINDOW, "%s - in constructor", CLASS_INFO);
 
+    //LOG (LOG_MAINWINDOW, "%s - app version - %s", CLASS_INFO, GIT_VERSION);
+
     ui->setupUi(this);
-    this->setWindowTitle("Automotive UI v0.1");
+    if (GIT_VERSION)
+        this->setWindowTitle(QString("VOCC ver. %1").arg(GIT_VERSION));
     this->centerOnScreen();
     lastButtonObject = NULL;
     lapTimerStarted = false;

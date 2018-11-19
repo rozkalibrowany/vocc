@@ -29,11 +29,13 @@ int main(int argc, char *argv[])
             break;
         case 'l':
             sscanf(optarg, "%x", &gLogMask);
-            LOG (LOG_MAIN, "Logger mask: [0x%04x]\n", gLogMask);
+            LOG (LOG_MAIN, "Logger mask - [0x%04x]\n", gLogMask);
             break;
         }
     }
-    LOG (LOG_MAIN, "App version: %s", GIT_VERSION);
+#ifdef GIT_VERSION
+    LOG (LOG_MAIN, "App version - %s", GIT_VERSION);
+#endif
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
