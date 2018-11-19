@@ -9,6 +9,8 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+DEFINES += GIT_VERSION="\\\"$(shell git -C \""$$_PRO_FILE_PWD_"\" describe --tags --abbrev=0)\\\""
+
 TARGET = komp_pokl_cpp
 TEMPLATE = app
 
@@ -31,7 +33,8 @@ SOURCES += \
     ../src/main/mainwindow.cpp \
     ../src/main/rpmwidget.cpp \
     ../src/stats/statistics.cpp \
-    ../src/settings/parser.c
+    ../src/settings/parser.c \
+    ../src/settings/processIndicator.cpp
 
 HEADERS  += \
     ../src/alerts/ledindicator.h \
@@ -45,7 +48,8 @@ HEADERS  += \
     ../src/main/mainwindow.h \
     ../src/main/rpmwidget.h \
     ../src/stats/statistics.h \
-    ../src/settings/parser.h
+    ../src/settings/parser.h \
+    ../src/settings/progressIndicator.h
 
 FORMS += \
     ../ui/mainwindow.ui \

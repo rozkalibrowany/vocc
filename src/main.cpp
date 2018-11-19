@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
+    LOG (LOG_MAIN, "App version: %s", GIT_VERSION);
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
