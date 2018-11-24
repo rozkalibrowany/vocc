@@ -9,6 +9,9 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #include "settings.h"
 #include "ui_settings.h"
 #include "../common/parameters.h"
@@ -16,9 +19,12 @@
 #include "../settings/parser.h"
 
 
+
 #define CLASS_INFO      "settings"
 #define FILE_NAME       "settings.conf"
 #define DEF_URL         "http://www.google.com"
+#define UPDATES_SERVER  "https://api.github.com/repos/rozkalibrowany/vocc/tags"
+
 
 Settings::Settings(QWidget *parent, Connections *connection) :
     QWidget(parent),
@@ -43,6 +49,8 @@ Settings::Settings(QWidget *parent, Connections *connection) :
     onConnectionsSetConsoleState(1);
     /* initialize timers */
     initializeTimers();
+    /* check internet connection */
+    checkInternetConnection();
 
 }
 
@@ -121,6 +129,9 @@ void Settings::initializeSignalsAndSlots(void)
     /* signal activated when shutdown button clicked */
     connect (settings->shutdownBtn, &QPushButton::clicked,
                 this, &Settings::onShutdownButtonClicked);
+    /* signal activated when check updates button clicked */
+    connect (settings->checkUpdatesBtn, &QPushButton::clicked,
+                this, &Settings::checkForUpdates);
 
 }
 
@@ -167,21 +178,94 @@ void Settings::checkInternetConnection(void)
     if (reply->bytesAvailable()) {
         LOG (LOG_SETTINGS, "%s - internet connection OK", CLASS_INFO);
 
-        settings->internetIcon->setProperty("connected", true);
-        settings->internetIcon->style()->unpolish(settings->internetIcon);
-        settings->internetIcon->style()->polish(settings->internetIcon);
-        settings->internetIcon->update();
+        setWidgetStyleSheet(settings->internetIcon, "connected", true);
         settings->internetTxt->setText("Internet available");
+        if (!settings->checkUpdatesBtn->isEnabled()) {
+            settings->checkUpdatesBtn->setDisabled(false);
+            setWidgetStyleSheet(settings->checkUpdatesBtn, "notActive", false);
+        }
     } else {
         LOG (LOG_SETTINGS, "%s - NO internet connection", CLASS_INFO);
 
-        settings->internetIcon->setProperty("connected", false);
-        settings->internetIcon->style()->unpolish(settings->internetIcon);
-        settings->internetIcon->style()->polish(settings->internetIcon);
-        settings->internetIcon->update();
+        setWidgetStyleSheet(settings->internetIcon, "connected", false);
         settings->internetTxt->setText("Internet unavailable");
+        if (settings->checkUpdatesBtn->isEnabled()) {
+            settings->checkUpdatesBtn->setDisabled(true);
+            setWidgetStyleSheet(settings->checkUpdatesBtn, "notActive", true);
+        }
     }
 
+}
+
+
+void Settings::checkForUpdates(void)
+{
+    LOG (LOG_SETTINGS, "%s - checking for updates...", CLASS_INFO);
+
+    mPi = new QProgressIndicator(settings->updatesIndicator);
+
+    settings->updatesLabel->setText("Searching updates...");
+    mPi->startAnimation();
+    mPi->show();
+
+    if (GIT_VERSION == NULL) {
+
+    } else {
+        QNetworkAccessManager name;
+
+        QNetworkRequest req(QUrl(UPDATES_SERVER));
+
+        QEventLoop loop;
+
+        QNetworkReply *reply = name.get(req);
+
+        connect (reply, &QNetworkReply::finished,
+                    &loop, &QEventLoop::quit);
+
+        connect (reply, &QNetworkReply::finished,
+                    this, &Settings::getResponseFromServer);
+
+        loop.exec();
+    }
+
+}
+
+
+void Settings::getResponseFromServer(void)
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(QObject::sender());
+
+    if (reply->error() != QNetworkReply::NoError) {
+        LOG (LOG_SETTINGS, "%s - error connecting to server", CLASS_INFO);
+        consolePrintMessage("error connecting to server", 2);
+        return;
+    }
+
+    LOG (LOG_SETTINGS, "%s - got server response!", CLASS_INFO);
+    consolePrintMessage("got server response!", 0);
+
+    reply->deleteLater();
+
+    QString strReply = (QString)reply->readAll();
+    /* parse json */
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
+
+    QJsonArray jsonArray = jsonResponse.array();
+
+    foreach (const QJsonValue &value, jsonArray) {
+        QJsonObject jsonObj = value.toObject();
+        mVersion = jsonObj["name"].toString();
+    }
+
+    if (!QString::compare(mVersion, GIT_VERSION)) {
+        LOG (LOG_SETTINGS, "%s - this is the newest version - %s", CLASS_INFO, mVersion);
+        consolePrintMessage(QString("This is the newest version: %1").arg(mVersion), 0);
+
+        settings->updatesLabel->setText("App is up to date");
+        mPi->stopAnimation();
+        delete mPi;
+        mPi = NULL;
+    }
 }
 
 
@@ -273,6 +357,16 @@ void Settings::readConfigFile()
 }
 
 
+template <typename T>
+void Settings::setWidgetStyleSheet(T &widget, const char* property, bool set)
+{
+    widget->setProperty(property, set);
+    widget->style()->unpolish(widget);
+    widget->style()->polish(widget);
+    widget->update();
+}
+
+
 void Settings::saveConfigFile(void)
 {
     LOG (LOG_SETTINGS, "%s - saving config file", CLASS_INFO);
@@ -281,7 +375,7 @@ void Settings::saveConfigFile(void)
     if (file.open(QIODevice::ReadWrite)) {
         QTextStream out(&file);
 
-        out << "# File generated automatically by application. Do not make changes.\n";
+        out << "# File generated automatically by VOCC. Do not make changes.\n";
         out << "\n";
         out << "|Font size| = |" << settings->fontSizeBox->currentText() << "|\n";
         out << "|Font type| = |" << settings->fontTypeBox->currentText() << "|\n";

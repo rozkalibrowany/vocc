@@ -738,7 +738,7 @@ color: #e6e6e6;</string>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>45</height>
+                 <height>48</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -758,7 +758,7 @@ color: #e6e6e6;</string>
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>0</number>
+                 <number>3</number>
                 </property>
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_15">
@@ -783,6 +783,9 @@ color: #e6e6e6;</string>
                       </property>
                       <property name="sizeConstraint">
                        <enum>QLayout::SetMinimumSize</enum>
+                      </property>
+                      <property name="leftMargin">
+                       <number>2</number>
                       </property>
                       <item>
                        <widget class="QLabel" name="internetIcon">
@@ -817,13 +820,16 @@ border-image: url(:44x44/44x44/no_internet.png);
                         <property name="scaledContents">
                          <bool>true</bool>
                         </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
                        </widget>
                       </item>
                       <item>
                        <widget class="QLabel" name="internetTxt">
                         <property name="minimumSize">
                          <size>
-                          <width>160</width>
+                          <width>170</width>
                           <height>40</height>
                          </size>
                         </property>
@@ -834,7 +840,7 @@ border-image: url(:44x44/44x44/no_internet.png);
                          </size>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true">font: 75 italic 11pt &quot;Halvetica&quot; ;
+                         <string notr="true">font: 10.5pt &quot;Halvetica&quot; ;
 color: #00ffc1;</string>
                         </property>
                         <property name="text">
@@ -867,8 +873,8 @@ color: #00ffc1;</string>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
-                        <height>0</height>
+                        <width>110</width>
+                        <height>40</height>
                        </size>
                       </property>
                       <property name="maximumSize">
@@ -882,7 +888,7 @@ color: #00ffc1;</string>
 border: 2px solid #00ffc1;
 border-radius: 4px;
 padding: 2px;
-font: 75 italic 10pt &quot;Halvetica&quot; ;
+font: 75 italic 10.5pt &quot;Halvetica&quot; ;
 color: #00ffc1;
 }
 
@@ -890,7 +896,7 @@ QPushButton:pressed{
 border: 4px solid #00ffc1;
 border-radius: 4px;
 padding: 2px;
-font: 75 italic 10pt &quot;Halvetica&quot; ;
+font: 75 italic 10.5pt &quot;Halvetica&quot; ;
 color: #00ffc1;
 }</string>
                       </property>
@@ -907,7 +913,154 @@ color: #00ffc1;
               </widget>
              </item>
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_36">
+              <widget class="QFrame" name="frame">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>48</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: none;</string>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_36">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>3</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_17">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_43">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_18">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>4</number>
+                      </property>
+                      <item>
+                       <widget class="QWidget" name="updatesIndicator" native="true">
+                        <property name="minimumSize">
+                         <size>
+                          <width>35</width>
+                          <height>35</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="updatesLabel">
+                        <property name="minimumSize">
+                         <size>
+                          <width>168</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">font: 10.5pt &quot;Halvetica&quot; ;
+color: #00ffc1;</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_41">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="checkUpdatesBtn">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>108</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
+border: 2px solid #00ffc1;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 10.5pt &quot;Halvetica&quot; ;
+color: #00ffc1;
+}
+
+QPushButton:pressed{
+border: 4px solid #00ffc1;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 10.5pt &quot;Halvetica&quot; ;
+color: #00ffc1;
+}
+
+QPushButton[notActive=&quot;true&quot;]{
+border: 2px solid #c0c0c0;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 10.5pt &quot;Halvetica&quot; ;
+color: #c0c0c0;
+}</string>
+                      </property>
+                      <property name="text">
+                       <string>Check updates</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_17">
                <item>
                 <spacer name="verticalSpacer">
                  <property name="orientation">
@@ -922,9 +1075,6 @@ color: #00ffc1;
                 </spacer>
                </item>
               </layout>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_17"/>
              </item>
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_35"/>
@@ -1176,6 +1326,9 @@ QSlider::handle:horizontal {
                    <property name="styleSheet">
                     <string notr="true">border: none;</string>
                    </property>
+                   <property name="lineWidth">
+                    <number>0</number>
+                   </property>
                    <layout class="QVBoxLayout" name="verticalLayout_21">
                     <property name="spacing">
                      <number>0</number>
@@ -1197,7 +1350,7 @@ QSlider::handle:horizontal {
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
-                        <height>34</height>
+                        <height>32</height>
                        </size>
                       </property>
                       <property name="maximumSize">
@@ -1211,7 +1364,7 @@ QSlider::handle:horizontal {
                       </property>
                       <property name="styleSheet">
                        <string notr="true">selection-color: #00ffc1;
-border: 1px solid #00ffc1;
+border: none;
 font: 75 bold 11pt &quot;Halvetica&quot; ;
 color:  #00ffc1;
 padding: 1px 1px 1px 1px;
@@ -1282,8 +1435,8 @@ min-height: 30px;</string>
                      <widget class="QComboBox" name="fontTypeBox">
                       <property name="minimumSize">
                        <size>
-                        <width>104</width>
-                        <height>34</height>
+                        <width>102</width>
+                        <height>32</height>
                        </size>
                       </property>
                       <property name="maximumSize">
@@ -1293,7 +1446,7 @@ min-height: 30px;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">border: 1px solid #00ffc1;
+                       <string notr="true">border: none;
 selection-color: #00ffc1;
 font: 75 bold 11pt &quot;Halvetica&quot; ;
 color:  #00ffc1;

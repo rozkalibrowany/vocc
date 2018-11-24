@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
 #ifdef GIT_VERSION
     LOG (LOG_MAIN, "App version - %s", GIT_VERSION);
 #endif
+    /* TODO: what if no git version */
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

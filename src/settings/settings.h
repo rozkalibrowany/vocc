@@ -19,11 +19,13 @@
 
 #include <QWidget>
 #include <QString>
+#include "progressIndicator.h"
 #include "../connections/connections.h"
 
 namespace Ui {
     class Settings;
 }
+
 
 class Settings : public QWidget
 {
@@ -48,6 +50,8 @@ public slots:
 private slots:
     /// check internet connection on timeout
     void checkInternetConnection(void);
+    /// reads response (json) from server
+    void getResponseFromServer(void);
     /// method called when can baudrate changed
     void onConnectionsCanBaudChange(int value);
     /// method called when clear console button clicked
@@ -68,6 +72,8 @@ private slots:
     void onQuitButtonClicked(void);
     /// method called when shutdown button clicked
     void onShutdownButtonClicked(void);
+    /// method called when check updates button clicked
+    void checkForUpdates(void);
 
 signals:
     /// signal emitted when can baudrate changed
@@ -102,8 +108,13 @@ private:
     int stripBaudRateToInt(QString baud);
     /// saving file
     void saveConfigFile(void);
+    /// set stylesheet
+    template <typename T>
+    void setWidgetStyleSheet(T &widget, const char* property, bool set);
 
     int index;
+    QProgressIndicator *mPi;
+    QString mVersion;
     Connections *con;
     Ui::Settings *settings;
 };

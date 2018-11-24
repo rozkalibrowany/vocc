@@ -34,7 +34,7 @@ SOURCES += \
     ../src/main/rpmwidget.cpp \
     ../src/stats/statistics.cpp \
     ../src/settings/parser.c \
-    ../src/settings/processIndicator.cpp
+    ../src/settings/progressIndicator.cpp
 
 HEADERS  += \
     ../src/alerts/ledindicator.h \
