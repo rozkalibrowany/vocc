@@ -19,6 +19,7 @@
 
 #include <QWidget>
 #include <QString>
+#include <QDialog>
 #include "progressIndicator.h"
 #include "../connections/connections.h"
 
@@ -117,6 +118,21 @@ private:
     QString mVersion;
     Connections *con;
     Ui::Settings *settings;
+};
+
+
+class Dialog : public QDialog
+{
+    Q_OBJECT
+
+public:
+    Dialog(QWidget *parent = 0);
+
+    QLabel *mLabel;
+
+private:
+    void setButtonStyleSheet(QPushButton &pb);
+
 };
 
 #endif // SETTINGS_H

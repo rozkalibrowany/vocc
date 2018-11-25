@@ -12,6 +12,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QDialogButtonBox>
 #include "settings.h"
 #include "ui_settings.h"
 #include "../common/parameters.h"
@@ -262,10 +263,21 @@ void Settings::getResponseFromServer(void)
         consolePrintMessage(QString("This is the newest version: %1").arg(mVersion), 0);
 
         settings->updatesLabel->setText("App is up to date");
-        mPi->stopAnimation();
-        delete mPi;
-        mPi = NULL;
+    } else {
+        LOG (LOG_SETTINGS, "%s - found new version - %s", CLASS_INFO, mVersion);
+        consolePrintMessage(QString("Found new app version: %1").arg(mVersion), 0);
+
+        settings->updatesLabel->setText("Found updates");
+
+        Dialog *dialog = new Dialog(this);
+        dialog->show();
+        dialog->setWindowTitle("Update info");
+        dialog->mLabel->setText(QString("Install new version %1 over %2?").arg(mVersion).arg(GIT_VERSION));
     }
+
+    mPi->stopAnimation();
+    delete mPi;
+    mPi = NULL;
 }
 
 
@@ -539,4 +551,56 @@ void Settings::onQuitButtonClicked(void)
 void Settings::onShutdownButtonClicked(void)
 {
     emit shutdownSystem();
+}
+
+/* ------------------------------------------ */
+
+Dialog::Dialog(QWidget *parent) : QDialog (parent)
+{
+    if (parent != NULL)
+        resize(parent->width()/3, parent->height()/3);
+    setFocusPolicy(Qt::NoFocus);
+
+    QDialogButtonBox *bb = new QDialogButtonBox(
+                QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout();
+
+    mLabel = new QLabel;
+    mLabel->setAlignment(Qt::AlignCenter);
+    mainLayout->addWidget(mLabel);
+
+    QPushButton *okBtn = bb->button(QDialogButtonBox::Ok);
+    okBtn->setAutoDefault(true);
+    okBtn->setDefault(true);
+    setButtonStyleSheet(*okBtn);
+
+    QPushButton *cnclBtn = bb->button(QDialogButtonBox::Cancel);
+    cnclBtn->setAutoDefault(false);
+    cnclBtn->setDefault(false);
+    setButtonStyleSheet(*cnclBtn);
+
+    mainLayout->addWidget(bb);
+
+    this->setLayout(mainLayout);
+
+    connect (bb, &QDialogButtonBox::accepted,
+                this, &QDialog::accept);
+
+    connect (bb, &QDialogButtonBox::rejected,
+                this, &QDialog::reject);
+
+
+}
+
+
+void Dialog::setButtonStyleSheet(QPushButton &pb)
+{
+    pb.setStyleSheet("QPushButton { \
+                     border: 2px solid #00ffc1; \
+                     border-radius: 4px; } \
+                      QPushButton:pressed { \
+                     border: 4px solid #00ffc1; \
+                     border-radius: 4px; }");
+    pb.setFixedSize(this->width()/3, this->height()/4.5);
 }
