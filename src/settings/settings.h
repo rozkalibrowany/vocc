@@ -75,6 +75,8 @@ private slots:
     void onShutdownButtonClicked(void);
     /// method called when check updates button clicked
     void checkForUpdates(void);
+    /// method called on dialog exit
+    void onUpdatesDialogResult(int result);
 
 signals:
     /// signal emitted when can baudrate changed

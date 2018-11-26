@@ -258,7 +258,7 @@ void Settings::getResponseFromServer(void)
         mVersion = jsonObj["name"].toString();
     }
 
-    if (!QString::compare(mVersion, GIT_VERSION)) {
+    if (QString::compare(mVersion, GIT_VERSION)) {
         LOG (LOG_SETTINGS, "%s - this is the newest version - %s", CLASS_INFO, mVersion);
         consolePrintMessage(QString("This is the newest version: %1").arg(mVersion), 0);
 
@@ -270,6 +270,8 @@ void Settings::getResponseFromServer(void)
         settings->updatesLabel->setText("Found updates");
 
         Dialog *dialog = new Dialog(this);
+        connect (dialog, &QDialog::finished,
+                    [=](int result) { this->onUpdatesDialogResult(result); });
         dialog->show();
         dialog->setWindowTitle("Update info");
         dialog->mLabel->setText(QString("Install new version %1 over %2?").arg(mVersion).arg(GIT_VERSION));
@@ -278,6 +280,22 @@ void Settings::getResponseFromServer(void)
     mPi->stopAnimation();
     delete mPi;
     mPi = NULL;
+}
+
+
+void Settings::onUpdatesDialogResult(int result)
+{
+    if (result == QDialog::Accepted) {
+        LOG (LOG_SETTINGS, "%s - installing new app version", CLASS_INFO);
+        consolePrintMessage("installing new app version", 0);
+
+
+    } else {
+        LOG (LOG_SETTINGS, "%s - installing new app version aborted", CLASS_INFO);
+        consolePrintMessage("installing new app version aborted", 1);
+
+        settings->updatesLabel->setText("Process aborted");
+    }
 }
 
 
@@ -557,8 +575,8 @@ void Settings::onShutdownButtonClicked(void)
 
 Dialog::Dialog(QWidget *parent) : QDialog (parent)
 {
-    if (parent != NULL)
-        resize(parent->width()/3, parent->height()/3);
+    //if (parent != NULL)
+       //resize(parent->width()/3, parent->height()/3);
     setFocusPolicy(Qt::NoFocus);
 
     QDialogButtonBox *bb = new QDialogButtonBox(
@@ -568,6 +586,7 @@ Dialog::Dialog(QWidget *parent) : QDialog (parent)
 
     mLabel = new QLabel;
     mLabel->setAlignment(Qt::AlignCenter);
+    mLabel->setStyleSheet("QLabel { font: 13pt \"Halvetica\"; }");
     mainLayout->addWidget(mLabel);
 
     QPushButton *okBtn = bb->button(QDialogButtonBox::Ok);
@@ -602,5 +621,5 @@ void Dialog::setButtonStyleSheet(QPushButton &pb)
                       QPushButton:pressed { \
                      border: 4px solid #00ffc1; \
                      border-radius: 4px; }");
-    pb.setFixedSize(this->width()/3, this->height()/4.5);
+    pb.setFixedSize(this->width()/1.5, this->height());
 }
