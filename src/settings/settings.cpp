@@ -3,7 +3,6 @@
 #include <QSize>
 #include <QObject>
 #include <QTime>
-#include <QFile>
 #include <QString>
 #include <QTimer>
 #include <QNetworkAccessManager>
@@ -19,13 +18,11 @@
 #include "../common/logger.h"
 #include "../settings/parser.h"
 
-
-
 #define CLASS_INFO      "settings"
 #define FILE_NAME       "settings.conf"
-#define DEF_URL         "http://www.google.com"
-#define UPDATES_SERVER  "https://api.github.com/repos/rozkalibrowany/vocc/tags"
-
+#define TMP_PATH        "/tmp/"
+#define APP_REPO        "vocc-0.1.0.tar.gz"
+#define MB              1024
 
 Settings::Settings(QWidget *parent, Connections *connection) :
     QWidget(parent),
@@ -52,6 +49,8 @@ Settings::Settings(QWidget *parent, Connections *connection) :
     initializeTimers();
     /* check internet connection */
     checkInternetConnection();
+    /* set updates status label */
+    setUpdatesStatusLabel();
 
 }
 
@@ -139,12 +138,12 @@ void Settings::initializeSignalsAndSlots(void)
 
 void Settings::initializeTimers(void)
 {
-    QTimer *checkConnection = new QTimer();
+    mCheckConnection = new QTimer();
 
-    checkConnection->setInterval(5000);
-    checkConnection->start();
+    mCheckConnection->setInterval(5000);
+    mCheckConnection->start();
 
-    connect (checkConnection, &QTimer::timeout,
+    connect (mCheckConnection, &QTimer::timeout,
                 this, &Settings::checkInternetConnection);
 
 }
@@ -160,7 +159,7 @@ void Settings::enableRadioButtons(bool enable)
 }
 
 
-void Settings::checkInternetConnection(void)
+bool Settings::checkInternetConnection(void)
 {
     LOG (LOG_SETTINGS, "%s - checking internet connection", CLASS_INFO);
 
@@ -185,6 +184,7 @@ void Settings::checkInternetConnection(void)
             settings->checkUpdatesBtn->setDisabled(false);
             setWidgetStyleSheet(settings->checkUpdatesBtn, "notActive", false);
         }
+        return true;
     } else {
         LOG (LOG_SETTINGS, "%s - NO internet connection", CLASS_INFO);
 
@@ -194,6 +194,7 @@ void Settings::checkInternetConnection(void)
             settings->checkUpdatesBtn->setDisabled(true);
             setWidgetStyleSheet(settings->checkUpdatesBtn, "notActive", true);
         }
+        return false;
     }
 
 }
@@ -205,7 +206,11 @@ void Settings::checkForUpdates(void)
 
     mPi = new QProgressIndicator(settings->updatesIndicator);
 
-    settings->updatesLabel->setText("Searching updates...");
+    if (mUpdateStatus == NULL)
+        setUpdatesStatusLabel();
+
+    mUpdateStatus->setText("Searching updates...");
+
     mPi->startAnimation();
     mPi->show();
 
@@ -262,19 +267,19 @@ void Settings::getResponseFromServer(void)
         LOG (LOG_SETTINGS, "%s - this is the newest version - %s", CLASS_INFO, mVersion);
         consolePrintMessage(QString("This is the newest version: %1").arg(mVersion), 0);
 
-        settings->updatesLabel->setText("App is up to date");
+        //settings->updatesLabel->setText("App is up to date");
     } else {
         LOG (LOG_SETTINGS, "%s - found new version - %s", CLASS_INFO, mVersion);
         consolePrintMessage(QString("Found new app version: %1").arg(mVersion), 0);
 
-        settings->updatesLabel->setText("Found updates");
+        //settings->updatesLabel->setText("Found updates");
 
         Dialog *dialog = new Dialog(this);
         connect (dialog, &QDialog::finished,
                     [=](int result) { this->onUpdatesDialogResult(result); });
         dialog->show();
         dialog->setWindowTitle("Update info");
-        dialog->mLabel->setText(QString("Install new version %1 over %2?").arg(mVersion).arg(GIT_VERSION));
+        dialog->mLabel->setText(QString("Install new version %1? \n (current is %2)").arg(mVersion).arg(GIT_VERSION));
     }
 
     mPi->stopAnimation();
@@ -289,13 +294,115 @@ void Settings::onUpdatesDialogResult(int result)
         LOG (LOG_SETTINGS, "%s - installing new app version", CLASS_INFO);
         consolePrintMessage("installing new app version", 0);
 
+        if (checkInternetConnection()) {
+            QFile file(QString(TMP_PATH) + QString(APP_REPO));
+            QUrl url(APP_REPOSITORY);
+
+            mPi = new QProgressIndicator(settings->updatesIndicator);
+            mPi->startAnimation();
+            mPi->show();
+
+            mCheckConnection->stop();
+
+            if (settings->checkUpdatesBtn->isEnabled()) {
+                settings->checkUpdatesBtn->setDisabled(true);
+                setWidgetStyleSheet(settings->checkUpdatesBtn, "notActive", true);
+            }
+
+            downloadFile(url, file);
+        } else {
+            checkInternetConnection();
+            return;
+        }
 
     } else {
         LOG (LOG_SETTINGS, "%s - installing new app version aborted", CLASS_INFO);
         consolePrintMessage("installing new app version aborted", 1);
 
-        settings->updatesLabel->setText("Process aborted");
+        mUpdateStatus->setText("Process aborted");
+        return;
     }
+}
+
+
+void Settings::downloadFile(QUrl &url, QFile &file)
+{
+    LOG (LOG_SETTINGS, "%s - downloading file %s", CLASS_INFO, url.toString().toStdString().c_str());
+
+    QNetworkAccessManager name;
+
+    QNetworkRequest req(url);
+
+    if (!file.open(QIODevice::WriteOnly)) {
+        LOG (LOG_SETTINGS, "%s - unable to save the file %s", CLASS_INFO, file.fileName());
+        consolePrintMessage(QString("unable to save the file %1").arg(file.fileName()), 2);
+        delete &file;
+        return;
+    }
+
+    QEventLoop loop;
+
+    QNetworkReply *reply = name.get(req);
+
+    connect(reply, &QNetworkReply::sslErrors,
+                [=] (QList<QSslError> errors) { this->sslErrors(errors); });
+
+    connect (reply, &QNetworkReply::finished,
+                &loop, &QEventLoop::quit);
+
+    connect (reply, &QNetworkReply::readyRead,
+                [&file, reply] {
+                    LOG (LOG_SETTINGS, "%s - READ SMTH", CLASS_INFO);
+                    if (&file) {
+                        file.write(reply->readAll());
+                    }
+                });
+
+    connect (reply, &QNetworkReply::downloadProgress,
+                [this](qint64 read, qint64 total) {
+                    this->onDownloadProgressUpdate(read, total);
+                });
+
+    connect (reply, &QNetworkReply::finished,
+                 [this, &file, reply] {
+
+                    LOG (LOG_SETTINGS, "%s - download complete", CLASS_INFO);
+                    this->consolePrintMessage("Download complete", 0);
+
+                    mCheckConnection->start();
+                    mUpdateStatus->setText("Download complete");
+                    mPi->stopAnimation();
+                    delete mPi;
+                    mPi = NULL;
+
+                    if (reply->error()) {
+                        this->consolePrintMessage(reply->errorString(), 2);
+                    }
+
+                    file.flush();
+                    file.close();
+
+                    reply->deleteLater();
+    });
+
+    loop.exec();
+}
+
+
+void Settings::onDownloadProgressUpdate(qint64 read, qint64 total)
+{
+    int progress;
+
+    progress = read/MB;
+
+    mUpdateStatus->setText(QString("%1 kB downloaded...").arg(progress));
+}
+
+
+void Settings::sslErrors(const QList<QSslError> &sslErrors)
+{
+    for (const QSslError &error : sslErrors)
+       consolePrintMessage(QString("SSL error: %1").arg(error.errorString()), 2);
 }
 
 
@@ -421,6 +528,17 @@ void Settings::saveConfigFile(void)
         file.close();
     } else {
         LOG (LOG_SETTINGS, "%s - could not save config file", CLASS_INFO);
+    }
+}
+
+
+void Settings::setUpdatesStatusLabel(void)
+{
+    if (mUpdateStatus == NULL) {
+        mUpdateStatus = new QLabel();
+        mUpdateStatus->setMinimumWidth(170);
+        mUpdateStatus->setAlignment(Qt::AlignCenter);
+        settings->statusLayer->addWidget(mUpdateStatus);
     }
 }
 
@@ -575,8 +693,8 @@ void Settings::onShutdownButtonClicked(void)
 
 Dialog::Dialog(QWidget *parent) : QDialog (parent)
 {
-    //if (parent != NULL)
-       //resize(parent->width()/3, parent->height()/3);
+    if (parent != NULL)
+       resize(parent->width()/3, parent->height()/3);
     setFocusPolicy(Qt::NoFocus);
 
     QDialogButtonBox *bb = new QDialogButtonBox(
@@ -621,5 +739,5 @@ void Dialog::setButtonStyleSheet(QPushButton &pb)
                       QPushButton:pressed { \
                      border: 4px solid #00ffc1; \
                      border-radius: 4px; }");
-    pb.setFixedSize(this->width()/1.5, this->height());
+    pb.setFixedSize(this->width()/3, this->height()/4.5);
 }

@@ -20,8 +20,13 @@
 #include <QWidget>
 #include <QString>
 #include <QDialog>
+#include <QFile>
+#include <QtNetwork>
+#include <QProgressBar>
 #include "progressIndicator.h"
 #include "../connections/connections.h"
+
+class QSslError;
 
 namespace Ui {
     class Settings;
@@ -50,7 +55,7 @@ public slots:
 
 private slots:
     /// check internet connection on timeout
-    void checkInternetConnection(void);
+    bool checkInternetConnection(void);
     /// reads response (json) from server
     void getResponseFromServer(void);
     /// method called when can baudrate changed
@@ -77,6 +82,10 @@ private slots:
     void checkForUpdates(void);
     /// method called on dialog exit
     void onUpdatesDialogResult(int result);
+    /// show download progress
+    void onDownloadProgressUpdate(qint64 read, qint64 total);
+    /// ssl errors
+    void sslErrors(const QList<QSslError> &errors);
 
 signals:
     /// signal emitted when can baudrate changed
@@ -101,6 +110,8 @@ private:
     void initializeSignalsAndSlots(void);
     /// initializing timers
     void initializeTimers(void);
+    /// download file
+    void downloadFile(QUrl &url, QFile &file);
     /// method that returns console state enable/disable
     bool connectionsGetConsoleState(void);
     /// method that returns can mode state
@@ -114,9 +125,13 @@ private:
     /// set stylesheet
     template <typename T>
     void setWidgetStyleSheet(T &widget, const char* property, bool set);
+    /// set updates label
+    void setUpdatesStatusLabel(void);
 
     int index;
+    QTimer *mCheckConnection;
     QProgressIndicator *mPi;
+    QLabel *mUpdateStatus;
     QString mVersion;
     Connections *con;
     Ui::Settings *settings;

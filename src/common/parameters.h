@@ -12,6 +12,8 @@
 #define MESSAGE_2               "0CF11F05"
 #define DEFAULT_FONT            "Halvetica"
 #define SHUTDOWN_CMD            "shutdown now"
-
+#define DEF_URL                 "http://www.google.com"
+#define UPDATES_SERVER          "https://api.github.com/repos/rozkalibrowany/vocc/tags"
+#define APP_REPOSITORY          "https://codeload.github.com/rozkalibrowany/vocc/tar.gz/0.1.0"
 #endif // PARAMETERS
 
