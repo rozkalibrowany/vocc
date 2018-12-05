@@ -267,12 +267,12 @@ void Settings::getResponseFromServer(void)
         LOG (LOG_SETTINGS, "%s - this is the newest version - %s", CLASS_INFO, mVersion);
         consolePrintMessage(QString("This is the newest version: %1").arg(mVersion), 0);
 
-        //settings->updatesLabel->setText("App is up to date");
+        mUpdateStatus->setText("App is up to date");
     } else {
         LOG (LOG_SETTINGS, "%s - found new version - %s", CLASS_INFO, mVersion);
         consolePrintMessage(QString("Found new app version: %1").arg(mVersion), 0);
 
-        //settings->updatesLabel->setText("Found updates");
+        mUpdateStatus->setText("Found updates");
 
         Dialog *dialog = new Dialog(this);
         connect (dialog, &QDialog::finished,
@@ -291,8 +291,8 @@ void Settings::getResponseFromServer(void)
 void Settings::onUpdatesDialogResult(int result)
 {
     if (result == QDialog::Accepted) {
-        LOG (LOG_SETTINGS, "%s - installing new app version", CLASS_INFO);
-        consolePrintMessage("installing new app version", 0);
+        LOG (LOG_SETTINGS, "%s - downloading new app version", CLASS_INFO);
+        consolePrintMessage("downloading new app version", 0);
 
         if (checkInternetConnection()) {
             QFile file(QString(TMP_PATH) + QString(APP_REPO));
@@ -352,57 +352,145 @@ void Settings::downloadFile(QUrl &url, QFile &file)
 
     connect (reply, &QNetworkReply::readyRead,
                 [&file, reply] {
-                    LOG (LOG_SETTINGS, "%s - READ SMTH", CLASS_INFO);
                     if (&file) {
                         file.write(reply->readAll());
                     }
                 });
 
     connect (reply, &QNetworkReply::downloadProgress,
-                [this](qint64 read, qint64 total) {
-                    this->onDownloadProgressUpdate(read, total);
+                [this](qint64 read) {
+                    int progress;
+
+                    progress = read/MB;
+
+                    mUpdateStatus->setText(QString("%1 kB downloaded...").arg(progress));
                 });
 
     connect (reply, &QNetworkReply::finished,
                  [this, &file, reply] {
-
-                    LOG (LOG_SETTINGS, "%s - download complete", CLASS_INFO);
-                    this->consolePrintMessage("Download complete", 0);
-
-                    mCheckConnection->start();
-                    mUpdateStatus->setText("Download complete");
-                    mPi->stopAnimation();
-                    delete mPi;
-                    mPi = NULL;
-
-                    if (reply->error()) {
-                        this->consolePrintMessage(reply->errorString(), 2);
-                    }
-
-                    file.flush();
-                    file.close();
-
-                    reply->deleteLater();
+                     this->onDownloadedFileFinished(file, reply);
     });
 
     loop.exec();
 }
 
 
-void Settings::onDownloadProgressUpdate(qint64 read, qint64 total)
+void Settings::onDownloadedFileFinished(QFile &file, QNetworkReply *reply)
 {
-    int progress;
+    mPi->stopAnimation();
+    delete mPi;
+    mPi = NULL;
 
-    progress = read/MB;
+    if (reply->error()) {
+        this->consolePrintMessage(reply->errorString(), 2);
+        LOG (LOG_SETTINGS, "%s - error while downloading - %s", CLASS_INFO,
+                reply->errorString());
 
-    mUpdateStatus->setText(QString("%1 kB downloaded...").arg(progress));
+        return;
+    }
+
+    LOG (LOG_SETTINGS, "%s - download complete", CLASS_INFO);
+    consolePrintMessage("Download complete", 0);
+
+    mCheckConnection->start();
+    mUpdateStatus->setText("Download complete");
+
+    Dialog *dialog = new Dialog(this);
+    connect (dialog, &QDialog::finished,
+                [=](int result) { this->onInstallationDialogResult(result); });
+    dialog->show();
+    dialog->setWindowTitle("Installation");
+    dialog->mLabel->setText(QString("Do you want to install new version %1 now?").arg(mVersion));
+
+
+    file.flush();
+    file.close();
+
+    reply->deleteLater();
+}
+
+
+void Settings::onInstallationDialogResult(int result)
+{
+    if (result == QDialog::Accepted) {
+        LOG (LOG_SETTINGS, "%s - running installation script", CLASS_INFO);
+        consolePrintMessage("Running installation script", 1);
+
+        QString currentPath;
+
+        QDir tmpCurrDir = QDir::current();
+        bool dirPresent = tmpCurrDir.cdUp();
+
+        if (dirPresent)
+             currentPath = tmpCurrDir.path();
+        else {
+            LOG (LOG_SETTINGS, "%s - cannot find parent directory", CLASS_INFO);
+            consolePrintMessage(QString("Cannot find parent directory"), 2);
+            return;
+        }
+
+        QString mFilePath = currentPath + "/etc/" + QString::fromUtf8(INSTALLATION_FILE);
+
+        if (checkIfFileExists(mFilePath)) {
+
+            QProcess *install = new QProcess();
+
+            QString installCmd = QString::fromUtf8(SHELL);
+            installCmd = installCmd + " " + mFilePath;
+            LOG (LOG_SETTINGS, "%s - install command \"%s\"", CLASS_INFO,
+                 installCmd.toStdString().c_str());
+            consolePrintMessage(QString("Install command \"%1\"").arg(installCmd), 0);
+
+            if (install->startDetached(installCmd)){
+                emit quitApplication();
+            } else {
+                QString msg = install->readAllStandardError();
+                LOG (LOG_SETTINGS, "%s - ERROR: %s", CLASS_INFO,
+                     msg.toStdString().c_str());
+                consolePrintMessage(QString("ERROR: %1").arg(msg), 2);
+            }
+
+        } else {
+            LOG (LOG_SETTINGS, "%s - installation aborted", CLASS_INFO);
+            consolePrintMessage(QString("Installation aborted"), 2);
+
+            return;
+        }
+
+
+    } else {
+        LOG (LOG_SETTINGS, "%s - installation aborted", CLASS_INFO);
+        consolePrintMessage("Installation aborted", 2);
+    }
 }
 
 
 void Settings::sslErrors(const QList<QSslError> &sslErrors)
 {
-    for (const QSslError &error : sslErrors)
+    for (const QSslError &error : sslErrors) {
        consolePrintMessage(QString("SSL error: %1").arg(error.errorString()), 2);
+       LOG (LOG_SETTINGS, "%s - ssl error - %s", CLASS_INFO, error.errorString());
+    }
+}
+
+
+bool Settings::checkIfFileExists(QString &path)
+{
+    LOG (LOG_SETTINGS, "%s - checking if file exists - %s", CLASS_INFO,
+            path.toStdString().c_str());
+
+    QFileInfo checkFile(path);
+
+    if (checkFile.exists() && checkFile.isFile()) {
+        LOG (LOG_SETTINGS, "%s - file \"%s\" found", CLASS_INFO,
+             path.toStdString().c_str());
+        return true;
+    } else {
+        LOG (LOG_SETTINGS, "%s - file \"%s\" not found", CLASS_INFO,
+             path.toStdString().c_str());
+        consolePrintMessage(QString("File %1 not found").arg(path), 2);
+        return false;
+    }
 }
 
 

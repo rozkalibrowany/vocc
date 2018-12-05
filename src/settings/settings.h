@@ -82,8 +82,10 @@ private slots:
     void checkForUpdates(void);
     /// method called on dialog exit
     void onUpdatesDialogResult(int result);
-    /// show download progress
-    void onDownloadProgressUpdate(qint64 read, qint64 total);
+    /// method called when download complete
+    void onInstallationDialogResult(int result);
+    /// on download finished
+    void onDownloadedFileFinished(QFile &file, QNetworkReply *reply);
     /// ssl errors
     void sslErrors(const QList<QSslError> &errors);
 
@@ -110,6 +112,8 @@ private:
     void initializeSignalsAndSlots(void);
     /// initializing timers
     void initializeTimers(void);
+    /// check if file exists
+    bool checkIfFileExists(QString &path);
     /// download file
     void downloadFile(QUrl &url, QFile &file);
     /// method that returns console state enable/disable
