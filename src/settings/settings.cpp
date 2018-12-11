@@ -430,22 +430,21 @@ void Settings::onInstallationDialogResult(int result)
             return;
         }
 
-        QString mFilePath = currentPath + "/etc/" + QString::fromUtf8(INSTALLATION_FILE);
+        QString mFilePath = upPath + "/etc/" + QString::fromUtf8(INSTALLATION_FILE);
 
         if (checkIfFileExists(mFilePath)) {
 
             QProcess *install = new QProcess();
 
-            QString installCmd = QString::fromUtf8(SHELL);
-            installCmd = installCmd + " " + mFilePath;
+            QString installCmd = QString::fromUtf8(DEFAULT_TERMINAL) + " " + QString::fromUtf8(SHELL_PARAMETER) + \
+                    " " + QString::fromUtf8(SHELL) + " " + QString::fromUtf8(CMD_PARAMETER) + " \"" + QString::fromUtf8(SHELL) + " " + \
+                    mFilePath + " " + runPath + " " + QString::fromUtf8(TMP_PATH) + " " + "vocc" + "; " + QString::fromUtf8(SHELL) + "\"";
+
             LOG (LOG_SETTINGS, "%s - install command \"%s\"", CLASS_INFO,
                  installCmd.toStdString().c_str());
             consolePrintMessage(QString("Install command \"%1\"").arg(installCmd), 0);
 
             if (install->startDetached(installCmd)){
-
-                QProcess *proc = new QProcess();
-                proc->startDetached("x-terminal-emulator -x bash -c \"bash /home/ksiegieda/vocc/vocc/etc/install.sh; bash\"");
                 emit quitApplication();
             } else {
                 QString msg = install->readAllStandardError();
