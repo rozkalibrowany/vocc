@@ -21,7 +21,7 @@
 #define CLASS_INFO      "settings"
 #define FILE_NAME       "settings.conf"
 #define TMP_PATH        "/tmp/"
-#define APP_REPO        "vocc-0.1.0.tar.gz"
+#define APP_REPO        "vocc-0.2.0.tar.gz"
 #define MB              1024
 
 Settings::Settings(QWidget *parent, Connections *connection) :
@@ -263,7 +263,7 @@ void Settings::getResponseFromServer(void)
         mVersion = jsonObj["name"].toString();
     }
 
-    if (QString::compare(mVersion, GIT_VERSION)) {
+    if (!QString::compare(mVersion, GIT_VERSION)) {
         LOG (LOG_SETTINGS, "%s - this is the newest version - %s", CLASS_INFO, mVersion);
         consolePrintMessage(QString("This is the newest version: %1").arg(mVersion), 0);
 

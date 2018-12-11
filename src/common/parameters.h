@@ -19,6 +19,6 @@
 #define CMD_PARAMETER           "-c"
 #define DEF_URL                 "http://www.google.com"
 #define UPDATES_SERVER          "https://api.github.com/repos/rozkalibrowany/vocc/tags"
-#define APP_REPOSITORY          "https://codeload.github.com/rozkalibrowany/vocc/tar.gz/0.1.0"
+#define APP_REPOSITORY          "https://codeload.github.com/rozkalibrowany/vocc/tar.gz/0.2.0"
 #endif // PARAMETERS
 

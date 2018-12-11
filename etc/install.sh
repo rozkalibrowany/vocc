@@ -89,7 +89,7 @@ make -j4
 sleep 1s
 
 # copy binary to project folder
-cd ../bin && mv "komp"* $BINARY_FILE
+cd ../bin 
 cp $BINARY_FILE $PATH_BINARY/$BINARY_FILE
 
 sleep 1s
