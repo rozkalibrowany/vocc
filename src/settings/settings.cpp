@@ -416,13 +416,14 @@ void Settings::onInstallationDialogResult(int result)
         LOG (LOG_SETTINGS, "%s - running installation script", CLASS_INFO);
         consolePrintMessage("Running installation script", 1);
 
-        QString currentPath;
+        QString upPath, runPath;
 
         QDir tmpCurrDir = QDir::current();
+        runPath = tmpCurrDir.path();
         bool dirPresent = tmpCurrDir.cdUp();
 
         if (dirPresent)
-             currentPath = tmpCurrDir.path();
+             upPath = tmpCurrDir.path();
         else {
             LOG (LOG_SETTINGS, "%s - cannot find parent directory", CLASS_INFO);
             consolePrintMessage(QString("Cannot find parent directory"), 2);
@@ -442,6 +443,9 @@ void Settings::onInstallationDialogResult(int result)
             consolePrintMessage(QString("Install command \"%1\"").arg(installCmd), 0);
 
             if (install->startDetached(installCmd)){
+
+                QProcess *proc = new QProcess();
+                proc->startDetached("x-terminal-emulator -x bash -c \"bash /home/ksiegieda/vocc/vocc/etc/install.sh; bash\"");
                 emit quitApplication();
             } else {
                 QString msg = install->readAllStandardError();
@@ -451,8 +455,9 @@ void Settings::onInstallationDialogResult(int result)
             }
 
         } else {
-            LOG (LOG_SETTINGS, "%s - installation aborted", CLASS_INFO);
-            consolePrintMessage(QString("Installation aborted"), 2);
+            LOG (LOG_SETTINGS, "%s - installation file not found - \"%s\"", CLASS_INFO,
+                    mFilePath.toStdString().c_str());
+            consolePrintMessage(QString("Installation file not found"), 2);
 
             return;
         }
@@ -492,7 +497,6 @@ bool Settings::checkIfFileExists(QString &path)
         return false;
     }
 }
-
 
 /* returns:
  *          0 - TEST mode
