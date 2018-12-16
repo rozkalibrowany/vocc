@@ -80,10 +80,10 @@ echo "$INSTALL_STAMP now in folder $DEV"
 sleep 1s
 
 # qmake project
-qmake "komp"*
+qmake $BINARY_FILE*
 echo "$INSTALL_STAMP qmaking project..."
 
-# make 
+# make
 make -j4
 
 sleep 1s
@@ -104,7 +104,3 @@ sleep 1s
 echo "$INSTALL_STAMP executing new application version..."
 cd $PATH_BINARY
 ./$BINARY_FILE &
-
-
-
-#mkdir cosik
