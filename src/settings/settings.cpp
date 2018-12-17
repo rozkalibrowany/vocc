@@ -276,13 +276,13 @@ void Settings::getResponseFromServer(void)
 
     mVersion = version;
 
-    if (!QString::compare(mVersion, GIT_VERSION)) {
-        LOG (LOG_SETTINGS, "%s - this is the newest version - %s", CLASS_INFO, mVersion);
+    if (QString::compare(mVersion, GIT_VERSION)) {
+        LOG (LOG_SETTINGS, "%s - this is the newest version - %s", CLASS_INFO, mVersion.toStdString().c_str());
         consolePrintMessage(QString("This is the newest version: %1").arg(mVersion), 0);
 
         mUpdateStatus->setText("App is up to date");
     } else {
-        LOG (LOG_SETTINGS, "%s - found new version - %s", CLASS_INFO, mVersion);
+        LOG (LOG_SETTINGS, "%s - found new version - %s", CLASS_INFO, mVersion.toStdString().c_str());
         consolePrintMessage(QString("Found new app version: %1").arg(mVersion), 0);
 
         mUpdateStatus->setText("Found updates");
@@ -308,8 +308,11 @@ void Settings::onUpdatesDialogResult(int result)
         consolePrintMessage("downloading new app version", 0);
 
         if (checkInternetConnection()) {
+            QString urlAddress;
             QFile file(QString(TMP_PATH) + QString(APP_REPO));
-            QUrl url(APP_REPOSITORY);
+
+            urlAddress = QString::fromUtf8(APP_REPOSITORY) + mVersion;
+            QUrl url(urlAddress);
 
             mPi = new QProgressIndicator(settings->updatesIndicator);
             mPi->startAnimation();
@@ -347,7 +350,7 @@ void Settings::downloadFile(QUrl &url, QFile &file)
     QNetworkRequest req(url);
 
     if (!file.open(QIODevice::WriteOnly)) {
-        LOG (LOG_SETTINGS, "%s - unable to save the file %s", CLASS_INFO, file.fileName());
+        LOG (LOG_SETTINGS, "%s - unable to save the file - %s", CLASS_INFO, file.fileName().toStdString().c_str());
         consolePrintMessage(QString("unable to save the file %1").arg(file.fileName()), 2);
         delete &file;
         return;
@@ -365,7 +368,7 @@ void Settings::downloadFile(QUrl &url, QFile &file)
 
     connect (reply, &QNetworkReply::readyRead,
                 [&file, reply] {
-                    if (&file) {
+                    if (file.exists()) {
                         file.write(reply->readAll());
                     }
                 });
@@ -397,7 +400,7 @@ void Settings::onDownloadedFileFinished(QFile &file, QNetworkReply *reply)
     if (reply->error()) {
         this->consolePrintMessage(reply->errorString(), 2);
         LOG (LOG_SETTINGS, "%s - error while downloading - %s", CLASS_INFO,
-                reply->errorString());
+                reply->errorString().toStdString().c_str());
 
         return;
     }
@@ -486,7 +489,7 @@ void Settings::sslErrors(const QList<QSslError> &sslErrors)
 {
     for (const QSslError &error : sslErrors) {
        consolePrintMessage(QString("SSL error: %1").arg(error.errorString()), 2);
-       LOG (LOG_SETTINGS, "%s - ssl error - %s", CLASS_INFO, error.errorString());
+       LOG (LOG_SETTINGS, "%s - ssl error - %s", CLASS_INFO, error.errorString().toStdString().c_str());
     }
 }
 
