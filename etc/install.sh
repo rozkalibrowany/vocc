@@ -61,7 +61,7 @@ sleep 1s
 
 # untar source files
 echo "$INSTALL_STAMP extracting source files..."
-mkdir $TMP_FOLDER && tar -zxvf $BINARY_FILE* -C $TMP_FOLDER
+mkdir $TMP_FOLDER && tar -zxf $BINARY_FILE* -C $TMP_FOLDER
 
 sleep 1s
 
