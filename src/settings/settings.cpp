@@ -12,6 +12,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDialogButtonBox>
+#include <stdio.h>
 #include "settings.h"
 #include "ui_settings.h"
 #include "../common/parameters.h"
@@ -240,6 +241,8 @@ void Settings::checkForUpdates(void)
 void Settings::getResponseFromServer(void)
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply*>(QObject::sender());
+    QString version = NULL;
+    int major, smajor, minor, sminor, release, srelease;
 
     if (reply->error() != QNetworkReply::NoError) {
         LOG (LOG_SETTINGS, "%s - error connecting to server", CLASS_INFO);
@@ -260,8 +263,18 @@ void Settings::getResponseFromServer(void)
 
     foreach (const QJsonValue &value, jsonArray) {
         QJsonObject jsonObj = value.toObject();
-        mVersion = jsonObj["name"].toString();
+        LOG (LOG_SETTINGS, "%s - found version - %s ", CLASS_INFO, jsonObj["name"].toString().toStdString().c_str());
+        if (version == NULL) {
+            version = jsonObj["name"].toString();
+            sscanf (version.toStdString().c_str(), "%d.%d.%d", &major, &minor, &release);
+        } else {
+            sscanf (jsonObj["name"].toString().toStdString().c_str(), "%d.%d.%d", &smajor, &sminor, &srelease);
+            if (smajor > major || sminor > minor || srelease  > release)
+                version = jsonObj["name"].toString();
+        }
     }
+
+    mVersion = version;
 
     if (!QString::compare(mVersion, GIT_VERSION)) {
         LOG (LOG_SETTINGS, "%s - this is the newest version - %s", CLASS_INFO, mVersion);
