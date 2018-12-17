@@ -21,7 +21,7 @@
 #define CLASS_INFO      "settings"
 #define FILE_NAME       "settings.conf"
 #define TMP_PATH        "/tmp/"
-#define APP_REPO        "vocc-0.1.0.tar.gz"
+#define APP_REPO        "vocc-0.2.0.tar.gz"
 #define MB              1024
 
 Settings::Settings(QWidget *parent, Connections *connection) :
@@ -263,7 +263,7 @@ void Settings::getResponseFromServer(void)
         mVersion = jsonObj["name"].toString();
     }
 
-    if (QString::compare(mVersion, GIT_VERSION)) {
+    if (!QString::compare(mVersion, GIT_VERSION)) {
         LOG (LOG_SETTINGS, "%s - this is the newest version - %s", CLASS_INFO, mVersion);
         consolePrintMessage(QString("This is the newest version: %1").arg(mVersion), 0);
 
@@ -430,22 +430,21 @@ void Settings::onInstallationDialogResult(int result)
             return;
         }
 
-        QString mFilePath = currentPath + "/etc/" + QString::fromUtf8(INSTALLATION_FILE);
+        QString mFilePath = upPath + "/etc/" + QString::fromUtf8(INSTALLATION_FILE);
 
         if (checkIfFileExists(mFilePath)) {
 
             QProcess *install = new QProcess();
 
-            QString installCmd = QString::fromUtf8(SHELL);
-            installCmd = installCmd + " " + mFilePath;
+            QString installCmd = QString::fromUtf8(DEFAULT_TERMINAL) + " " + QString::fromUtf8(SHELL_PARAMETER) + \
+                    " " + QString::fromUtf8(SHELL) + " " + QString::fromUtf8(CMD_PARAMETER) + " \"" + QString::fromUtf8(SHELL) + " " + \
+                    mFilePath + " " + runPath + " " + QString::fromUtf8(TMP_PATH) + " " + "vocc" + "; " + QString::fromUtf8(SHELL) + "\"";
+
             LOG (LOG_SETTINGS, "%s - install command \"%s\"", CLASS_INFO,
                  installCmd.toStdString().c_str());
             consolePrintMessage(QString("Install command \"%1\"").arg(installCmd), 0);
 
             if (install->startDetached(installCmd)){
-
-                QProcess *proc = new QProcess();
-                proc->startDetached("x-terminal-emulator -x bash -c \"bash /home/ksiegieda/vocc/vocc/etc/install.sh; bash\"");
                 emit quitApplication();
             } else {
                 QString msg = install->readAllStandardError();
