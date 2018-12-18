@@ -11,7 +11,7 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     m_axisX(new QValueAxis()),
     m_axisY(new QValueAxis()),
     m_step(0),
-    m_x(140),
+    m_x(75),
     m_y(1)
 {
     //QObject::connect(&m_timer, &QTimer::timeout, this, &Chart::handleTimeout);
@@ -30,7 +30,7 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     m_series->attachAxis(m_axisX);
     m_series->attachAxis(m_axisY);
     m_axisX->setTickCount(15);
-    m_axisX->setRange(0, 150);
+    m_axisX->setRange(0, 80);
     m_axisY->setRange(-5, 10);
 
     m_timer.start();
