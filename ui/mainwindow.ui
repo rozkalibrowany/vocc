@@ -547,7 +547,7 @@ color:  #6affcd;</string>
      <item row="0" column="0" rowspan="2">
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="drive">
         <property name="styleSheet">

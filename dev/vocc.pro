@@ -3,9 +3,10 @@
 # Project created by QtCreator 2018-07-23T22:43:59
 #
 #-------------------------------------------------
+
 QMAKE_CXXFLAGS_RELEASE += -O2
 
-QT       += core gui network
+QT       += core gui network charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -34,7 +35,8 @@ SOURCES += \
     ../src/main/rpmwidget.cpp \
     ../src/stats/statistics.cpp \
     ../src/settings/parser.c \
-    ../src/settings/progressIndicator.cpp
+    ../src/settings/progressIndicator.cpp \
+    ../src/stats/chart.cpp
 
 HEADERS  += \
     ../src/alerts/ledindicator.h \
@@ -49,7 +51,8 @@ HEADERS  += \
     ../src/main/rpmwidget.h \
     ../src/stats/statistics.h \
     ../src/settings/parser.h \
-    ../src/settings/progressIndicator.h
+    ../src/settings/progressIndicator.h \
+    ../src/stats/chart.h
 
 FORMS += \
     ../ui/mainwindow.ui \

@@ -19,6 +19,8 @@
 #define STATISTICS_H
 
 #include <QWidget>
+#include "chart.h"
+#include "../connections/connections.h"
 
 namespace Ui {
 class Statistics;
@@ -33,7 +35,7 @@ public:
      * @brief Statistics - costructs Statistics widget
      * @param parent
      */
-    explicit Statistics(QWidget *parent = 0);
+    explicit Statistics(QWidget *parent, Connections *connection);
     ~Statistics();
 
 public slots:
@@ -44,7 +46,11 @@ public slots:
     void setLapTime(QString lapTime);
 
 private:
+    void initializeSignalsAndSlots(void);
+
+    Chart *chartUpper, *chartBottom;
     Ui::Statistics *ui;
+    Connections *con;
 };
 
 #endif // STATISTICS_H

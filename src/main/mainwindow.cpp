@@ -2,6 +2,7 @@
 #include <string>
 #include <QSequentialIterable>
 #include <QDateTime>
+#include <QStyle>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../common/parameters.h"
@@ -38,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     settings = new Settings(ui->settingsWidget, connection);
 
     /* create statistics widget */
-    stats = new Statistics(ui->statsWidget);
+    stats = new Statistics(ui->statsWidget, connection);
 
     /* set connection status */
     connection->setConnectionStatus(false);

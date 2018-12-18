@@ -6,13 +6,41 @@
 #define CLASS_INFO      "stats"
 
 
-Statistics::Statistics(QWidget *parent) :
+Statistics::Statistics(QWidget *parent, Connections *connection) :
     QWidget(parent),
     ui(new Ui::Statistics)
 {
     LOG (LOG_STATS, "%s - in constructor", CLASS_INFO);
 
     ui->setupUi(this);
+    con = connection;
+
+    initializeSignalsAndSlots();
+
+
+    chartUpper = new Chart;
+    chartUpper->setTitle("Dynamic spline chart");
+    chartUpper->legend()->hide();
+    chartUpper->setAnimationOptions(QChart::AllAnimations);
+    QChartView *chartView = new QChartView(chartUpper, ui->currentChartWidget);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    ui->layoutCurrentChart->addWidget(chartView);
+    chartUpper->setAxisYRange(0, 200);
+
+
+    chartBottom = new Chart;
+    chartBottom->setTitle("Dynamic spline chart");
+    chartBottom->legend()->hide();
+    chartBottom->setAnimationOptions(QChart::AllAnimations);
+    QChartView *chartView2 = new QChartView(chartBottom, ui->powerChartWidget);
+    chartView2->setRenderHint(QPainter::Antialiasing);
+    ui->layoutPowerChart->addWidget(chartView2);
+}
+
+void Statistics::initializeSignalsAndSlots(void)
+{
+    connect (con, &Connections::updateBatteryCurrent,
+             [=](quint16 value) { chartUpper->updateChart(value); });
 }
 
 Statistics::~Statistics()
@@ -30,6 +58,4 @@ void Statistics::setLapTime(QString lapTime)
 
     QTableWidgetItem *item = new QTableWidgetItem(lapTime);
     item->setTextAlignment(Qt::AlignCenter);
-    ui->tabLapTimes->insertRow(ui->tabLapTimes->rowCount());
-    ui->tabLapTimes->setItem(ui->tabLapTimes->rowCount()-1, 0, item);
 }

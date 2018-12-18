@@ -26,227 +26,107 @@
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QTabWidget" name="tabWidget">
-        <property name="styleSheet">
-         <string notr="true">
-/* Style the tab using the tab sub-control. Note that
-    it reads QTabBar _not_ QTabWidget */
-QTabBar::tab {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
-                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-    border: 3px solid  #6affcd;
-    border-bottom-color: #aaaaaa; /* same as the pane color */
-    border-top-left-radius: 5px;
-    color: rgb(24,24,24);
-    border-top-right-radius: 6px;
-    min-width: 12ex;
-    padding: 4px;
-}
-
-QTabBar::tab:selected, QTabBar::tab:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
-                                stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
-	   color: rgb(24,24,24);
-}
-
-QTabBar::tab:selected {
-    border-color: #9B9B9B;
-    border-bottom-color: white; /* same as pane color */
-font: 75 italic bold 11pt &quot;Ubuntu&quot; ;
-color: rgb(24, 24, 24);
-
-}
-
-QTabBar::tab:!selected {
-    margin-top: 2px; /* make non-selected tabs look smaller */
-font: 75 italic bold 11pt &quot;Ubuntu&quot; ;
-color: rgb(24, 24, 24);
-}</string>
-        </property>
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-        <widget class="QWidget" name="tab_3">
-         <attribute name="title">
-          <string>Lap Times</string>
-         </attribute>
-         <widget class="QTableWidget" name="tabLapTimes">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>681</width>
-            <height>411</height>
-           </rect>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>0</number>
           </property>
+          <item>
+           <widget class="QStackedWidget" name="chartsStackedWidget">
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="currentDataPage">
+             <widget class="QWidget" name="verticalLayoutWidget">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>561</width>
+                <height>441</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <layout class="QVBoxLayout" name="layoutCurrentChart">
+                   <item>
+                    <widget class="QWidget" name="currentChartWidget" native="true">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>273</width>
+                       <height>213</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <item>
+                  <layout class="QVBoxLayout" name="layoutPowerChart">
+                   <item>
+                    <widget class="QWidget" name="powerChartWidget" native="true"/>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="oldDataPage"/>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QFrame" name="verticalFrame">
           <property name="minimumSize">
            <size>
-            <width>30</width>
+            <width>100</width>
             <height>0</height>
            </size>
           </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QTableWidget {
-    border: 2px solid  #6affcd;
-    border-bottom-color: #C2C7CB; /* same as the pane color */
-    border-top-left-radius: 2px;
-    border-top-right-radius: 4px;
-    min-width: 2ex;
-    padding: 1px;
-	font: 75 italic bold 16pt &quot;Gill Sans MT&quot;  ;
-	color: rgb(224, 224, 224);
-
-
-}
-QHeaderView::section {
-    padding: 1px;
-    font-size: 13pt;
-    border-style: none;
-    border-bottom: 0.5px solid  #6affcd;
-    border-right: 2px solid #6affcd;
-font: 75 italic bold 11pt &quot;Gill Sans MT&quot; ;
-color: rgb(216, 216, 216);
-}
-
-QHeaderView::section:horizontal
-{
-	font: 75 italic bold 12pt &quot;Gill Sans MT&quot; ;
-
-    border-top: 1px solid #6affcd;
-	color: rgb(24, 24, 24);
-}
-
-QHeaderView::section:vertical
-{
-	font: 75 italic bold 12pt &quot;Gill Sans MT&quot; ;
-    padding: 2px;
-    border-left: 1px solid #6affcd;
-	color: rgb(24, 24, 24);
-}
-
-</string>
-          </property>
-          <property name="verticalScrollBarPolicy">
-           <enum>Qt::ScrollBarAlwaysOff</enum>
-          </property>
-          <property name="horizontalScrollBarPolicy">
-           <enum>Qt::ScrollBarAsNeeded</enum>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-          </property>
-          <property name="autoScrollMargin">
-           <number>10</number>
-          </property>
-          <property name="verticalScrollMode">
-           <enum>QAbstractItemView::ScrollPerItem</enum>
-          </property>
-          <property name="rowCount">
-           <number>0</number>
-          </property>
-          <property name="columnCount">
-           <number>1</number>
-          </property>
-          <attribute name="horizontalHeaderCascadingSectionResizes">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>670</number>
-          </attribute>
-          <attribute name="horizontalHeaderMinimumSectionSize">
-           <number>40</number>
-          </attribute>
-          <attribute name="verticalHeaderDefaultSectionSize">
-           <number>40</number>
-          </attribute>
-          <attribute name="verticalHeaderMinimumSectionSize">
-           <number>40</number>
-          </attribute>
-          <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderStretchLastSection">
-           <bool>false</bool>
-          </attribute>
-          <column>
-           <property name="text">
-            <string>Lap Times</string>
-           </property>
-          </column>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QPushButton" name="pushButton">
+               <property name="text">
+                <string>PushButton</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+           </item>
+          </layout>
          </widget>
-        </widget>
-        <widget class="QWidget" name="tab_4">
-         <attribute name="title">
-          <string>Best Lap Times</string>
-         </attribute>
-         <widget class="QTableWidget" name="tabBestTimes">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>681</width>
-            <height>421</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QTableWidget {
-    border: 2px solid  #6affcd;
-    border-bottom-color: #C2C7CB; /* same as the pane color */
-    border-top-left-radius: 2px;
-    border-top-right-radius: 4px;
-    min-width: 2ex;
-    padding: 1px;
-
-}
-QHeaderView::section {
-    padding: 1px;
-    font-size: 13pt;
-    border-style: none;
-    border-bottom: 0.5px solid  #6affcd;
-    border-right: 2px solid #6affcd;
-font: 75 italic bold 11pt &quot;Gill Sans MT&quot; ;
-color: rgb(216, 216, 216);
-}
-
-QHeaderView::section:horizontal
-{
-    border-top: 1px solid #6affcd;
-	color: rgb(24, 24, 24);
-}
-
-QHeaderView::section:vertical
-{
-    border-left: 1px solid #6affcd;
-color: rgb(24, 24, 24);
-}
-
-</string>
-          </property>
-          <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>670</number>
-          </attribute>
-          <attribute name="horizontalHeaderMinimumSectionSize">
-           <number>35</number>
-          </attribute>
-          <column>
-           <property name="text">
-            <string>Best Times</string>
-           </property>
-          </column>
-         </widget>
-        </widget>
-       </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
