@@ -2,8 +2,6 @@
 #define CHART_H
 
 #include <QtCharts>
-#include <QtCore/QTimer>
-
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QSplineSeries;
@@ -23,12 +21,9 @@ public:
     void setAxisXRange(qreal min, qreal max);
     void setAxisYRange(qreal min, qreal max);
     void updateChart(qreal value);
-
-public slots:
-    void handleTimeout();
+    void setPenColor(QColor color);
 
 private:
-    QTimer m_timer;
     QSplineSeries *m_series;
     QStringList m_titles;
     QValueAxis *m_axisX;
@@ -36,6 +31,7 @@ private:
     qreal m_step;
     qreal m_x;
     qreal m_y;
+    QPen pen;
 };
 
 #endif /* CHART_H */

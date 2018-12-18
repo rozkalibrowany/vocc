@@ -17,9 +17,8 @@ Statistics::Statistics(QWidget *parent, Connections *connection) :
 
     initializeSignalsAndSlots();
 
-
     chartUpper = new Chart;
-    chartUpper->setTitle("Dynamic spline chart");
+    chartUpper->setTitle("Dynamic Battery Current Data");
     chartUpper->legend()->hide();
     chartUpper->setAnimationOptions(QChart::AllAnimations);
     QChartView *chartView = new QChartView(chartUpper, ui->currentChartWidget);
@@ -29,18 +28,23 @@ Statistics::Statistics(QWidget *parent, Connections *connection) :
 
 
     chartBottom = new Chart;
-    chartBottom->setTitle("Dynamic spline chart");
+    chartBottom->setTitle("Dynamic Battery Voltage Data");
     chartBottom->legend()->hide();
     chartBottom->setAnimationOptions(QChart::AllAnimations);
     QChartView *chartView2 = new QChartView(chartBottom, ui->powerChartWidget);
     chartView2->setRenderHint(QPainter::Antialiasing);
     ui->layoutPowerChart->addWidget(chartView2);
+    chartBottom->setAxisYRange(0, 120);
+    chartBottom->setPenColor(Qt::green);
 }
 
 void Statistics::initializeSignalsAndSlots(void)
 {
     connect (con, &Connections::updateBatteryCurrent,
              [=](quint16 value) { chartUpper->updateChart(value); });
+
+    connect (con, &Connections::updateBatteryVoltage,
+             [=](quint16 value) { chartBottom->updateChart(value); });
 }
 
 Statistics::~Statistics()
