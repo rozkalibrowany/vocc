@@ -125,6 +125,10 @@ void MainWindow::initializeFunctionButtons(void)
     connect (ui->alertsButton, &QPushButton::clicked,
                 [this] { menuButtonChanged(*ui->vfAlerts); });
     connect (ui->statsButton, &QPushButton::clicked,
+                stats, &Statistics::enableChartData);
+    connect (this, &MainWindow::statsMenuDisabled,
+                stats, &Statistics::disableChartData);
+    connect (ui->statsButton, &QPushButton::clicked,
                 [this] { menuButtonChanged(*ui->vfStats); });
     connect (ui->settingsButton, &QPushButton::clicked,
                 [this] { menuButtonChanged(*ui->vfSettings); });
@@ -141,22 +145,22 @@ void MainWindow::initializeSignalsAndSlots(void)
     connect (connection, &Connections::setConnectionStateButton,
                 [=] (bool isConnected) { setStateConnectionButton(isConnected); });
 
-    connect (connection, &Connections::updateBatteryCurrent,
+    connect (connection, &Connections::updateBatteryCurrent, this,
                 [=] (quint16 current) { updateBatteryCurrent(current); });
 
-    connect (connection, &Connections::updateBatteryVoltage,
+    connect (connection, &Connections::updateBatteryVoltage, this,
                 [=] (quint16 voltage) { updateBatteryVoltage(voltage); });
 
-    connect (connection, &Connections::updatePower,
+    connect (connection, &Connections::updatePower, this,
                 [=] (float power) { updatePower(power); });
 
-    connect (connection, &Connections::updateThrottle,
+    connect (connection, &Connections::updateThrottle, this,
                 [=] (quint16 throttle) { updateThrottle(throttle); });
 
-    connect (connection, &Connections::updateControllerTemp,
+    connect (connection, &Connections::updateControllerTemp, this,
                 [=] (quint16 temp) { updateControllerTemp(temp); });
 
-    connect (connection, &Connections::updateMotorTemp,
+    connect (connection, &Connections::updateMotorTemp, this,
                 [=] (quint16 temp) { updateMotorTemp(temp); });
 
     connect (alerts, &Alerts::setAlertsButtonState,
@@ -233,6 +237,9 @@ void MainWindow::menuButtonChanged(QFrame &frame)
         buttonStyleUpdate(frame, true);
         LOG (LOG_MAINWINDOW, "%s - newPage: %d", CLASS_INFO, map[frame.objectName()]);
     } else if (lastButtonObject != &frame) {
+        if (lastButtonObject->objectName() == "vfStats") {
+            emit statsMenuDisabled();
+        }
         setNewPage(map[frame.objectName()]);
         buttonStyleUpdate(frame, true);
         buttonStyleUpdate(*lastButtonObject, false);

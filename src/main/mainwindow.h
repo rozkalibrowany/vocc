@@ -131,6 +131,8 @@ private slots:
     /// Method called to shutdown system
     void shutdownSystem(void);
 
+signals:
+    void statsMenuDisabled();
 };
 
 #endif // MAINWINDOW_H

@@ -15,36 +15,49 @@ Statistics::Statistics(QWidget *parent, Connections *connection) :
     ui->setupUi(this);
     con = connection;
 
-    initializeSignalsAndSlots();
-
     chartUpper = new Chart;
     chartUpper->setTitle("Dynamic Battery Current Data");
     chartUpper->legend()->hide();
     chartUpper->setAnimationOptions(QChart::AllAnimations);
-    QChartView *chartView = new QChartView(chartUpper, ui->currentChartWidget);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    ui->layoutCurrentChart->addWidget(chartView);
+    viewUpper = new QChartView(chartUpper, ui->currentChartWidget);
+    viewUpper->setRenderHint(QPainter::Antialiasing);
+    ui->layoutCurrentChart->addWidget(viewUpper);
     chartUpper->setAxisYRange(0, 200);
-
+    chartUpper->setTheme(QChart::ChartThemeDark);
 
     chartBottom = new Chart;
     chartBottom->setTitle("Dynamic Battery Voltage Data");
     chartBottom->legend()->hide();
     chartBottom->setAnimationOptions(QChart::AllAnimations);
-    QChartView *chartView2 = new QChartView(chartBottom, ui->powerChartWidget);
-    chartView2->setRenderHint(QPainter::Antialiasing);
-    ui->layoutPowerChart->addWidget(chartView2);
+    viewBottom = new QChartView(chartBottom, ui->powerChartWidget);
+    viewBottom->setRenderHint(QPainter::Antialiasing);
+    ui->layoutPowerChart->addWidget(viewBottom);
     chartBottom->setAxisYRange(0, 120);
-    chartBottom->setPenColor(Qt::green);
+    chartBottom->setTheme(QChart::ChartThemeDark);
+
 }
 
-void Statistics::initializeSignalsAndSlots(void)
+void Statistics::enableChartData(void)
 {
-    connect (con, &Connections::updateBatteryCurrent,
-             [=](quint16 value) { chartUpper->updateChart(value); });
+    LOG (LOG_STATS, "%s - connected chart data", CLASS_INFO);
 
-    connect (con, &Connections::updateBatteryVoltage,
-             [=](quint16 value) { chartBottom->updateChart(value); });
+    connect (con, &Connections::updateBatteryCurrent, chartUpper,
+             [=] (quint16 value) { chartUpper->updateChart(value); });
+
+    connect (con, &Connections::updateBatteryVoltage, chartBottom,
+             [=] (quint16 value) { chartBottom->updateChart(value); });
+
+}
+
+void Statistics::disableChartData(void)
+{
+    LOG (LOG_STATS, "%s - disconnected chart data", CLASS_INFO);
+
+    if (QObject::disconnect(con, 0, chartUpper, 0))
+          LOG (LOG_STATS, "%s - disconnected upper chart data", CLASS_INFO);
+    if (QObject::disconnect(con, 0, chartBottom, 0))
+        LOG (LOG_STATS, "%s - disconnected bottom chart data", CLASS_INFO);
+
 }
 
 Statistics::~Statistics()

@@ -44,11 +44,12 @@ public slots:
      * @param lapTime
      */
     void setLapTime(QString lapTime);
+    void enableChartData(void);
+    void disableChartData(void);
 
 private:
-    void initializeSignalsAndSlots(void);
-
     Chart *chartUpper, *chartBottom;
+    QChartView *viewUpper, *viewBottom;
     Ui::Statistics *ui;
     Connections *con;
 };
