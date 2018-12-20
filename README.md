@@ -5,7 +5,7 @@
 ![alt text](https://i.ibb.co/FYqY7Qc/4.png)
 # Requirements
  - gcc 
- - Qt5
+ - > Qt 5.9 (+QStyle, QtCharts)
  - qmake
 
 # Compilation
