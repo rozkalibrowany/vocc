@@ -32,10 +32,10 @@ Connections::~Connections()
 {
     LOG (LOG_CONNECTIONS, "%s - in destructor", CLASS_INFO);
 
-    if (process != NULL) {
-        process->close();
-        delete process;
-    }
+//    if (process != NULL) {
+//        process->close();
+//        delete process;
+//    }
 }
 
 
@@ -43,10 +43,7 @@ void Connections::initializeSignalsAndSlots(void)
 {
     LOG (LOG_CONNECTIONS, "%s - initializing signals", CLASS_INFO);
 
-    connect (this, &Connections::updateRpmSpeed,
-             [=](quint16 speed) { rpm->updateWidget(speed); });
-
-    connect (this, &Connections::updateAlerts,
+    connect (this, &Connections::updateAlerts, rpm,
              [=](char errors[16]) { alerts->updateAlertsState(errors); });
 }
 

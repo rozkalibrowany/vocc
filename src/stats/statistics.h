@@ -39,11 +39,6 @@ public:
     ~Statistics();
 
 public slots:
-    /**
-     * @brief setLapTime - this method sets lap time
-     * @param lapTime
-     */
-    void setLapTime(QString lapTime);
     void enableChartData(void);
     void disableChartData(void);
 

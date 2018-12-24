@@ -22,8 +22,11 @@ public:
     void setAxisYRange(qreal min, qreal max);
     void updateChart(qreal value);
     void setPenColor(QColor color);
+    void setPenWidth(int width);
+    void setChartSensitivity(int value);
 
 private:
+    int chartSensitivity, cnt;
     QSplineSeries *m_series;
     QStringList m_titles;
     QValueAxis *m_axisX;

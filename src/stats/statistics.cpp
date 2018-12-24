@@ -20,20 +20,22 @@ Statistics::Statistics(QWidget *parent, Connections *connection) :
     chartUpper->legend()->hide();
     chartUpper->setAnimationOptions(QChart::AllAnimations);
     viewUpper = new QChartView(chartUpper, ui->currentChartWidget);
-    viewUpper->setRenderHint(QPainter::Antialiasing);
+    viewUpper->setRenderHint(QPainter::Antialiasing, true);
     ui->layoutCurrentChart->addWidget(viewUpper);
     chartUpper->setAxisYRange(0, 200);
     chartUpper->setTheme(QChart::ChartThemeDark);
+    chartUpper->setPenWidth(4);
 
     chartBottom = new Chart;
     chartBottom->setTitle("Dynamic Battery Voltage Data");
     chartBottom->legend()->hide();
     chartBottom->setAnimationOptions(QChart::AllAnimations);
     viewBottom = new QChartView(chartBottom, ui->powerChartWidget);
-    viewBottom->setRenderHint(QPainter::Antialiasing);
+    viewBottom->setRenderHint(QPainter::Antialiasing, true);
     ui->layoutPowerChart->addWidget(viewBottom);
     chartBottom->setAxisYRange(0, 120);
     chartBottom->setTheme(QChart::ChartThemeDark);
+    chartBottom->setPenWidth(4);
 
 }
 
@@ -54,7 +56,7 @@ void Statistics::disableChartData(void)
     LOG (LOG_STATS, "%s - disconnected chart data", CLASS_INFO);
 
     if (QObject::disconnect(con, 0, chartUpper, 0))
-          LOG (LOG_STATS, "%s - disconnected upper chart data", CLASS_INFO);
+        LOG (LOG_STATS, "%s - disconnected upper chart data", CLASS_INFO);
     if (QObject::disconnect(con, 0, chartBottom, 0))
         LOG (LOG_STATS, "%s - disconnected bottom chart data", CLASS_INFO);
 
@@ -65,14 +67,4 @@ Statistics::~Statistics()
     LOG (LOG_STATS, "%s - in destructor", CLASS_INFO);
 
     delete ui;
-}
-
-
-void Statistics::setLapTime(QString lapTime)
-{
-    LOG (LOG_STATS, "%s - setting lap time - %s", CLASS_INFO,
-            lapTime.toStdString().c_str());
-
-    QTableWidgetItem *item = new QTableWidgetItem(lapTime);
-    item->setTextAlignment(Qt::AlignCenter);
 }
