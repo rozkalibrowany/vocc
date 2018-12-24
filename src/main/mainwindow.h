@@ -80,14 +80,17 @@ private:
     void setLapTimerTime(void);
     /// This method is called to set flashing button
     void setButtonFlashing(QFrame &frame, bool start);
+    /// Method called to froze mainwindow data
+    void disableDataRefreshing(void);
 
 
     bool lapTimerStarted; /// keeps information whether lap timer has started or not
-    bool flashingActivated, setFlash; /// keeps information whether timer for flashing button started
+    bool setFlash; /// keeps information whether timer for flashing button started
     int s, m, ms; /// keeps information about lap (minutes, seconds, miliseconds)
     QMap<QString, int> map; /// mapper for menu buttons page index (for example main: 0, settings: 1)
     QFrame *lastButtonObject; /// keeps information about last active pressed object
     QString date, time, lapTime; /// keeps information about time, date and lap time
+    QString flashingObject; /// keeps information about flashing object
     QTimer *lapTimer, *sleepTimer, *flashTimer; /// pointers of QTimer class
     QDesktopWidget resolution; /// keeps information about screen resolution
     Ui::MainWindow *ui; /// pointer to UI of MainWindow
@@ -130,6 +133,8 @@ private slots:
     void resetLapTimerSlot(void);
     /// Method called to shutdown system
     void shutdownSystem(void);
+    /// Method called to enable main window data refreshing
+    void enableDataRefreshing(void);
 
 signals:
     void statsMenuDisabled();

@@ -75,20 +75,23 @@ MainWindow::MainWindow(QWidget *parent)
     /* set default alert status */
     updateAlertsStatus(-1);
 
+    /* enable data refreshing */
+    enableDataRefreshing();
+
     /* read config file */
     conf_exit();
     int key = conf_init ("settings.conf");
 
     if (key) {
         LOG (LOG_MAINWINDOW, "%s - CONFIG file found", CLASS_INFO);
-        settings->consolePrintExternalMessage("CONFIG file found", 0);
+        settings->consolePrintExternalMessage("config file found", 0);
         QTimer *nt = new QTimer(this);
         nt->setInterval(1000);
         nt->setSingleShot(true);
         connect (nt, &QTimer::timeout, [=] { settings->readConfigFile(); });
         nt->start();
     } else {
-        LOG (LOG_MAINWINDOW, "%s - CONFIG file not found", CLASS_INFO);
+        LOG (LOG_MAINWINDOW, "%s - config file not found", CLASS_INFO);
         settings->consolePrintExternalMessage("config file not found", 1);
     }
 
@@ -122,6 +125,8 @@ void MainWindow::initializeFunctionButtons(void)
 
     connect (ui->driveButton, &QPushButton::clicked,
                 [this] { menuButtonChanged(*ui->vfMain); });
+    connect (ui->driveButton, &QPushButton::clicked,
+                this, &MainWindow::enableDataRefreshing);
     connect (ui->alertsButton, &QPushButton::clicked,
                 [this] { menuButtonChanged(*ui->vfAlerts); });
     connect (ui->statsButton, &QPushButton::clicked,
@@ -142,41 +147,11 @@ void MainWindow::initializeSignalsAndSlots(void)
     connect (ui->canButton, &QPushButton::clicked,
                 connection, &Connections::initializeConnection);
 
-    connect (connection, &Connections::setConnectionStateButton,
-                [=] (bool isConnected) { setStateConnectionButton(isConnected); });
-
-    connect (connection, &Connections::updateBatteryCurrent, this,
-                [=] (quint16 current) { updateBatteryCurrent(current); });
-
-    connect (connection, &Connections::updateBatteryVoltage, this,
-                [=] (quint16 voltage) { updateBatteryVoltage(voltage); });
-
-    connect (connection, &Connections::updatePower, this,
-                [=] (float power) { updatePower(power); });
-
-    connect (connection, &Connections::updateThrottle, this,
-                [=] (quint16 throttle) { updateThrottle(throttle); });
-
-    connect (connection, &Connections::updateControllerTemp, this,
-                [=] (quint16 temp) { updateControllerTemp(temp); });
-
-    connect (connection, &Connections::updateMotorTemp, this,
-                [=] (quint16 temp) { updateMotorTemp(temp); });
-
-    connect (alerts, &Alerts::setAlertsButtonState,
-                [=] (int errors) { updateAlertsStatus(errors); });
-
-    connect (connection, &Connections::setAlertsButtonState,
-                [=] (int state) { updateAlertsStatus(state); });
-
     connect (settings, &Settings::updateBackgroundContrast,
                 [=] (int value) { updateBackgroundContrast(value); });
 
     connect (settings, &Settings::updateFontSize,
                 [=] (QString size) { updateFontSize(size); });
-
-    connect (this, &MainWindow::addLapTime,
-                [=] (QString lapTime) { stats->setLapTime(lapTime); } );
 
     connect (settings, &Settings::quitApplication,
                 [this] () { this->close(); });
@@ -235,16 +210,74 @@ void MainWindow::menuButtonChanged(QFrame &frame)
         lastButtonObject = &frame;
         setNewPage(map[frame.objectName()]);
         buttonStyleUpdate(frame, true);
-        LOG (LOG_MAINWINDOW, "%s - newPage: %d", CLASS_INFO, map[frame.objectName()]);
+        LOG (LOG_MAINWINDOW, "%s - changed page to %d", CLASS_INFO, map[frame.objectName()]);
     } else if (lastButtonObject != &frame) {
-        if (lastButtonObject->objectName() == "vfStats") {
-            emit statsMenuDisabled();
+        switch (map[lastButtonObject->objectName()])
+        {
+            case 0:
+                disableDataRefreshing();
+                break;
+            case 2:
+                emit statsMenuDisabled();
+                break;
         }
+
+        if (!QString::compare(flashingObject, frame.objectName())) {
+            setButtonFlashing(frame, false);
+        }
+
         setNewPage(map[frame.objectName()]);
         buttonStyleUpdate(frame, true);
         buttonStyleUpdate(*lastButtonObject, false);
         lastButtonObject = &frame;
     }
+}
+
+
+void MainWindow::enableDataRefreshing(void)
+{
+    LOG (LOG_MAINWINDOW, "%s - enabled main window data refreshing", CLASS_INFO);
+
+    connect (connection, &Connections::updateRpmSpeed, rpm,
+                [=] (quint16 speed) { rpm->updateWidget(speed); });
+
+    connect (connection, &Connections::setConnectionStateButton, this,
+                [=] (bool isConnected) { setStateConnectionButton(isConnected); });
+
+    connect (connection, &Connections::updateBatteryCurrent, this,
+                [=] (quint16 current) { updateBatteryCurrent(current); });
+
+    connect (connection, &Connections::updateBatteryVoltage, this,
+                [=] (quint16 voltage) { updateBatteryVoltage(voltage); });
+
+    connect (connection, &Connections::updatePower, this,
+                [=] (float power) { updatePower(power); });
+
+    connect (connection, &Connections::updateThrottle, this,
+                [=] (quint16 throttle) { updateThrottle(throttle); });
+
+    connect (connection, &Connections::updateControllerTemp, this,
+                [=] (quint16 temp) { updateControllerTemp(temp); });
+
+    connect (connection, &Connections::updateMotorTemp, this,
+                [=] (quint16 temp) { updateMotorTemp(temp); });
+
+    connect (alerts, &Alerts::setAlertsButtonState,
+                [=] (int errors) { updateAlertsStatus(errors); });
+
+    connect (connection, &Connections::setAlertsButtonState, this,
+                [=] (int state) { updateAlertsStatus(state); });
+}
+
+
+void MainWindow::disableDataRefreshing(void)
+{
+    LOG (LOG_MAINWINDOW, "%s - disabled main window data refreshing", CLASS_INFO);
+
+    QObject::disconnect(connection, 0, this, 0);
+    QObject::disconnect(connection, &Connections::updateRpmSpeed, rpm, 0);
+    QObject::disconnect(alerts, 0, this, 0);
+
 }
 
 
@@ -395,6 +428,7 @@ void MainWindow::updateFontSize(QString size)
  */
 void MainWindow::updateAlertsStatus(int err)
 {
+    LOG (LOG_MAINWINDOW, "%s - ENABLED ALERTS STATUS", CLASS_INFO);
     QString text;
 
     if (err == 0x0) {
@@ -444,12 +478,12 @@ void MainWindow::updateAlertsStatus(int err)
 /* This method works only for 1 button simultaneously */
 void MainWindow::setButtonFlashing(QFrame &frame, bool start)
 {
-    if (flashingActivated && start)
+    if (flashingObject != NULL && start)
         return;
 
     if (start) {
         flashTimer->start();
-        flashingActivated = true;
+        flashingObject = frame.objectName();
         connect (flashTimer, &QTimer::timeout, [this, &frame]
         {
              setFlash = !setFlash;
@@ -459,7 +493,7 @@ void MainWindow::setButtonFlashing(QFrame &frame, bool start)
     else {
         flashTimer->stop();
         flashTimer->disconnect();
-        flashingActivated = false;
+        flashingObject = QString::null;
     }
 }
 
