@@ -332,7 +332,7 @@ void Settings::onUpdatesDialogResult(int result)
         }
 
     } else {
-        LOG (LOG_SETTINGS, "%s - installing new app version aborted", CLASS_INFO);
+        LOG (LOG_SETTINGS, "%s - installation of new app version aborted", CLASS_INFO);
         consolePrintMessage("installing new app version aborted", 1);
 
         mUpdateStatus->setText("Process aborted");
