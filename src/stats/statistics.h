@@ -19,6 +19,7 @@
 #define STATISTICS_H
 
 #include <QWidget>
+#include <QPushButton>
 #include "chart.h"
 #include "../connections/connections.h"
 
@@ -42,11 +43,21 @@ public slots:
     void enableChartData(void);
     void disableChartData(void);
 
+private slots:
+    void chartButtonChanged(QPushButton &button);
+    void switchUpperChartData(QPushButton &button);
+    void switchBottomChartData(QPushButton &button);
+
 private:
+    bool mEnableChartData;
     Chart *chartUpper, *chartBottom;
     QChartView *viewUpper, *viewBottom;
     Ui::Statistics *ui;
     Connections *con;
+    QPushButton *lastUpperButtonObject, *lastBottomButtonObject;
+
+    void initializeButtonSignals(void);
+    void styleUpdate(QPushButton *button, bool isChanged);
 };
 
 #endif // STATISTICS_H

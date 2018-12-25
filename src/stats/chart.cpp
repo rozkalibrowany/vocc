@@ -29,6 +29,7 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     m_axisX->setTickCount(15);
     m_axisX->setRange(0, 100);
     m_axisY->setRange(-5, 10);
+    m_axisX->hide();
 }
 
 Chart::~Chart()
@@ -78,8 +79,6 @@ void Chart::updateChart(qreal value)
         m_y = value;
         m_series->append(m_x, m_y);
         scroll(x, 0);
-//        if (m_x == 100)
-//            m_timer.stop();
     }
 }
 
