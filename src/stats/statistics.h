@@ -49,7 +49,6 @@ private slots:
     void switchBottomChartData(QPushButton &button);
 
 private:
-    bool mEnableChartData;
     Chart *chartUpper, *chartBottom;
     QChartView *viewUpper, *viewBottom;
     Ui::Statistics *ui;

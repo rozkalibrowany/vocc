@@ -95,8 +95,11 @@ void Statistics::chartButtonChanged(QPushButton &button)
         } else if (lastUpperButtonObject != &button) {
             styleUpdate(&button, true);
             styleUpdate(lastUpperButtonObject, false);
+            lastUpperButtonObject->setDisabled(false);
             lastUpperButtonObject = &button;
         }
+        button.setDisabled(true);
+
     } else {
         if (lastBottomButtonObject == NULL) {
             lastBottomButtonObject = &button;
@@ -104,8 +107,10 @@ void Statistics::chartButtonChanged(QPushButton &button)
         } else if (lastBottomButtonObject != &button) {
             styleUpdate(&button, true);
             styleUpdate(lastBottomButtonObject, false);
+            lastBottomButtonObject->setDisabled(false);
             lastBottomButtonObject = &button;
         }
+        button.setDisabled(true);
     }
 }
 
@@ -114,25 +119,26 @@ void Statistics::switchUpperChartData(QPushButton &button)
     LOG (LOG_STATS, "%s - switched upper chart data to %s", CLASS_INFO,
          button.objectName().toStdString().c_str());
 
-    if (!mEnableChartData)
-        return;
 
     if (QObject::disconnect(con, 0, chartUpper, 0))
         LOG (LOG_STATS, "%s - disconnected upper chart data", CLASS_INFO);
 
     if (!QString::compare(button.objectName(), "currentChartBtn")) {
+        LOG (LOG_STATS, "%s - switched upper chart data to current [A]", CLASS_INFO);
         chartUpper->setTitle("Dynamic Battery Current Data [A]");
         chartUpper->setAxisYRange(0, MAX_CURRENT);
 
         connect (con, &Connections::updateBatteryCurrent, chartUpper,
                  [=] (quint16 value) { chartUpper->updateChart(value); });
     } else if (!QString::compare(button.objectName(), "powerChartBtn")) {
+        LOG (LOG_STATS, "%s - switched upper chart data to power [kW]", CLASS_INFO);
         chartUpper->setTitle("Dynamic Battery Power Data [kW]");
         chartUpper->setAxisYRange(0, MAX_POWER);
 
         connect (con, &Connections::updatePower, chartUpper,
                  [=] (quint16 value) { chartUpper->updateChart(value); });
     } else {
+        LOG (LOG_STATS, "%s - switched upper chart data to throttle [%]", CLASS_INFO);
         chartUpper->setTitle("Dynamic Throttle Data [%]");
         chartUpper->setAxisYRange(0, MAX_THROTTLE);
 
@@ -147,25 +153,25 @@ void Statistics::switchBottomChartData(QPushButton &button)
     LOG (LOG_STATS, "%s - switched bottom chart data to %s", CLASS_INFO,
          button.objectName().toStdString().c_str());
 
-    if (!mEnableChartData)
-        return;
-
     if (QObject::disconnect(con, 0, chartBottom, 0))
         LOG (LOG_STATS, "%s - disconnected upper chart data", CLASS_INFO);
 
     if (!QString::compare(button.objectName(), "voltageChartBtn")) {
+        LOG (LOG_STATS, "%s - switched bottom chart data to voltage [V]", CLASS_INFO);
         chartBottom->setTitle("Dynamic Battery Voltage Data [V]");
         chartBottom->setAxisYRange(0, MAX_VOLTAGE);
 
         connect (con, &Connections::updateBatteryVoltage, chartBottom,
                  [=] (quint16 value) { chartBottom->updateChart(value); });
     } else if (!QString::compare(button.objectName(), "tempChartBtn")) {
+        LOG (LOG_STATS, "%s - switched bottom chart data to controller temp [C]", CLASS_INFO);
         chartBottom->setTitle("Dynamic Controller Temperatures Data [C]");
         chartBottom->setAxisYRange(0, MAX_TEMP);
 
         connect (con, &Connections::updateControllerTemp, chartBottom,
                  [=] (quint16 value) { chartBottom->updateChart(value); });
     } else {
+        LOG (LOG_STATS, "%s - switched upper chart data to motor speed [rpm]", CLASS_INFO);
         chartBottom->setTitle("Dynamic Motor Speed Data [rpm]");
         chartBottom->setAxisYRange(0, MAX_RPM);
 
@@ -191,13 +197,11 @@ void Statistics::enableChartData(void)
 {
     LOG (LOG_STATS, "%s - connected chart data", CLASS_INFO);
 
-    mEnableChartData = true;
-
-//    connect (con, &Connections::updateBatteryCurrent, chartUpper,
-//             [=] (quint16 value) { chartUpper->updateChart(value); });
-
-//    connect (con, &Connections::updateBatteryVoltage, chartBottom,
-//             [=] (quint16 value) { chartBottom->updateChart(value); });
+    if (lastBottomButtonObject != NULL && lastUpperButtonObject != NULL)
+    {
+        switchUpperChartData(*lastUpperButtonObject);
+        switchBottomChartData(*lastBottomButtonObject);
+    }
 
 }
 
@@ -209,8 +213,6 @@ void Statistics::disableChartData(void)
         LOG (LOG_STATS, "%s - disconnected upper chart data", CLASS_INFO);
     if (QObject::disconnect(con, 0, chartBottom, 0))
         LOG (LOG_STATS, "%s - disconnected bottom chart data", CLASS_INFO);
-
-    mEnableChartData = false;
 
 }
 
