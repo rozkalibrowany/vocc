@@ -141,7 +141,7 @@ void Settings::initializeTimers(void)
 {
     mCheckConnection = new QTimer();
 
-    mCheckConnection->setInterval(5000);
+    mCheckConnection->setInterval(10000);
     mCheckConnection->start();
 
     connect (mCheckConnection, &QTimer::timeout,
@@ -179,8 +179,13 @@ bool Settings::checkInternetConnection(void)
     if (reply->bytesAvailable()) {
         LOG (LOG_SETTINGS, "%s - internet connection OK", CLASS_INFO);
 
+        if (mUpdateStatus == NULL) {
+            setUpdatesStatusLabel();
+        }
         setWidgetStyleSheet(settings->internetIcon, "connected", true);
         settings->internetTxt->setText("Internet available");
+        mUpdateStatus->setText("ready to search..");
+        settings->updatesIndicator->setStyleSheet("border-image: url(\":44x44/44x44/download.png\");");
         if (!settings->checkUpdatesBtn->isEnabled()) {
             settings->checkUpdatesBtn->setDisabled(false);
             setWidgetStyleSheet(settings->checkUpdatesBtn, "notActive", false);
@@ -191,6 +196,7 @@ bool Settings::checkInternetConnection(void)
 
         setWidgetStyleSheet(settings->internetIcon, "connected", false);
         settings->internetTxt->setText("Internet unavailable");
+        mUpdateStatus->setText("check connection..");
         if (settings->checkUpdatesBtn->isEnabled()) {
             settings->checkUpdatesBtn->setDisabled(true);
             setWidgetStyleSheet(settings->checkUpdatesBtn, "notActive", true);
@@ -211,6 +217,7 @@ void Settings::checkForUpdates(void)
         setUpdatesStatusLabel();
 
     mUpdateStatus->setText("Searching updates...");
+    settings->updatesIndicator->setStyleSheet("");
 
     mPi->startAnimation();
     mPi->show();
@@ -243,6 +250,8 @@ void Settings::getResponseFromServer(void)
     QNetworkReply *reply = qobject_cast<QNetworkReply*>(QObject::sender());
     QString version = NULL;
     int major, smajor, minor, sminor, release, srelease;
+
+    settings->updatesIndicator->setStyleSheet("");
 
     if (reply->error() != QNetworkReply::NoError) {
         LOG (LOG_SETTINGS, "%s - error connecting to server", CLASS_INFO);
@@ -314,6 +323,7 @@ void Settings::onUpdatesDialogResult(int result)
             urlAddress = QString::fromUtf8(APP_REPOSITORY) + mVersion;
             QUrl url(urlAddress);
 
+            settings->updatesIndicator->setStyleSheet("");
             mPi = new QProgressIndicator(settings->updatesIndicator);
             mPi->startAnimation();
             mPi->show();
@@ -645,7 +655,7 @@ void Settings::setUpdatesStatusLabel(void)
         mUpdateStatus = new QLabel();
         mUpdateStatus->setMinimumWidth(170);
         mUpdateStatus->setAlignment(Qt::AlignCenter);
-        settings->statusLayer->addWidget(mUpdateStatus);
+        settings->statusLayout->addWidget(mUpdateStatus);
     }
 }
 

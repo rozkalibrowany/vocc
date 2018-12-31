@@ -967,7 +967,7 @@ color: #00ffc1;
                        <number>4</number>
                       </property>
                       <item>
-                       <layout class="QVBoxLayout" name="indLayer">
+                       <layout class="QVBoxLayout" name="indLayout">
                         <property name="spacing">
                          <number>0</number>
                         </property>
@@ -999,7 +999,7 @@ color: #00ffc1;
                        </layout>
                       </item>
                       <item>
-                       <layout class="QVBoxLayout" name="statusLayer">
+                       <layout class="QVBoxLayout" name="statusLayout">
                         <property name="spacing">
                          <number>0</number>
                         </property>
@@ -1013,7 +1013,7 @@ color: #00ffc1;
                    </layout>
                   </item>
                   <item>
-                   <widget class="QFrame" name="">
+                   <widget class="QFrame" name="frame">
                     <property name="maximumSize">
                      <size>
                       <width>117</width>
