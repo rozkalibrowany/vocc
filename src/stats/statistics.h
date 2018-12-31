@@ -19,6 +19,7 @@
 #define STATISTICS_H
 
 #include <QWidget>
+#include <QPushButton>
 #include "chart.h"
 #include "../connections/connections.h"
 
@@ -39,18 +40,24 @@ public:
     ~Statistics();
 
 public slots:
-    /**
-     * @brief setLapTime - this method sets lap time
-     * @param lapTime
-     */
-    void setLapTime(QString lapTime);
+    void enableChartData(void);
+    void disableChartData(void);
+
+private slots:
+    void chartButtonChanged(QPushButton &button);
+    void switchUpperChartData(QPushButton &button);
+    void switchBottomChartData(QPushButton &button);
 
 private:
-    void initializeSignalsAndSlots(void);
-
+    bool mEnableChartData;
     Chart *chartUpper, *chartBottom;
+    QChartView *viewUpper, *viewBottom;
     Ui::Statistics *ui;
     Connections *con;
+    QPushButton *lastUpperButtonObject, *lastBottomButtonObject;
+
+    void initializeButtonSignals(void);
+    void styleUpdate(QPushButton *button, bool isChanged);
 };
 
 #endif // STATISTICS_H

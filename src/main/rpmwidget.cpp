@@ -55,7 +55,7 @@ void RpmWidget::drawLine(int value)
 {
     LOG (LOG_RPM, "%s - drawing line, value %d", CLASS_INFO, value);
 
-    float x1, x2, y1, y2, lineLength, angle, angleOffset;
+    double x1, x2, y1, y2, lineLength, angle, angleOffset;
 
     QGraphicsEllipseItem *pintopItem, *dotItem;
     QGraphicsLineItem *lineItem;

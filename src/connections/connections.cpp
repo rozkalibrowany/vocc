@@ -32,10 +32,10 @@ Connections::~Connections()
 {
     LOG (LOG_CONNECTIONS, "%s - in destructor", CLASS_INFO);
 
-    if (process != NULL) {
-        process->close();
-        delete process;
-    }
+//    if (process != NULL) {
+//        process->close();
+//        delete process;
+//    }
 }
 
 
@@ -43,10 +43,7 @@ void Connections::initializeSignalsAndSlots(void)
 {
     LOG (LOG_CONNECTIONS, "%s - initializing signals", CLASS_INFO);
 
-    connect (this, &Connections::updateRpmSpeed,
-             [=](quint16 speed) { rpm->updateWidget(speed); });
-
-    connect (this, &Connections::updateAlerts,
+    connect (this, &Connections::updateAlerts, rpm,
              [=](char errors[16]) { alerts->updateAlertsState(errors); });
 }
 
@@ -222,7 +219,7 @@ void Connections::readLine()
         lsb = data[0].toUInt(&valid_l, 16);
         msb = data[1].toUInt(&valid_m, 16);
         quint16 rpm = msb*256 + lsb;
-        if (valid_l && valid_m) /* update rpm widget (3 samples) */
+        if (valid_l && valid_m) /* update rpm widget (8 samples) */
             emit updateRpmSpeed(calculateAvg(avgRpm, rpm, 8));
         /* read battery current (base 16) */
         lsb = data[2].toUInt(&valid_l, 16);

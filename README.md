@@ -1,9 +1,11 @@
 # VOCC - desktop client for automotive (desktop, ARM)
 ![alt text](https://preview.ibb.co/eZY4c9/Zrzut_ekranu_z_2018_09_11_20_43_48.png)
-
+![alt text](https://i.ibb.co/KFwDccx/2.png)
+![alt text](https://i.ibb.co/QFyp5TT/Zrzut-ekranu-z-2018-12-26-13-02-07.png)
+![alt text](https://i.ibb.co/FYqY7Qc/4.png)
 # Requirements
  - gcc 
- - Qt5
+ - > Qt 5.9 (+QStyle, QtCharts)
  - qmake
 
 # Compilation

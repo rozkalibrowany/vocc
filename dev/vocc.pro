@@ -38,6 +38,7 @@ SOURCES += \
     ../src/settings/progressIndicator.cpp \
     ../src/stats/chart.cpp
 
+
 HEADERS  += \
     ../src/alerts/ledindicator.h \
     ../src/alerts/alerts.h \
@@ -54,6 +55,7 @@ HEADERS  += \
     ../src/settings/progressIndicator.h \
     ../src/stats/chart.h
 
+
 FORMS += \
     ../ui/mainwindow.ui \
     ../ui/rpmwidget.ui \
@@ -64,3 +66,9 @@ FORMS += \
 
 RESOURCES += \
     ../img/img.qrc
+
+SUBDIRS += \
+    ../src/qt/chartviewer.pro
+
+DISTFILES += \
+    ../src/qt/charts/charts.pri

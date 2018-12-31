@@ -547,7 +547,7 @@ color:  #6affcd;</string>
      <item row="0" column="0" rowspan="2">
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="drive">
         <property name="styleSheet">
@@ -646,7 +646,7 @@ background: transparent;
                <property name="styleSheet">
                 <string notr="true">border: none;
 font: 14pt &quot;Ubuntu&quot;;
-color:  #6affcd;</string>
+</string>
                </property>
                <property name="text">
                 <string>Throttle</string>

@@ -332,7 +332,7 @@ void Settings::onUpdatesDialogResult(int result)
         }
 
     } else {
-        LOG (LOG_SETTINGS, "%s - installing new app version aborted", CLASS_INFO);
+        LOG (LOG_SETTINGS, "%s - installation of new app version aborted", CLASS_INFO);
         consolePrintMessage("installing new app version aborted", 1);
 
         mUpdateStatus->setText("Process aborted");
@@ -811,7 +811,7 @@ Dialog::Dialog(QWidget *parent) : QDialog (parent)
 
     mLabel = new QLabel;
     mLabel->setAlignment(Qt::AlignCenter);
-    mLabel->setStyleSheet("QLabel { font: 13pt \"Halvetica\"; }");
+    mLabel->setStyleSheet("QLabel { font: 13pt \"Halvetica\"; color: white; }");
     mainLayout->addWidget(mLabel);
 
     QPushButton *okBtn = bb->button(QDialogButtonBox::Ok);
@@ -840,10 +840,12 @@ Dialog::Dialog(QWidget *parent) : QDialog (parent)
 
 void Dialog::setButtonStyleSheet(QPushButton &pb)
 {
-    pb.setStyleSheet("QPushButton { \
+    pb.setStyleSheet("QPushButton {             \
                      border: 2px solid #00ffc1; \
-                     border-radius: 4px; } \
-                      QPushButton:pressed { \
+                     border-radius: 4px;        \
+                     font: 11pt \"Halvetica\";  \
+                     color: white;      }       \
+                      QPushButton:pressed {     \
                      border: 4px solid #00ffc1; \
                      border-radius: 4px; }");
     pb.setFixedSize(this->width()/3, this->height()/4.5);

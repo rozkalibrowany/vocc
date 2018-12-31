@@ -3,20 +3,20 @@
 #include <QtCore/QRandomGenerator>
 #include <QtCore/QDebug>
 
-static int cnt = 0;
-
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     QChart(QChart::ChartTypeCartesian, parent, wFlags),
     m_series(0),
     m_axisX(new QValueAxis()),
     m_axisY(new QValueAxis()),
     m_step(0),
-    m_x(75),
-    m_y(1)
+    m_x(80),
+    m_y(1),
+    cnt(0),
+    chartSensitivity(3)
 {
     m_series = new QSplineSeries(this);
-    pen.setColor(Qt::red);
-    pen.setWidth(3);
+    pen.setColor(QColor(74,178,143));
+    pen.setWidth(4);
     m_series->setPen(pen);
     m_series->append(m_x, m_y);
 
@@ -26,9 +26,10 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     addAxis(m_axisY,Qt::AlignLeft);
     m_series->attachAxis(m_axisX);
     m_series->attachAxis(m_axisY);
-    m_axisX->setTickCount(20);
-    m_axisX->setRange(0, 80);
+    m_axisX->setTickCount(15);
+    m_axisX->setRange(0, 100);
     m_axisY->setRange(-5, 10);
+    m_axisX->hide();
 }
 
 Chart::~Chart()
@@ -52,9 +53,22 @@ void Chart::setPenColor(QColor color)
     m_series->setPen(pen);
 }
 
+void Chart::setPenWidth(int width)
+{
+    if (width > 0) {
+        pen.setWidth(width);
+        m_series->setPen(pen);
+    }
+}
+
+void Chart::setChartSensitivity(int value)
+{
+    chartSensitivity = value;
+}
+
 void Chart::updateChart(qreal value)
 {
-    if (cnt != 4) {
+    if (cnt != chartSensitivity) {
         cnt++;
         return;
     } else {
@@ -65,8 +79,6 @@ void Chart::updateChart(qreal value)
         m_y = value;
         m_series->append(m_x, m_y);
         scroll(x, 0);
-//        if (m_x == 100)
-//            m_timer.stop();
     }
 }
 
