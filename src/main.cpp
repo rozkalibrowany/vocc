@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
                      << "LOG_RPM \t\t 0x0008\n\t\t" << "LOG_MAINWINDOW \t 0x0010\n\t\t" \
                      << "LOG_ALERTS \t\t 0x0020\n\t\t" << "LOG_LEDINDICATOR \t 0x0040\n\t\t" \
                      << "LOG_SETTINGS \t\t 0x0080\n\t\t" << "LOG_CONNECTIONS_DATA \t 0x0100\n\t\t" \
-                     << "LOG_MAINWINDOW_DATA \t 0x0200\n\t\t" << "LOG_STATS \t 0x0400\n";
+                     << "LOG_MAINWINDOW_DATA \t 0x0200\n\t\t" << "LOG_STATS \t\t 0x0400\n";
             exit(EXIT_FAILURE);
             break;
         case 'l':
@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
 #endif
     /* TODO: what if no git version */
     QApplication a(argc, argv);
+    a.setWindowIcon(QIcon(":/44x44/44x44/navigation.png"));
     MainWindow w;
     w.show();
     return a.exec();

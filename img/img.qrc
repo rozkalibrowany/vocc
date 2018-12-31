@@ -36,6 +36,8 @@
         <file>44x44/windows.png</file>
         <file>44x44/no_internet.png</file>
         <file>44x44/internet.png</file>
+        <file>44x44/download.png</file>
+        <file>44x44/icon.png</file>
     </qresource>
     <qresource prefix="/colorized_circles">
         <file>colorized_circles/circle1.png</file>
