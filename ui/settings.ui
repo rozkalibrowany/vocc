@@ -1836,7 +1836,7 @@ color: #ff4d4d;
 }</string>
                        </property>
                        <property name="text">
-                        <string>Shutdown </string>
+                        <string>Power Off</string>
                        </property>
                       </widget>
                      </item>
