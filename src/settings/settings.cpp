@@ -196,7 +196,8 @@ bool Settings::checkInternetConnection(void)
 
         setWidgetStyleSheet(settings->internetIcon, "connected", false);
         settings->internetTxt->setText("Internet unavailable");
-        mUpdateStatus->setText("check connection..");
+        if (mUpdateStatus != NULL)
+            mUpdateStatus->setText("check connection..");
         if (settings->checkUpdatesBtn->isEnabled()) {
             settings->checkUpdatesBtn->setDisabled(true);
             setWidgetStyleSheet(settings->checkUpdatesBtn, "notActive", true);
