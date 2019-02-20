@@ -6,7 +6,8 @@
 
 QMAKE_CXXFLAGS_RELEASE += -O2
 
-QT       += core gui network charts
+
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,6 +15,12 @@ DEFINES += GIT_VERSION="\\\"$(shell git -C \""$$_PRO_FILE_PWD_"\" describe --tag
 
 TARGET = vocc
 TEMPLATE = app
+
+#QMAKE_LFLAGS += -static
+#unix:!macx: LIBS += -L$$PWD/../libs/ -lQt5Charts
+
+#INCLUDEPATH += $$PWD/../libs/include
+#DEPENDPATH += $$PWD/../libs/include
 
 CONFIG += c++11
 
@@ -70,5 +77,10 @@ RESOURCES += \
 SUBDIRS += \
     ../src/qt/chartviewer.pro
 
-DISTFILES += \
-    ../src/qt/charts/charts.pri
+
+unix:!macx: LIBS += -L$$PWD/../libs/ -lQt5Charts
+
+INCLUDEPATH += $$PWD/../libs/include/QtCharts
+DEPENDPATH += $$PWD/../libs/include/QtCharts
+
+unix:!macx: PRE_TARGETDEPS += $$PWD/../libs/libQt5Charts.a

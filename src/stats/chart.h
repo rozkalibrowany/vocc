@@ -1,7 +1,7 @@
+
 #ifndef CHART_H
 #define CHART_H
-
-#include <QtCharts>
+#include "QtCharts"
 
 QT_CHARTS_BEGIN_NAMESPACE
 class QSplineSeries;
