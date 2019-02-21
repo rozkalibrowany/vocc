@@ -1,7 +1,4 @@
 #include "chart.h"
-#include <QtCharts>
-#include <QtCore/QRandomGenerator>
-#include <QtCore/QDebug>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     QChart(QChart::ChartTypeCartesian, parent, wFlags),
