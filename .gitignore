@@ -3,6 +3,7 @@
 *.autosave
 *.user
 *.o
+*.qmake*
 versions/
 dev/moc/
 Makefile

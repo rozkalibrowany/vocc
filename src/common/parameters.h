@@ -8,7 +8,7 @@
 #define SHELL                   "sh"
 #define SIMULATION_FILE         "can_simulation.py"
 #define INSTALLATION_FILE       "install.sh"
-#define RUN_CAN_CMD             "stdbuff -o0 candump can0"
+#define RUN_CAN_CMD             "stdbuf -o0 candump can0"
 #define CAN_INIT                "ip link set can0 up type can bitrate"
 #define MESSAGE_1               "0CF11E05"
 #define MESSAGE_2               "0CF11F05"
