@@ -65,6 +65,7 @@ private:
     /// method that returns information about CAN data check box
     bool isCanToConsoleEnabled(void);
 
+    bool canInitialized;
     bool mCanToConsole; /// - enable/disable output CAN data to console
     QString mFilePath; /// - keeps the path of python can simulation file
     bool mCanMode; /// - keeps an information about can mode (0-Converter, 1-Simulation)

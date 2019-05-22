@@ -31,11 +31,6 @@ Connections::Connections(RpmWidget *m_rpm, Alerts *m_alerts)
 Connections::~Connections()
 {
     LOG (LOG_CONNECTIONS, "%s - in destructor", CLASS_INFO);
-
-//    if (process != NULL) {
-//        process->close();
-//        delete process;
-//    }
 }
 
 
@@ -62,16 +57,17 @@ void Connections::initializeConnection(void)
     }
 
     /* if CAN is in conv mode set iface */
-    if (mCanMode)
-        exitCode = initializeCanInterface();
-    else /* else, initialize pythonic symulation */
+    if (mCanMode) {
+        if (!canInitialized)
+            exitCode = initializeCanInterface();
+    } else {/* else, initialize pythonic symulation */
         exitCode = initializeSimulation();
-
-    if (exitCode) {
-        LOG (LOG_CONNECTIONS, "%s - connection failed", CLASS_INFO);
-        emit printMessage(QString("connection failed"), 2);
-        return;
+        if (exitCode) {
+            LOG (LOG_CONNECTIONS, "%s - connection failed", CLASS_INFO);
+            emit printMessage(QString("connection failed"), 2);
+        }
     }
+
 
     /* create new QProcess object */
     process = new QProcess();
@@ -142,6 +138,8 @@ int Connections::initializeCanInterface(void)
         LOG (LOG_CONNECTIONS, "%s - ERROR: %s", CLASS_INFO,
              msg.toStdString().c_str());
         emit printMessage(QString("ERROR: %1").arg(msg), 2);
+    } else {
+        canInitialized = true;
     }
 
     return iface->exitCode();

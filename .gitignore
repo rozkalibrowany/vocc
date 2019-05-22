@@ -4,6 +4,7 @@
 *.user
 *.o
 *.qmake*
+*img/qrc*
 versions/
 dev/moc/
 Makefile
