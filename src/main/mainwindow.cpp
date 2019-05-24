@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent)
     if (key) {
         LOG (LOG_MAINWINDOW, "%s - CONFIG file found", CLASS_INFO);
         settings->consolePrintExternalMessage("config file found", 0);
-        QTimer *nt = new QTimer(this);
+        QTimer *nt = new QTimer();
         nt->setInterval(1000);
         nt->setSingleShot(true);
         connect (nt, &QTimer::timeout, [=] { settings->readConfigFile(); });
@@ -195,7 +195,7 @@ void MainWindow::initializeTimerForDateTime(void)
     LOG (LOG_MAINWINDOW, "%s - current date and time %s, %s", CLASS_INFO, \
          date.toStdString().c_str(), time.toStdString().c_str());
 
-    QTimer *timer = new QTimer(this);
+    QTimer *timer = new QTimer();
     connect (timer, &QTimer::timeout, this, &MainWindow::setSystemDateSlot);
     timer->start(1000);
 }
@@ -274,9 +274,9 @@ void MainWindow::disableDataRefreshing(void)
 {
     LOG (LOG_MAINWINDOW, "%s - disabled main window data refreshing", CLASS_INFO);
 
-    QObject::disconnect(connection, 0, this, 0);
-    QObject::disconnect(connection, &Connections::updateRpmSpeed, rpm, 0);
-    QObject::disconnect(alerts, 0, this, 0);
+    disconnect(connection, 0, this, 0);
+    disconnect(connection, &Connections::updateRpmSpeed, rpm, 0);
+    disconnect(alerts, 0, this, 0);
 
 }
 

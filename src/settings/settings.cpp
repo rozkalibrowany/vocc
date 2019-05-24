@@ -179,7 +179,7 @@ bool Settings::checkInternetConnection(void)
     if (reply->bytesAvailable()) {
         LOG (LOG_SETTINGS, "%s - internet connection OK", CLASS_INFO);
 
-        if (mUpdateStatus == NULL) {
+        if (mUpdateStatus == nullptr) {
             setUpdatesStatusLabel();
         }
         setWidgetStyleSheet(settings->internetIcon, "connected", true);
@@ -249,7 +249,7 @@ void Settings::checkForUpdates(void)
 void Settings::getResponseFromServer(void)
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply*>(QObject::sender());
-    QString version = NULL;
+    QString version;
     int major, smajor, minor, sminor, release, srelease;
 
     settings->updatesIndicator->setStyleSheet("");

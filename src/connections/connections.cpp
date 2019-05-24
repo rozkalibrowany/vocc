@@ -58,8 +58,10 @@ void Connections::initializeConnection(void)
 
     /* if CAN is in conv mode set iface */
     if (mCanMode) {
+        /* let the connection move forward even if initializeConnection
+         * returns false */
         if (!canInitialized)
-            exitCode = initializeCanInterface();
+            initializeCanInterface();
     } else {/* else, initialize pythonic symulation */
         exitCode = initializeSimulation();
         if (exitCode) {
@@ -174,7 +176,7 @@ void Connections::establishConnection(void)
     if (process->pid() != 0) {
         setConnectionStatus(true);
         LOG (LOG_CONNECTIONS, "%s - process PID: %d", CLASS_INFO, process->pid());
-        emit printMessage(QString("connection established, PID: %1").arg(process->pid()), 0);
+        emit printMessage(QString("connection established"), 0);
     }
     emit setConnectionStateButton(getConnectionStatus());
     emit enableRadioButtons(false);
@@ -191,6 +193,9 @@ void Connections::readLine()
     /* split data */
     QString data_s (data_Uns);
     QStringList data(data_s.split(' '));
+
+    if (data.isEmpty())
+        return;
 
     if (data[0] != "can0") {
         LOG (LOG_CONNECTIONS_DATA, "%s - wrong CAN data - %s", CLASS_INFO, \
@@ -279,7 +284,7 @@ void Connections::readLine()
 
 template <typename T> T Connections::calculateAvg(QVector<T> &container, T value, quint16 _size)
 {
-    if (value == 0)
+    if (value == 0 || container.isEmpty())
         return 0;
 
     T avgValue = 0;

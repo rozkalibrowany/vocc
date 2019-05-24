@@ -16,8 +16,8 @@ DEFINES += GIT_VERSION="\\\"$(shell git -C \""$$_PRO_FILE_PWD_"\" describe --tag
 TARGET = vocc
 TEMPLATE = app
 
-QMAKE_LFLAGS += -static
-unix:!macx: LIBS += -L$$PWD/../libs/ -lQt5Charts
+#QMAKE_LFLAGS += -static
+#unix:!macx: LIBS += -L$$PWD/../libs/ -lQt5Charts
 
 INCLUDEPATH += $$PWD/../libs/include
 DEPENDPATH += $$PWD/../libs/include
@@ -78,9 +78,9 @@ SUBDIRS += \
     ../src/qt/chartviewer.pro
 
 
-#unix:!macx: LIBS += -L$$PWD/../libs -lQt5Charts
+unix:!macx: LIBS += -L$$PWD/../libs -lQt5Charts
 
-#INCLUDEPATH += $$PWD/../libs/include/QtCharts
-#DEPENDPATH += $$PWD/../libs/include/QtCharts
+INCLUDEPATH += $$PWD/../libs/include/QtCharts
+DEPENDPATH += $$PWD/../libs/include/QtCharts
 
 unix:!macx: PRE_TARGETDEPS += $$PWD/../libs/libQt5Charts.a
