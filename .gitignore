@@ -3,8 +3,11 @@
 *.autosave
 *.user
 *.o
+<<<<<<< HEAD
 *.qmake*
 *img/qrc*
+=======
+>>>>>>> 0eff8bf70bd71e67365ba8be516e44e777cd582a
 versions/
 dev/moc/
 Makefile

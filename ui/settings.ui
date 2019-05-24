@@ -1294,17 +1294,7 @@ color: #c0c0c0;
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_35">
                <item>
-                <spacer name="verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
+                <widget class="QCalendarWidget" name="calendarWidget"/>
                </item>
               </layout>
              </item>
@@ -1865,51 +1855,6 @@ color: #e6e6e6;</string>
                   <number>0</number>
                  </property>
                  <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_30">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>5</number>
-                   </property>
-                   <item>
-                    <widget class="QFrame" name="frame">
-                     <property name="minimumSize">
-                      <size>
-                       <width>250</width>
-                       <height>130</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">border: none;</string>
-                     </property>
-                     <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
-                     </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
-                     </property>
-                     <widget class="QCalendarWidget" name="calendarWidget">
-                      <property name="geometry">
-                       <rect>
-                        <x>0</x>
-                        <y>0</y>
-                        <width>245</width>
-                        <height>135</height>
-                       </rect>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>135</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
                   <layout class="QVBoxLayout" name="verticalLayout_24">
                    <property name="spacing">
                     <number>0</number>
@@ -1931,14 +1876,14 @@ color: #e6e6e6;</string>
                      <item>
                       <widget class="QPushButton" name="quitBtn">
                        <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
                        <property name="minimumSize">
                         <size>
-                         <width>70</width>
+                         <width>150</width>
                          <height>40</height>
                         </size>
                        </property>
@@ -1993,7 +1938,7 @@ color: #ff4d4d;
                        </property>
                        <property name="minimumSize">
                         <size>
-                         <width>70</width>
+                         <width>150</width>
                          <height>40</height>
                         </size>
                        </property>
@@ -2021,7 +1966,7 @@ color: #ff4d4d;
 }</string>
                        </property>
                        <property name="text">
-                        <string>Power Off</string>
+                        <string>Reboot</string>
                        </property>
                       </widget>
                      </item>
