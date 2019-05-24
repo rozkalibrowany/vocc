@@ -135,6 +135,7 @@ private slots:
     void shutdownSystem(void);
     /// Method called to enable main window data refreshing
     void enableDataRefreshing(void);
+    void rebootSystem(void);
 
 signals:
     void statsMenuDisabled();

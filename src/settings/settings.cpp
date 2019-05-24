@@ -130,6 +130,9 @@ void Settings::initializeSignalsAndSlots(void)
     /* signal activated when shutdown button clicked */
     connect (settings->shutdownBtn, &QPushButton::clicked,
                 this, &Settings::onShutdownButtonClicked);
+    /* signal activated when shutdown button clicked */
+    connect (settings->rebootBtn, &QPushButton::clicked,
+                this, &Settings::onRebootButtonClicked);
     /* signal activated when check updates button clicked */
     connect (settings->checkUpdatesBtn, &QPushButton::clicked,
                 this, &Settings::checkForUpdates);
@@ -805,6 +808,11 @@ void Settings::onQuitButtonClicked(void)
 void Settings::onShutdownButtonClicked(void)
 {
     emit shutdownSystem();
+}
+
+void Settings::onRebootButtonClicked(void)
+{
+    emit rebootSystem();
 }
 
 /* ------------------------------------------ */

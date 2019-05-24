@@ -1874,27 +1874,71 @@ color: #e6e6e6;</string>
                       <number>3</number>
                      </property>
                      <item>
-                      <widget class="QPushButton" name="quitBtn">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="minimumSize">
-                        <size>
-                         <width>150</width>
-                         <height>40</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>70</width>
-                         <height>40</height>
-                        </size>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">QPushButton {
+                      <layout class="QHBoxLayout" name="horizontalLayout_23">
+                       <item>
+                        <widget class="QPushButton" name="rebootBtn">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>80</width>
+                           <height>45</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>70</width>
+                           <height>45</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+border: 1.5px solid #ff4d4d;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic  11pt &quot;Halvetica&quot; ;
+color: #ff4d4d;
+}
+
+QPushButton:pressed{
+border: 4px solid #ff4d4d;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 11pt &quot;Halvetica&quot; ;
+color: #ff4d4d;
+}</string>
+                         </property>
+                         <property name="text">
+                          <string>Reboot</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="shutdownBtn">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>80</width>
+                           <height>45</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>80</width>
+                           <height>45</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
 border: 1.5px solid #ff4d4d;
 border-radius: 4px;
 padding: 2px;
@@ -1909,11 +1953,55 @@ padding: 2px;
 font: 75 italic 11pt &quot;Halvetica&quot; ;
 color: #ff4d4d;
 }</string>
-                       </property>
-                       <property name="text">
-                        <string>Quit</string>
-                       </property>
-                      </widget>
+                         </property>
+                         <property name="text">
+                          <string>Shutdown</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="quitBtn">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>80</width>
+                           <height>45</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>70</width>
+                           <height>45</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+border: 1.5px solid #ff4d4d;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 11pt &quot;Halvetica&quot; ;
+color: #ff4d4d;
+}
+
+QPushButton:pressed{
+border: 4px solid #ff4d4d;
+border-radius: 4px;
+padding: 2px;
+font: 75 italic 11pt &quot;Halvetica&quot; ;
+color: #ff4d4d;
+}</string>
+                         </property>
+                         <property name="text">
+                          <string>Quit</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
                      </item>
                     </layout>
                    </item>
@@ -1929,46 +2017,17 @@ color: #ff4d4d;
                       <number>3</number>
                      </property>
                      <item>
-                      <widget class="QPushButton" name="shutdownBtn">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
+                      <spacer name="verticalSpacer">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
                        </property>
-                       <property name="minimumSize">
+                       <property name="sizeHint" stdset="0">
                         <size>
-                         <width>150</width>
+                         <width>20</width>
                          <height>40</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>70</width>
-                         <height>40</height>
-                        </size>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">QPushButton {
-border: 1.5px solid #ff4d4d;
-border-radius: 4px;
-padding: 2px;
-font: 75 italic  9pt &quot;Halvetica&quot; ;
-color: #ff4d4d;
-}
-
-QPushButton:pressed{
-border: 4px solid #ff4d4d;
-border-radius: 4px;
-padding: 2px;
-font: 75 italic 9pt &quot;Halvetica&quot; ;
-color: #ff4d4d;
-}</string>
-                       </property>
-                       <property name="text">
-                        <string>Reboot</string>
-                       </property>
-                      </widget>
+                      </spacer>
                      </item>
                     </layout>
                    </item>

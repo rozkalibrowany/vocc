@@ -78,6 +78,7 @@ private slots:
     void onQuitButtonClicked(void);
     /// method called when shutdown button clicked
     void onShutdownButtonClicked(void);
+    void onRebootButtonClicked(void);
     /// method called when check updates button clicked
     void checkForUpdates(void);
     /// method called on dialog exit
@@ -104,6 +105,7 @@ signals:
     void quitApplication();
     /// signal emitted to shutdown system
     void shutdownSystem();
+    void rebootSystem();
 
 private:
     /// method which fills canbaud combobox with values

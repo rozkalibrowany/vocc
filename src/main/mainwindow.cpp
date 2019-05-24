@@ -158,6 +158,9 @@ void MainWindow::initializeSignalsAndSlots(void)
 
     connect (settings, &Settings::shutdownSystem,
                 this, &MainWindow::shutdownSystem);
+
+    connect (settings, &Settings::rebootSystem,
+                this, &MainWindow::rebootSystem);
 }
 
 
@@ -582,5 +585,13 @@ void MainWindow::shutdownSystem(void)
     QProcess *proc = new QProcess();
 
     proc->start(SHUTDOWN_CMD);
+    proc->waitForFinished();
+}
+
+void MainWindow::rebootSystem(void)
+{
+    QProcess *proc = new QProcess();
+
+    proc->start(REBOOT_CMD);
     proc->waitForFinished();
 }
