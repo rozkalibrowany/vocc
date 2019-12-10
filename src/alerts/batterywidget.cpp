@@ -20,17 +20,7 @@ void BatteryWidget::initBatteryErrors(void)
 {
     LOG (LOG_ALERTS, "%s - initializing controller errors", CLASS_INFO);
 
-    batteryErrors[0] = "BMS NOT CONNECTED";
-    batteryErrors[4] = "BMS NOT CONNECTED";
-    batteryErrors[5] = "BMS NOT CONNECTED";
-    batteryErrors[6] = "BMS NOT CONNECTED";
-    batteryErrors[7] = "BMS NOT CONNECTED";
-    batteryErrors[8] = "BMS NOT CONNECTED";
-    batteryErrors[9] = "BMS NOT CONNECTED";
-    batteryErrors[10] = "BMS NOT CONNECTED";
-    batteryErrors[11] = "BMS NOT CONNECTED";
-    batteryErrors[12] = "BMS NOT CONNECTED";
-    batteryErrors[13] = "BMS NOT CONNECTED";
-    batteryErrors[14] = "BMS NOT CONNECTED";
-    batteryErrors[15] = "BMS NOT CONNECTED";
+    for (int i = 0; i <= 15; i++) {
+        batteryErrors[i] = "BMS UNPLUGGED";
+    }
 }
